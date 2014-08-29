@@ -10,27 +10,48 @@ import UIKit
 import XCTest
 
 class JSONHelperTests: XCTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    // Initialize our test subject with a dummy API response.
+    let result = SearchResult(data: [
+        "query": "a",
+        "current_page": 1,
+        "friends_per_page": [2, 2, 2, 2, 1],
+        "suggested_friend": [
+            "name": "Mark",
+            "age": 30
+        ],
+        "friends": [
+            [
+                "name": "Hannibal",
+                "age": 76
+            ], [
+                "name": "Sabrina",
+                "age": 18
+            ]
+        ]
+        ])
+
+    // Test different deserializations.
+    func testStringDeserialization() {
+        XCTAssert(result.query == "a", "Pass")
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testIntDeserialization() {
+        XCTAssert(result.currentPage == 1, "Pass")
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        XCTAssert(true, "Pass")
+
+    func testStringArrayDeserialization() {
+        // TODO
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
+
+    func testIntArrayDeserialization() {
+        XCTAssert(result.friendsPerPage?.count == 5, "Pass")
     }
-    
+
+    func testClassDeserialization() {
+        XCTAssert(result.suggestedFriend?.name == "Mark", "Pass")
+    }
+
+    func testClassArrayDeserialization() {
+        XCTAssert(result.friends?.count == 2, "Pass")
+    }
 }
