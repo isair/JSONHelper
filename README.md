@@ -58,7 +58,7 @@ let dummyAPIResponse = [
 ]
 ````
 
-Deserializing this data is on line after you set up your models to use JSONHelper.
+Deserializing this data is one line after you set up your models to use JSONHelper.
 
 ````swift
 var searchResult = FriendSearchResult(data: dummyAPIResponse)
@@ -74,7 +74,7 @@ var searchResult: FriendSearchResult?
 searchResult <<<< dummyAPIResponse
 ````
 
-And your models will only look like this after you set them up to use JSONHelper:
+And your models will only look like this after you set them up:
 
 ````swift
 class User: Deserializable {
