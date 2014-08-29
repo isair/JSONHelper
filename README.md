@@ -104,7 +104,15 @@ class SearchResult: Deserializable {
 }
 ````
 
+Oh, by the way, __all operators are chainable__.
+
 Operator List
 --------------
 
-// TODO
+__<<<__ Used for deserializing primitive types.
+
+__<<<*__ Used for deserializing an array of primitive types.
+
+__<<<<__ Used for deserializing a class.
+
+__<<<<*__ Used for deserializing a class array.
