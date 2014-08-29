@@ -13,6 +13,8 @@
 		5FC3E27219B00BD300330914 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FC3E27119B00BD300330914 /* Images.xcassets */; };
 		5FC3E27E19B00BD300330914 /* JSONHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E27D19B00BD300330914 /* JSONHelperTests.swift */; };
 		5FC3E28919B00C2900330914 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E28819B00C2900330914 /* JSONHelper.swift */; };
+		5FC3E29219B0136400330914 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E29019B0136400330914 /* SearchResult.swift */; };
+		5FC3E29319B0136400330914 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E29119B0136400330914 /* User.swift */; };
 		5FC3E29419B013B700330914 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E28819B00C2900330914 /* JSONHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +39,8 @@
 		5FC3E27C19B00BD300330914 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FC3E27D19B00BD300330914 /* JSONHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelperTests.swift; sourceTree = "<group>"; };
 		5FC3E28819B00C2900330914 /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = JSONHelper.swift; path = "Pod Classes/JSONHelper.swift"; sourceTree = "<group>"; };
+		5FC3E29019B0136400330914 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SearchResult.swift; path = Models/SearchResult.swift; sourceTree = "<group>"; };
+		5FC3E29119B0136400330914 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = Models/User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +104,7 @@
 			isa = PBXGroup;
 			children = (
 				5FC3E27D19B00BD300330914 /* JSONHelperTests.swift */,
+				5FC3E28F19B0134D00330914 /* Models */,
 				5FC3E27B19B00BD300330914 /* Supporting Files */,
 			);
 			path = JSONHelperTests;
@@ -119,6 +124,15 @@
 				5FC3E28819B00C2900330914 /* JSONHelper.swift */,
 			);
 			name = "Pod Classes";
+			sourceTree = "<group>";
+		};
+		5FC3E28F19B0134D00330914 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5FC3E29019B0136400330914 /* SearchResult.swift */,
+				5FC3E29119B0136400330914 /* User.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,7 +245,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FC3E29419B013B700330914 /* JSONHelper.swift in Sources */,
+				5FC3E29219B0136400330914 /* SearchResult.swift in Sources */,
 				5FC3E27E19B00BD300330914 /* JSONHelperTests.swift in Sources */,
+				5FC3E29319B0136400330914 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
