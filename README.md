@@ -64,16 +64,6 @@ Deserializing this data is one line after you set up your models to use JSONHelp
 var searchResult = FriendSearchResult(data: dummyAPIResponse)
 ````
 
-or as simple as:
-
-````swift
-var searchResult: FriendSearchResult?
-
-...
-
-searchResult <<<< dummyAPIResponse
-````
-
 And your models will only look like this after you set them up:
 
 ````swift
