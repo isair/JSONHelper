@@ -13,6 +13,7 @@
 		5FC3E27219B00BD300330914 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5FC3E27119B00BD300330914 /* Images.xcassets */; };
 		5FC3E27E19B00BD300330914 /* JSONHelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E27D19B00BD300330914 /* JSONHelperTests.swift */; };
 		5FC3E28919B00C2900330914 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E28819B00C2900330914 /* JSONHelper.swift */; };
+		5FC3E29419B013B700330914 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC3E28819B00C2900330914 /* JSONHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -229,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FC3E29419B013B700330914 /* JSONHelper.swift in Sources */,
 				5FC3E27E19B00BD300330914 /* JSONHelperTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
