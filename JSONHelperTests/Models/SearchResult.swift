@@ -11,14 +11,14 @@ import Foundation
 class SearchResult: Deserializable {
     var query: String?
     var currentPage: Int?
-    var pageCount: Int?
+    var friendsPerPage: [Int]?
     var suggestedFriend: User?
     var friends: [User]?
 
     required init(data: [String : AnyObject]) {
         query <<< data["query"]
         currentPage <<< data["current_page"]
-        pageCount <<< data["page_count"]
+        friendsPerPage <<<* data["friends_per_page"]
         suggestedFriend <<<< data["suggested_friend"]
         friends <<<<* data["friends"]
     }
