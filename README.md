@@ -14,3 +14,97 @@ Installation
 --------------
 
 I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a birt dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/Pod%20Classes/JSONHelper.swift) into your project.
+
+Usage
+--------------
+
+Let's assume you have two models like the ones given below, and an api-end point where you can submit a search query to search among your friends.
+
+```swift
+class User {
+    var name: String?
+    var age: Int?
+}
+````
+
+````swift
+class FriendSearchResult {
+    var currentPage: Int?
+    var pageCount: Int?
+    var suggestedFriend: User?
+    var friends: [User]?
+}
+````
+
+You send the request using your favorite networking library and get back a response like this (of type [String: AnyObject]):
+
+````swift
+let dummyAPIResponse = [
+    "current_page": 1,
+    "page_count": 10,
+    "suggested_friend": [
+        "name": "Mark",
+        "age": 30
+    ],
+    "friends": [
+        [
+            "name": "Hannibal",
+            "age": 76
+        ], [
+            "name": "Sabrina",
+            "age": 18
+        ]
+    ]
+]
+````
+
+Deserializing this data is on line after you set up your models to use JSONHelper.
+
+````swift
+var searchResult = FriendSearchResult(data: dummyAPIResponse)
+````
+
+or as simple as:
+
+````swift
+var searchResult: FriendSearchResult?
+
+...
+
+searchResult <<<< dummyAPIResponse
+````
+
+And your models will only look like this after you set them up to use JSONHelper:
+
+````swift
+class User: Deserializable {
+    var name: String?
+    var age: Int?
+
+    required init(data: [String: AnyObject]) {
+        name <<< data["name"]
+        age <<< data["age"]
+    }
+}
+````
+
+````swift
+class SearchResult: Deserializable {
+    var currentPage: Int?
+    var pageCount: Int?
+    var suggestedFriend: User?
+    var friends: [User]?
+
+    required init(data: [String : AnyObject]) {
+        currentPage <<< data["current_page"]
+        pageCount <<<* data["friends_per_page"]
+        suggestedFriend <<<< data["suggested_friend"]
+        friends <<<<* data["friends"]
+    }
+}
+````
+
+Operator List
+--------------
+
+// TODO
