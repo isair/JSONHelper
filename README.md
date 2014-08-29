@@ -97,7 +97,7 @@ class SearchResult: Deserializable {
 
     required init(data: [String : AnyObject]) {
         currentPage <<< data["current_page"]
-        pageCount <<<* data["friends_per_page"]
+        pageCount <<< data["page_count"]
         suggestedFriend <<<< data["suggested_friend"]
         friends <<<<* data["friends"]
     }
