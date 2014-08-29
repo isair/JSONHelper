@@ -104,8 +104,6 @@ class SearchResult: Deserializable {
 }
 ````
 
-Oh, by the way, __all operators are chainable__.
-
 Operator List
 --------------
 
