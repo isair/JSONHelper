@@ -36,7 +36,7 @@ class FriendSearchResult {
 }
 ````
 
-You send the request using your favorite networking library and get back a response like this (of type [String: AnyObject]):
+Let's say you send the request using your favorite networking library and get back a response like this (of type [String: AnyObject]):
 
 ````swift
 let dummyAPIResponse = [
