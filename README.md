@@ -113,4 +113,4 @@ __<<<*__ Used for deserializing an array of primitive types.
 
 __<<<<__ Used for deserializing a class.
 
-__<<<<*__ Used for deserializing a class array.
+__<<<<*__ Used for deserializing an array of class instances.
