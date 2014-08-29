@@ -70,18 +70,26 @@ func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
     return property
 }
 
-// Operator for quick primitive array deserializarion.
+// Operator for quick string or integer array deserialization.
 infix operator <<<* { associativity right precedence 150 }
 
-func <<<*<T: AnyObject>(inout array: [T]?, valueObject: AnyObject?) -> [T]? {
+func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
 
-    if let unwrappedValueObject: AnyObject = valueObject {
+    if let stringArray = value >>> JSONStrings {
+        array = stringArray
+    } else {
+        array = nil
+    }
 
-        if let valueArray = unwrappedValueObject as? [T] {
-            array = valueArray
-        } else {
-            array = nil
-        }
+    // TODO: Error reporting support.
+
+    return array
+}
+
+func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
+
+    if let intArray = value >>> JSONInts {
+        array = intArray
     } else {
         array = nil
     }
