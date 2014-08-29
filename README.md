@@ -87,7 +87,7 @@ class User: Deserializable {
 ````
 
 ````swift
-class SearchResult: Deserializable {
+class FriendSearchResult: Deserializable {
     var currentPage: Int?
     var pageCount: Int?
     var suggestedFriend: User?
