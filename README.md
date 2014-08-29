@@ -3,6 +3,14 @@ JSONHelper
 
 Lightning quick JSON deserialization for iOS &amp; OS X written in Swift. Expanded upon the ideas found in [this blog post](http://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics).
 
+Table of Contents
+--------------
+
+1. [Purpose](#purpose)
+2. [Installation](#installation)
+3. [Usage](#usage)
+4. [Operator List](#operator-list)
+
 Purpose
 --------------
 
@@ -97,10 +105,9 @@ class SearchResult: Deserializable {
 Operator List
 --------------
 
-__<<<__ Used for deserializing primitive types.
-
-__<<<*__ Used for deserializing an array of primitive types.
-
-__<<<<__ Used for deserializing a class.
-
-__<<<<*__ Used for deserializing an array of class instances.
+| Operator  | Functionality                                                                     |
+| --------- | --------------------------------------------------------------------------------- |
+| __<<<__   | For deserializing data into primitive types such as String, Int, etc.             |
+| __<<<*__  | For deserializing data into an array of primitive types.                          |
+| __<<<<__  | For deserializing data into an instance of a class.                               |
+| __<<<<*__ | For deserializing data into an array that contains instances of a certain class.  |
