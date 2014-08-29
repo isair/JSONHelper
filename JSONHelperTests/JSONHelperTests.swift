@@ -11,47 +11,55 @@ import XCTest
 
 class JSONHelperTests: XCTestCase {
     // Initialize our test subject with a dummy API response.
-    let result = SearchResult(data: [
-        "query": "a",
-        "current_page": 1,
-        "friends_per_page": [2, 2, 2, 2, 1],
-        "suggested_friend": [
-            "name": "Mark",
-            "age": 30
+    let result = TestModel(data: [
+        "string_val": "a",
+        "int_val": 1,
+        "bool_val": true,
+        "string_array_val": ["a", "b", "c"],
+        "int_array_val": [2, 2, 2, 2, 1],
+        "bool_array_val": [true, false, true],
+        "instance_val": [
+            "string_val": "Mark"
         ],
-        "friends": [
+        "instance_array_val": [
             [
-                "name": "Hannibal",
-                "age": 76
+                "string_val": "Hannibal"
             ], [
-                "name": "Sabrina",
-                "age": 18
+                "string_val": "Sabrina"
             ]
         ]
         ])
 
     // Test different deserializations.
     func testStringDeserialization() {
-        XCTAssert(result.query == "a", "Pass")
+        XCTAssert(result.stringVal == "a", "Pass")
     }
     
     func testIntDeserialization() {
-        XCTAssert(result.currentPage == 1, "Pass")
+        XCTAssert(result.intVal == 1, "Pass")
+    }
+
+    func testBoolDeserialization() {
+        XCTAssert(result.boolVal == true, "Pass")
     }
 
     func testStringArrayDeserialization() {
-        // TODO
+        XCTAssert(result.stringArrayVal?.count == 3, "Pass")
     }
 
     func testIntArrayDeserialization() {
-        XCTAssert(result.friendsPerPage?.count == 5, "Pass")
+        XCTAssert(result.intArrayVal?.count == 5, "Pass")
     }
 
-    func testClassDeserialization() {
-        XCTAssert(result.suggestedFriend?.name == "Mark", "Pass")
+    func testBoolArrayDeserialization() {
+        XCTAssert(result.boolArrayVal?.count == 3, "Pass")
     }
 
-    func testClassArrayDeserialization() {
-        XCTAssert(result.friends?.count == 2, "Pass")
+    func testInstanceDeserialization() {
+        XCTAssert(result.instanceVal?.stringVal == "Mark", "Pass")
+    }
+
+    func testInstanceArrayDeserialization() {
+        XCTAssert(result.instanceArrayVal?.count == 2, "Pass")
     }
 }

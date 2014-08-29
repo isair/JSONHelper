@@ -1,5 +1,5 @@
 //
-//  User.swift
+//  TestSubmodel.swift
 //  JSONHelper
 //
 //  Created by Baris Sencan on 28/08/14.
@@ -8,12 +8,10 @@
 
 import Foundation
 
-class User: Deserializable {
-    var name: String?
-    var age: Int?
+class TestSubmodel: Deserializable {
+    var stringVal: String?
 
     required init(data: [String: AnyObject]) {
-        name <<< data["name"]
-        age <<< data["age"]
+        stringVal <<< data["string_val"]
     }
 }
