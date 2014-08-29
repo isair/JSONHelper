@@ -18,7 +18,7 @@ I plan to support [CocoaPods](http://cocoapods.org) when it starts working with 
 Usage
 --------------
 
-Let's assume you have two models like the ones given below, and an api-end point where you can submit a search query to search among your friends.
+Let's assume you have two models like the ones given below, and an api end-point where you can submit a search query to search among your friends.
 
 ```swift
 class User {
