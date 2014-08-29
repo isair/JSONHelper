@@ -1,7 +1,7 @@
 JSONHelper
 ==========
 
-Lightning quick JSON deserialization for iOS &amp; OS X written in Swift.
+Lightning quick JSON deserialization for iOS &amp; OS X written in Swift. (Expanded upon the ideas found in this blog post: http://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics)
 
 Purpose
 --------------
