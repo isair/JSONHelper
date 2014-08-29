@@ -25,6 +25,14 @@ func JSONInts(object: AnyObject?) -> [Int]? {
     return object as? [Int]
 }
 
+func JSONBool(object: AnyObject?) -> Bool? {
+    return object as? Bool
+}
+
+func JSONBools(object: AnyObject?) -> [Bool]? {
+    return object as? [Bool]
+}
+
 func JSONArray(object: AnyObject?) -> [AnyObject]? {
     return object as? [AnyObject]
 }
@@ -70,7 +78,7 @@ func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
     return property
 }
 
-// Operator for quick string or integer array deserialization.
+// Operator for quick primitive array deserialization.
 infix operator <<<* { associativity right precedence 150 }
 
 func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
@@ -90,6 +98,19 @@ func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
 
     if let intArray = value >>> JSONInts {
         array = intArray
+    } else {
+        array = nil
+    }
+
+    // TODO: Error reporting support.
+
+    return array
+}
+
+func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
+
+    if let boolArray = value >>> JSONBools {
+        array = boolArray
     } else {
         array = nil
     }
