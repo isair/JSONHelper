@@ -303,6 +303,6 @@ func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
     if !didDeserialize {
         // TODO: Error reporting support.
     }
-    
+
     return array
 }
