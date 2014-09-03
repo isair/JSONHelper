@@ -109,7 +109,7 @@ Assigning Default Values
 JSONHelper also supports non-optional deserialization, which lets you easily assign default values in case deserialization fails.
 
 ````swift
-class User {
+class User: Deserializable {
     var name = "Guest"
 
     ...
