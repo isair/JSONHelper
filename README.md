@@ -9,7 +9,8 @@ Table of Contents
 1. [Purpose](#purpose)
 2. [Installation](#installation)
 3. [Usage](#usage)
-4. [Operator List](#operator-list)
+4. [Assigning Default Values](#assigning-default-values)
+5. [Operator List](#operator-list)
 
 Purpose
 --------------
@@ -98,6 +99,26 @@ class FriendSearchResult: Deserializable {
         pageCount <<< data["page_count"]
         suggestedFriend <<<< data["suggested_friend"]
         friends <<<<* data["friends"]
+    }
+}
+````
+
+Assigning Default Values
+--------------
+
+JSONHelper also supports non-optional deserialization, which lets you easily assign default values in case deserialization fails.
+
+````swift
+class User: Deserializable {
+    var name = "Guest"
+
+    ...
+
+    required init(data: [String: AnyObject]) {
+        name <<< data["name"]
+
+        ...
+
     }
 }
 ````

@@ -30,36 +30,73 @@ class JSONHelperTests: XCTestCase {
         ]
         ])
 
+    let resultWithChangedDefaults = TestModel(data: [
+        "string_val": "a",
+        "defaultable_string": "not default",
+        "int_val": 1,
+        "defaultable_int": 99,
+        "bool_val": true,
+        "defaultable_bool": false,
+        "string_array_val": ["a", "b", "c"],
+        "int_array_val": [2, 2, 2, 2, 1],
+        "bool_array_val": [true, false, true],
+        "instance_val": [
+            "string_val": "Mark"
+        ],
+        "instance_array_val": [
+            [
+                "string_val": "Hannibal"
+            ], [
+                "string_val": "Sabrina"
+            ]
+        ]
+        ])
+
     // Test different deserializations.
-    func testStringDeserialization() {
-        XCTAssert(result.stringVal == "a", "Pass")
+    func testString() {
+        XCTAssert(result.stringVal == "a", "result.stringVal should equal 'a'")
+    }
+
+    func testDefaultableString() {
+        XCTAssert(result.defaultableString == "default", "result.defaultableString should equal 'default'")
+        XCTAssert(resultWithChangedDefaults.defaultableString == "not default", "resultWithChangedDefaults.defaultableString should equal 'not default'")
     }
     
-    func testIntDeserialization() {
-        XCTAssert(result.intVal == 1, "Pass")
+    func testInt() {
+        XCTAssert(result.intVal == 1, "result.intVal should equal 1")
     }
 
-    func testBoolDeserialization() {
-        XCTAssert(result.boolVal == true, "Pass")
+    func testDefaultableInt() {
+        XCTAssert(result.defaultableInt == 91, "result.defaultableInt should equal 91")
+        XCTAssert(resultWithChangedDefaults.defaultableInt == 99, "resultWithChangedDefaults.defaultableInt should equal 99")
     }
 
-    func testStringArrayDeserialization() {
-        XCTAssert(result.stringArrayVal?.count == 3, "Pass")
+    func testBool() {
+        XCTAssert(result.boolVal == true, "result.boolVal should be true")
     }
 
-    func testIntArrayDeserialization() {
-        XCTAssert(result.intArrayVal?.count == 5, "Pass")
+    func testDefaultableBool() {
+        XCTAssert(result.defaultableBool == true, "result.defaultableBool should be true")
+        XCTAssert(resultWithChangedDefaults.defaultableBool == false, "resultWithChangedDefaults.defaultableBool should be false")
     }
 
-    func testBoolArrayDeserialization() {
-        XCTAssert(result.boolArrayVal?.count == 3, "Pass")
+    func testStringArray() {
+        XCTAssert(result.stringArrayVal?.count == 3, "result.stringArrayVal should have 3 members")
     }
 
-    func testInstanceDeserialization() {
-        XCTAssert(result.instanceVal?.stringVal == "Mark", "Pass")
+    func testIntArray() {
+        XCTAssert(result.intArrayVal?.count == 5, "result.intArrayVal should have 5 members")
     }
 
-    func testInstanceArrayDeserialization() {
-        XCTAssert(result.instanceArrayVal?.count == 2, "Pass")
+    func testBoolArray() {
+        XCTAssert(result.boolArrayVal?.count == 3, "result.boolArrayVal should have 3 members")
+    }
+
+    func testInstance() {
+        XCTAssert(result.instanceVal?.stringVal == "Mark", "result.instanceVal?.stringVal should equal 'Mark'")
+    }
+
+    func testInstanceArray() {
+        XCTAssert(result.instanceArrayVal?.count == 2, "result.instanceArrayVal should have 2 members")
     }
 }

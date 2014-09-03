@@ -85,11 +85,13 @@ func >>><A, B>(a: A?, f: A -> B?) -> B? {
 infix operator <<< { associativity right precedence 150 }
 
 func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
+    var didDeserialize = false
 
     if let unwrappedValue: AnyObject = value {
 
         if let convertedValue = unwrappedValue as? T {
             property = convertedValue
+            didDeserialize = true
         } else {
             property = nil
         }
@@ -97,7 +99,27 @@ func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
         property = nil
     }
 
-    // TODO: Error reporting support.
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return property
+}
+
+func <<<<T>(inout property: T, value: AnyObject?) -> T {
+    var didDeserialize = false
+
+    if let unwrappedValue: AnyObject = value {
+
+        if let convertedValue = unwrappedValue as? T {
+            property = convertedValue
+            didDeserialize = true
+        }
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
 
     return property
 }
@@ -106,40 +128,97 @@ func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
 infix operator <<<* { associativity right precedence 150 }
 
 func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
+    var didDeserialize = false
 
     if let stringArray = value >>> JSONStrings {
         array = stringArray
+        didDeserialize = true
     } else {
         array = nil
     }
 
-    // TODO: Error reporting support.
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
+func <<<*(inout array: [String], value: AnyObject?) -> [String] {
+    var didDeserialize = false
+
+    if let stringArray = value >>> JSONStrings {
+        array = stringArray
+        didDeserialize = true
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
 
     return array
 }
 
 func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
+    var didDeserialize = false
 
     if let intArray = value >>> JSONInts {
         array = intArray
+        didDeserialize = true
     } else {
         array = nil
     }
 
-    // TODO: Error reporting support.
+    if (!didDeserialize) {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
+func <<<*(inout array: [Int], value: AnyObject?) -> [Int] {
+    var didDeserialize = false
+
+    if let intArray = value >>> JSONInts {
+        array = intArray
+        didDeserialize = true
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
 
     return array
 }
 
 func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
+    var didDeserialize = false
 
     if let boolArray = value >>> JSONBools {
         array = boolArray
+        didDeserialize = true
     } else {
         array = nil
     }
 
-    // TODO: Error reporting support.
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
+func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
+    var didDeserialize = false
+
+    if let boolArray = value >>> JSONBools {
+        array = boolArray
+        didDeserialize = true
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
 
     return array
 }
@@ -152,14 +231,33 @@ protocol Deserializable {
 }
 
 func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
+    var didDeserialize = false
 
     if let data = dataObject >>> JSONObject {
         instance = T(data: data)
+        didDeserialize = true
     } else {
         instance = nil
     }
 
-    // TODO: Error reporting support.
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return instance
+}
+
+func <<<<<T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
+    var didDeserialize = false
+
+    if let data = dataObject >>> JSONObject {
+        instance = T(data: data)
+        didDeserialize = true
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
 
     return instance
 }
@@ -168,6 +266,7 @@ func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
 infix operator <<<<* {associativity right precedence 150 }
 
 func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
+    var didDeserialize = false
 
     if let dataArray = dataObject >>> JSONObjects {
         array = [T]()
@@ -175,11 +274,35 @@ func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]?
         for data in dataArray {
             array!.append(T(data: data))
         }
+
+        didDeserialize = true
     } else {
         array = nil
     }
 
-    // TODO: Error reporting support.
-    
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
+func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
+    var didDeserialize = false
+
+    if let dataArray = dataObject >>> JSONObjects {
+        array = [T]()
+
+        for data in dataArray {
+            array.append(T(data: data))
+        }
+
+        didDeserialize = true
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
     return array
 }
