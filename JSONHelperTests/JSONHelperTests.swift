@@ -30,6 +30,28 @@ class JSONHelperTests: XCTestCase {
         ]
         ])
 
+    let resultWithChangedDefaults = TestModel(data: [
+        "string_val": "a",
+        "defaultable_string": "not default",
+        "int_val": 1,
+        "defaultable_int": 99,
+        "bool_val": true,
+        "defaultable_bool": false,
+        "string_array_val": ["a", "b", "c"],
+        "int_array_val": [2, 2, 2, 2, 1],
+        "bool_array_val": [true, false, true],
+        "instance_val": [
+            "string_val": "Mark"
+        ],
+        "instance_array_val": [
+            [
+                "string_val": "Hannibal"
+            ], [
+                "string_val": "Sabrina"
+            ]
+        ]
+        ])
+
     // Test different deserializations.
     func testString() {
         XCTAssert(result.stringVal == "a", "Pass")
@@ -37,6 +59,7 @@ class JSONHelperTests: XCTestCase {
 
     func testDefaultableString() {
         XCTAssert(result.defaultableString == "default", "Pass")
+        XCTAssert(resultWithChangedDefaults.defaultableString == "not default", "Pass")
     }
     
     func testInt() {
@@ -45,6 +68,7 @@ class JSONHelperTests: XCTestCase {
 
     func testDefaultableInt() {
         XCTAssert(result.defaultableInt == 91, "Pass")
+        XCTAssert(resultWithChangedDefaults.defaultableInt == 99, "Pass")
     }
 
     func testBool() {
@@ -53,6 +77,7 @@ class JSONHelperTests: XCTestCase {
 
     func testDefaultableBool() {
         XCTAssert(result.defaultableBool == true, "Pass")
+        XCTAssert(resultWithChangedDefaults.defaultableBool == false, "Pass")
     }
 
     func testStringArray() {
