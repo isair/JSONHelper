@@ -81,23 +81,67 @@ func >>><A, B>(a: A?, f: A -> B?) -> B? {
     }
 }
 
+// Required for the ability to get default values of variables.
+protocol Defaultable {
+    func defaultValue() -> Self
+}
+
+extension Optional: Defaultable {
+
+    func defaultValue() -> Optional {
+        return .None
+    }
+}
+
+extension String: Defaultable {
+
+    func defaultValue() -> String {
+        return self
+    }
+}
+
+extension Int: Defaultable {
+
+    func defaultValue() -> Int {
+        return self
+    }
+}
+
+extension Bool: Defaultable {
+
+    func defaultValue() -> Bool {
+        return self
+    }
+}
+
+extension Array: Defaultable {
+
+    func defaultValue() -> Array {
+        return self
+    }
+}
+
 // Operator for quick primitive type deserialization.
 infix operator <<< { associativity right precedence 150 }
 
-func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
+func <<<<T: Defaultable>(inout property: T, value: AnyObject?) -> T {
+    var didDeserialize = false
 
     if let unwrappedValue: AnyObject = value {
 
         if let convertedValue = unwrappedValue as? T {
             property = convertedValue
+            didDeserialize = true
         } else {
-            property = nil
+            property = property.defaultValue()
         }
     } else {
-        property = nil
+        property = property.defaultValue()
     }
 
-    // TODO: Error reporting support.
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
 
     return property
 }

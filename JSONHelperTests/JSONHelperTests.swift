@@ -31,35 +31,47 @@ class JSONHelperTests: XCTestCase {
         ])
 
     // Test different deserializations.
-    func testStringDeserialization() {
+    func testString() {
         XCTAssert(result.stringVal == "a", "Pass")
     }
+
+    func testDefaultableString() {
+        XCTAssert(result.defaultableString == "default", "Pass")
+    }
     
-    func testIntDeserialization() {
+    func testInt() {
         XCTAssert(result.intVal == 1, "Pass")
     }
 
-    func testBoolDeserialization() {
+    func testDefaultableInt() {
+        XCTAssert(result.defaultableInt == 91, "Pass")
+    }
+
+    func testBool() {
         XCTAssert(result.boolVal == true, "Pass")
     }
 
-    func testStringArrayDeserialization() {
+    func testDefaultableBool() {
+        XCTAssert(result.defaultableBool == true, "Pass")
+    }
+
+    func testStringArray() {
         XCTAssert(result.stringArrayVal?.count == 3, "Pass")
     }
 
-    func testIntArrayDeserialization() {
+    func testIntArray() {
         XCTAssert(result.intArrayVal?.count == 5, "Pass")
     }
 
-    func testBoolArrayDeserialization() {
+    func testBoolArray() {
         XCTAssert(result.boolArrayVal?.count == 3, "Pass")
     }
 
-    func testInstanceDeserialization() {
+    func testInstance() {
         XCTAssert(result.instanceVal?.stringVal == "Mark", "Pass")
     }
 
-    func testInstanceArrayDeserialization() {
+    func testInstanceArray() {
         XCTAssert(result.instanceArrayVal?.count == 2, "Pass")
     }
 }
