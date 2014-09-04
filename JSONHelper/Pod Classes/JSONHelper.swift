@@ -306,3 +306,28 @@ func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
 
     return array
 }
+
+// Overloading of own operators for deserialization of JSON strings.
+private func dataStringToObject(dataString: String) -> AnyObject? {
+    var data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
+    var error: NSError?
+
+    return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+}
+
+func <<<<<T: Deserializable>(inout instance: T?, dataString: String) -> T? {
+    return instance <<<< dataStringToObject(dataString)
+}
+
+func <<<<<T: Deserializable>(inout instance: T, dataString: String) -> T {
+    return instance <<<< dataStringToObject(dataString)
+}
+
+func <<<<*<T: Deserializable>(inout array: [T]?, dataString: String) -> [T]? {
+    return array <<<<* dataStringToObject(dataString)
+}
+
+func <<<<*<T: Deserializable>(inout array: [T], dataString: String) -> [T] {
+    return array <<<<* dataStringToObject(dataString)
+}
+
