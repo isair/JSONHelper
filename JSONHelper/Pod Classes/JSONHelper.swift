@@ -9,7 +9,7 @@
 //  Distributed under the permissive zlib license
 //  Get the latest version from here:
 //
-//  https://github.com/isair/JSONHelper-Swift
+//  https://github.com/isair/JSONHelper
 //
 //  This software is provided 'as-is', without any express or implied
 //  warranty.  In no event will the authors be held liable for any damages
