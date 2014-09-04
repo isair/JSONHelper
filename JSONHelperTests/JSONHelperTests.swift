@@ -99,4 +99,26 @@ class JSONHelperTests: XCTestCase {
     func testInstanceArray() {
         XCTAssert(result.instanceArrayVal?.count == 2, "result.instanceArrayVal should have 2 members")
     }
+
+    func testJSONStringParsing() {
+        class Person: Deserializable {
+            var name = ""
+
+            required init(data: [String: AnyObject]) {
+                name <<< data["name"]
+            }
+        }
+
+        var jsonString = "[{\"name\": \"I am \"},{\"name\": \"Groot!\"}]"
+        var people = [Person]()
+        var areYouGroot = ""
+
+        people <<<<* jsonString
+        
+        for person in people {
+            areYouGroot += person.name
+        }
+
+        XCTAssert(areYouGroot == "I am Groot!", "Groot should be Groot")
+    }
 }
