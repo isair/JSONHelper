@@ -10,6 +10,7 @@ Table of Contents
 2. [Installation](#installation)
 3. [Usage](#usage)
 4. [Assigning Default Values](#assigning-default-values)
+5. [JSON String Deserialization](#json-string-deserialization)
 5. [Operator List](#operator-list)
 
 Purpose
@@ -123,12 +124,36 @@ class User: Deserializable {
 }
 ````
 
+JSON String Deserialization
+--------------
+
+You can deserialize instances and arrays of instances directly from a JSON string swiftly with JSONHelper as well. Here is a quick and Groot-y example.
+
+````swift
+class Person: Deserializable {
+    var name = ""
+
+    required init(data: [String: AnyObject]) {
+        name <<< data["name"]
+    }
+}
+
+var jsonString = "[{\"name\": \"I am \"},{\"name\": \"Groot!\"}]"
+var people = [Person]()
+
+people <<<<* jsonString
+
+for person in people {
+    println("\(person.name)")
+}
+````
+
 Operator List
 --------------
 
-| Operator  | Functionality                                                                     |
-| --------- | --------------------------------------------------------------------------------- |
-| __<<<__   | For deserializing data into primitive types such as String, Int, etc.             |
-| __<<<*__  | For deserializing data into an array of primitive types.                          |
-| __<<<<__  | For deserializing data into an instance of a class.                               |
-| __<<<<*__ | For deserializing data into an array that contains instances of a certain class.  |
+| Operator  | Functionality                                                                                              |
+| --------- | ---------------------------------------------------------------------------------------------------------- |
+| __<<<__   | For deserializing data into primitive types such as String, Int, etc.                                      |
+| __<<<*__  | For deserializing data into an array of primitive types.                                                   |
+| __<<<<__  | For deserializing data into an instance of a class. __Supports JSON strings__                              |
+| __<<<<*__ | For deserializing data into an array that contains instances of a certain class. __Supports JSON strings__ |

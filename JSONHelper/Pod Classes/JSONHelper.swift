@@ -1,7 +1,7 @@
 //
 //  JSONHelper.swift
 //
-//  Version 1.1.0
+//  Version 1.2.0
 //
 //  Created by Baris Sencan on 28/08/2014.
 //  Copyright 2014 Baris Sencan
