@@ -33,46 +33,46 @@
 import Foundation
 
 // Internally used functions.
-func JSONString(object: AnyObject?) -> String? {
+public func JSONString(object: AnyObject?) -> String? {
     return object as? String
 }
 
-func JSONStrings(object: AnyObject?) -> [String]? {
+public func JSONStrings(object: AnyObject?) -> [String]? {
     return object as? [String]
 }
 
-func JSONInt(object: AnyObject?) -> Int? {
+public func JSONInt(object: AnyObject?) -> Int? {
     return object as? Int
 }
 
-func JSONInts(object: AnyObject?) -> [Int]? {
+public func JSONInts(object: AnyObject?) -> [Int]? {
     return object as? [Int]
 }
 
-func JSONBool(object: AnyObject?) -> Bool? {
+public func JSONBool(object: AnyObject?) -> Bool? {
     return object as? Bool
 }
 
-func JSONBools(object: AnyObject?) -> [Bool]? {
+public func JSONBools(object: AnyObject?) -> [Bool]? {
     return object as? [Bool]
 }
 
-func JSONArray(object: AnyObject?) -> [AnyObject]? {
+public func JSONArray(object: AnyObject?) -> [AnyObject]? {
     return object as? [AnyObject]
 }
 
-func JSONObject(object: AnyObject?) -> [String: AnyObject]? {
+public func JSONObject(object: AnyObject?) -> [String: AnyObject]? {
     return object as? [String: AnyObject]
 }
 
-func JSONObjects(object: AnyObject?) -> [[String: AnyObject]]? {
+public func JSONObjects(object: AnyObject?) -> [[String: AnyObject]]? {
     return object as? [[String: AnyObject]]
 }
 
 // Operator for use in "if let" conversions.
 infix operator >>> { associativity left precedence 150 }
 
-func >>><A, B>(a: A?, f: A -> B?) -> B? {
+public func >>><A, B>(a: A?, f: A -> B?) -> B? {
 
     if let x = a {
         return f(x)
@@ -84,7 +84,7 @@ func >>><A, B>(a: A?, f: A -> B?) -> B? {
 // Operator for quick primitive type deserialization.
 infix operator <<< { associativity right precedence 150 }
 
-func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
+public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
     var didDeserialize = false
 
     if let unwrappedValue: AnyObject = value {
@@ -106,7 +106,7 @@ func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
     return property
 }
 
-func <<<<T>(inout property: T, value: AnyObject?) -> T {
+public func <<<<T>(inout property: T, value: AnyObject?) -> T {
     var didDeserialize = false
 
     if let unwrappedValue: AnyObject = value {
@@ -127,7 +127,7 @@ func <<<<T>(inout property: T, value: AnyObject?) -> T {
 // Operator for quick primitive array deserialization.
 infix operator <<<* { associativity right precedence 150 }
 
-func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
+public func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
     var didDeserialize = false
 
     if let stringArray = value >>> JSONStrings {
@@ -144,7 +144,7 @@ func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
     return array
 }
 
-func <<<*(inout array: [String], value: AnyObject?) -> [String] {
+public func <<<*(inout array: [String], value: AnyObject?) -> [String] {
     var didDeserialize = false
 
     if let stringArray = value >>> JSONStrings {
@@ -159,7 +159,7 @@ func <<<*(inout array: [String], value: AnyObject?) -> [String] {
     return array
 }
 
-func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
+public func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
     var didDeserialize = false
 
     if let intArray = value >>> JSONInts {
@@ -176,7 +176,7 @@ func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
     return array
 }
 
-func <<<*(inout array: [Int], value: AnyObject?) -> [Int] {
+public func <<<*(inout array: [Int], value: AnyObject?) -> [Int] {
     var didDeserialize = false
 
     if let intArray = value >>> JSONInts {
@@ -191,7 +191,7 @@ func <<<*(inout array: [Int], value: AnyObject?) -> [Int] {
     return array
 }
 
-func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
+public func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
     var didDeserialize = false
 
     if let boolArray = value >>> JSONBools {
@@ -208,7 +208,7 @@ func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
     return array
 }
 
-func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
+public func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
     var didDeserialize = false
 
     if let boolArray = value >>> JSONBools {
@@ -226,11 +226,11 @@ func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
 // Operator for quick class deserialization.
 infix operator <<<< { associativity right precedence 150 }
 
-protocol Deserializable {
+public protocol Deserializable {
     init(data: [String: AnyObject])
 }
 
-func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
+public func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
     var didDeserialize = false
 
     if let data = dataObject >>> JSONObject {
@@ -247,7 +247,7 @@ func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
     return instance
 }
 
-func <<<<<T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
+public func <<<<<T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
     var didDeserialize = false
 
     if let data = dataObject >>> JSONObject {
@@ -265,7 +265,7 @@ func <<<<<T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
 // Operator for quick deserialization into an array of instances of a deserializable class.
 infix operator <<<<* {associativity right precedence 150 }
 
-func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
+public func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
     var didDeserialize = false
 
     if let dataArray = dataObject >>> JSONObjects {
@@ -287,7 +287,7 @@ func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]?
     return array
 }
 
-func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
+public func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
     var didDeserialize = false
 
     if let dataArray = dataObject >>> JSONObjects {
@@ -315,19 +315,19 @@ private func dataStringToObject(dataString: String) -> AnyObject? {
     return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
 }
 
-func <<<<<T: Deserializable>(inout instance: T?, dataString: String) -> T? {
+public func <<<<<T: Deserializable>(inout instance: T?, dataString: String) -> T? {
     return instance <<<< dataStringToObject(dataString)
 }
 
-func <<<<<T: Deserializable>(inout instance: T, dataString: String) -> T {
+public func <<<<<T: Deserializable>(inout instance: T, dataString: String) -> T {
     return instance <<<< dataStringToObject(dataString)
 }
 
-func <<<<*<T: Deserializable>(inout array: [T]?, dataString: String) -> [T]? {
+public func <<<<*<T: Deserializable>(inout array: [T]?, dataString: String) -> [T]? {
     return array <<<<* dataStringToObject(dataString)
 }
 
-func <<<<*<T: Deserializable>(inout array: [T], dataString: String) -> [T] {
+public func <<<<*<T: Deserializable>(inout array: [T], dataString: String) -> [T] {
     return array <<<<* dataStringToObject(dataString)
 }
 
