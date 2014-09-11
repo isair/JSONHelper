@@ -124,6 +124,38 @@ public func <<<<T>(inout property: T, value: AnyObject?) -> T {
     return property
 }
 
+public func <<<(inout property: NSURL?, value: AnyObject?) -> NSURL? {
+    var didDeserialize = false
+
+    if let stringURL = value >>> JSONString {
+        property = NSURL(string: stringURL)
+        didDeserialize = true
+    } else {
+        property = nil
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return property
+}
+
+public func <<<(inout property: NSURL, value: AnyObject?) -> NSURL {
+    var didDeserialize = false
+
+    if let stringURL = value >>> JSONString {
+        property = NSURL(string: stringURL)
+        didDeserialize = true
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return property
+}
+
 public func <<<(inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
     var didDeserialize = false
 
