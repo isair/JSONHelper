@@ -124,6 +124,58 @@ public func <<<<T>(inout property: T, value: AnyObject?) -> T {
     return property
 }
 
+public func <<<(inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
+    var didDeserialize = false
+
+    if let dateString = valueAndFormat.value >>> JSONString {
+
+        if let formatString = valueAndFormat.format >>> JSONString {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+
+            if let newDate = dateFormatter.dateFromString(dateString) {
+                property = newDate
+                didDeserialize = true
+            } else {
+                property = nil
+            }
+        } else {
+            property = nil
+        }
+    } else {
+        property = nil
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+    
+    return property
+}
+
+public func <<<(inout property: NSDate, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate {
+    var didDeserialize = false
+
+    if let dateString = valueAndFormat.value >>> JSONString {
+
+        if let formatString = valueAndFormat.format >>> JSONString {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+
+            if let newDate = dateFormatter.dateFromString(dateString) {
+                property = newDate
+                didDeserialize = true
+            }
+        }
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+    
+    return property
+}
+
 // Operator for quick primitive array deserialization.
 infix operator <<<* { associativity right precedence 150 }
 
