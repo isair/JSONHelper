@@ -307,6 +307,46 @@ public func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
     return array
 }
 
+public func <<<*(inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
+    var didDeserialize = false
+
+    if let stringURLArray = value >>> JSONStrings {
+        array = [NSURL]()
+        didDeserialize = true
+
+        for stringURL in stringURLArray {
+            array!.append(NSURL(string: stringURL))
+        }
+    } else {
+        array = nil
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
+public func <<<*(inout array: [NSURL], value: AnyObject?) -> [NSURL] {
+    var didDeserialize = false
+
+    if let stringURLArray = value >>> JSONStrings {
+        array = [NSURL]()
+        didDeserialize = true
+
+        for stringURL in stringURLArray {
+            array.append(NSURL(string: stringURL))
+        }
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
 public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
     var didDeserialize = false
 
