@@ -275,6 +275,66 @@ public func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
     return array
 }
 
+public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
+    var didDeserialize = false
+
+    if let dateStringArray = valueAndFormat.value >>> JSONStrings {
+
+        if let formatString = valueAndFormat.format >>> JSONString {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+
+            array = [NSDate]()
+            didDeserialize = true
+
+            for dateString in dateStringArray {
+
+                if let date = dateFormatter.dateFromString(dateString) {
+                    array!.append(date)
+                }
+            }
+        } else {
+            array = nil
+        }
+    } else {
+        array = nil
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+
+    return array
+}
+
+public func <<<*(inout array: [NSDate], valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate] {
+    var didDeserialize = false
+
+    if let dateStringArray = valueAndFormat.value >>> JSONStrings {
+
+        if let formatString = valueAndFormat.format >>> JSONString {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = formatString
+
+            array = [NSDate]()
+            didDeserialize = true
+
+            for dateString in dateStringArray {
+
+                if let date = dateFormatter.dateFromString(dateString) {
+                    array.append(date)
+                }
+            }
+        }
+    }
+
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+    
+    return array
+}
+
 // Operator for quick class deserialization.
 infix operator <<<< { associativity right precedence 150 }
 
