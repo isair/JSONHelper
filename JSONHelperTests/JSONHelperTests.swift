@@ -15,6 +15,8 @@ class JSONHelperTests: XCTestCase {
         "string_val": "a",
         "int_val": 1,
         "bool_val": true,
+        "date_val": "2014-09-19",
+        "url_val": "http://github.com/",
         "string_array_val": ["a", "b", "c"],
         "int_array_val": [2, 2, 2, 2, 1],
         "bool_array_val": [true, false, true],
@@ -37,6 +39,10 @@ class JSONHelperTests: XCTestCase {
         "defaultable_int": 99,
         "bool_val": true,
         "defaultable_bool": false,
+        "date_val": "2014-09-19",
+        "defaultable_date": "2015-09-19",
+        "url_val": "http://github.com/",
+        "defaultable_url": "http://quora.com/",
         "string_array_val": ["a", "b", "c"],
         "int_array_val": [2, 2, 2, 2, 1],
         "bool_array_val": [true, false, true],
@@ -78,6 +84,33 @@ class JSONHelperTests: XCTestCase {
     func testDefaultableBool() {
         XCTAssert(result.defaultableBool == true, "result.defaultableBool should be true")
         XCTAssert(resultWithChangedDefaults.defaultableBool == false, "resultWithChangedDefaults.defaultableBool should be false")
+    }
+
+    func testDate() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        let testDate = dateFormatter.dateFromString("2014-09-19")
+
+        XCTAssert(result.dateVal!.compare(testDate!) == NSComparisonResult.OrderedSame, "result.dateVal should be 2014-09-19")
+    }
+
+    func testDefaultableDate() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+
+        let testDate = dateFormatter.dateFromString("2015-09-19")
+
+        XCTAssert(resultWithChangedDefaults.defaultableDate.compare(testDate!) == NSComparisonResult.OrderedSame, "resultWithChangedDefaults.defaultableDate should be 2015-09-19")
+    }
+
+    func testURL() {
+        XCTAssert(result.urlVal!.host == "github.com", "result.urlVal's host should be github.com")
+    }
+
+    func testDefaultableURL() {
+        XCTAssert(result.defaultableURL.host == "google.com", "result.defaultableURL's host should be google.com")
+        XCTAssert(resultWithChangedDefaults.defaultableURL.host == "quora.com", "resultWithChangedDefaults.defaultableURL's host should be quora.com")
     }
 
     func testStringArray() {
