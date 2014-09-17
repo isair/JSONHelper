@@ -8,10 +8,11 @@ Table of Contents
 
 1. [Purpose](#purpose)
 2. [Installation](#installation)
-3. [Usage](#usage)
-4. [Assigning Default Values](#assigning-default-values)
-5. [JSON String Deserialization](#json-string-deserialization)
-5. [Operator List](#operator-list)
+3. [Operator List](#operator-list)
+4. [Simple Tutorial](#simple-tutorial)
+5. [Assigning Default Values](#assigning-default-values)
+6. [NSDate and NSURL Deserialization](#nsdate-and-nsurl-deserialization)
+7. [JSON String Deserialization](#json-string-deserialization)
 
 Purpose
 --------------
@@ -25,7 +26,17 @@ Installation
 
 I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a birt dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/Pod%20Classes/JSONHelper.swift) into your project.
 
-Usage
+Operator List
+--------------
+
+| Operator  | Functionality                                                                                              |
+| --------- | ---------------------------------------------------------------------------------------------------------- |
+| __<<<__   | For deserializing data into primitive types, NSDate or NSURL.                                              |
+| __<<<*__  | For deserializing data into an array of primitive types, NSDate or NSURL.                                  |
+| __<<<<__  | For deserializing data into an instance of a class. __Supports JSON strings__                              |
+| __<<<<*__ | For deserializing data into an array that contains instances of a certain class. __Supports JSON strings__ |
+
+Simple Tutorial
 --------------
 
 Let's assume you have two models like the ones given below, and an api end-point where you can submit a search query to search among your friends.
@@ -134,6 +145,27 @@ class User: Deserializable {
 }
 ````
 
+NSDate and NSURL Deserialization
+--------------
+
+The __<<<__ and __<<<*__ operators also support deserializing data into NSDate and NSURL variables.
+
+````swift
+let website: NSURL?
+let imageURLs: [NSURL]?
+
+website <<< "http://mywebsite.com"
+imageURLs <<<* ["http://mywebsite.com/image.png", "http://mywebsite.com/anotherImage.png"]
+````
+
+````swift
+let meetingDate: NSDate?
+let partyDates: [NSDate]?
+
+meetingDate <<< (value: "2014-09-18", format: "yyyy-MM-dd")
+partyDates <<<* (value: ["2014-09-19", "2014-09-20"], format: "yyyy-MM-dd")
+````
+
 JSON String Deserialization
 --------------
 
@@ -157,13 +189,3 @@ for person in people {
     println("\(person.name)")
 }
 ````
-
-Operator List
---------------
-
-| Operator  | Functionality                                                                                              |
-| --------- | ---------------------------------------------------------------------------------------------------------- |
-| __<<<__   | For deserializing data into primitive types such as String, Int, etc.                                      |
-| __<<<*__  | For deserializing data into an array of primitive types.                                                   |
-| __<<<<__  | For deserializing data into an instance of a class. __Supports JSON strings__                              |
-| __<<<<*__ | For deserializing data into an array that contains instances of a certain class. __Supports JSON strings__ |
