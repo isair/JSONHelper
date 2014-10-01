@@ -208,6 +208,63 @@ public func <<<(inout property: NSDate, valueAndFormat: (value: AnyObject?, form
     return property
 }
 
+// Internal function to convert from NSNumber -> NSDate
+internal func dateFromSecondsSince1970(t: NSNumber) -> NSDate {
+    return NSDate(timeIntervalSince1970: t.doubleValue)
+}
+
+// Overrides for <<< which creates a date from a JSON number assuming the
+// number represents unix time (seconds since Jan 1, 1970)
+public func <<<(inout property: NSDate?, value: AnyObject?) -> NSDate? {
+    return property <<< (value, dateFromSecondsSince1970)
+}
+
+public func <<<(inout property: NSDate, value: AnyObject?) -> NSDate {
+    return property <<< (value, dateFromSecondsSince1970)
+}
+
+// Override for <<< which creates a date from a JSON number and allows the
+// caller to specify a function which provides the conversion from NSNumber to NSDate.
+public func <<<(inout property: NSDate?, valueAndConverter: (value: AnyObject?, converter: (NSNumber) -> NSDate)) -> NSDate? {
+    var didDeserialize = false
+    
+    if let unwrappedValue: AnyObject = valueAndConverter.value {
+        
+        if let convertedValue = unwrappedValue as? NSNumber {
+            property = valueAndConverter.converter(convertedValue)
+            didDeserialize = true
+        } else {
+            property = nil
+        }
+    } else {
+        property = nil
+    }
+    
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+    
+    return property
+}
+
+public func <<<(inout property: NSDate, valueAndConverter: (value: AnyObject?, converter: (NSNumber) -> NSDate)) -> NSDate {
+    var didDeserialize = false
+    
+    if let unwrappedValue: AnyObject = valueAndConverter.value {
+        
+        if let convertedValue = unwrappedValue as? NSNumber {
+            property = valueAndConverter.converter(convertedValue)
+            didDeserialize = true
+        }
+    }
+    
+    if !didDeserialize {
+        // TODO: Error reporting support.
+    }
+    
+    return property
+}
+
 // Operator for quick primitive array deserialization.
 infix operator <<<* { associativity right precedence 150 }
 
