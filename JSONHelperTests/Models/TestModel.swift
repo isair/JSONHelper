@@ -18,7 +18,7 @@ class TestModel: Deserializable {
     var dateVal: NSDate?
     var defaultableDate = NSDate()
     var urlVal: NSURL?
-    var defaultableURL = NSURL(string: "http://google.com/")
+    var defaultableURL = NSURL(string: "http://google.com/")!
     var stringArrayVal: [String]?
     var intArrayVal: [Int]?
     var boolArrayVal: [Bool]?

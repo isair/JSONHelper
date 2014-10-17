@@ -145,8 +145,10 @@ public func <<<(inout property: NSURL, value: AnyObject?) -> NSURL {
     var didDeserialize = false
 
     if let stringURL = value >>> JSONString {
-        property = NSURL(string: stringURL)
-        didDeserialize = true
+        if let prop = NSURL(string: stringURL) {
+            property = prop
+            didDeserialize = true
+        }
     }
 
     if !didDeserialize {
@@ -372,7 +374,9 @@ public func <<<*(inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
         didDeserialize = true
 
         for stringURL in stringURLArray {
-            array!.append(NSURL(string: stringURL))
+            if let url = NSURL(string: stringURL) {
+                array!.append(url)
+            }
         }
     } else {
         array = nil
@@ -393,7 +397,9 @@ public func <<<*(inout array: [NSURL], value: AnyObject?) -> [NSURL] {
         didDeserialize = true
 
         for stringURL in stringURLArray {
-            array.append(NSURL(string: stringURL))
+            if let url = NSURL(string: stringURL) {
+                array.append(url)
+            }
         }
     }
 
