@@ -14,11 +14,11 @@
 		<string>https://github.com/isair/JSONHelper.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>JSONHelper/JSONHelper.xcodeproj</string>
+	<string>JSONHelper.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>9540366943750F418CA1A28462EA7F786EC07683</key>
-		<string>../../..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/isair/JSONHelper.git</string>
