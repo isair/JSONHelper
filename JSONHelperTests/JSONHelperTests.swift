@@ -60,30 +60,30 @@ class JSONHelperTests: XCTestCase {
 
     // Test different deserializations.
     func testString() {
-        XCTAssert(result.stringVal == "a", "result.stringVal should equal 'a'")
+        XCTAssertEqual(result.stringVal!, "a", "result.stringVal should equal 'a'")
     }
 
     func testDefaultableString() {
-        XCTAssert(result.defaultableString == "default", "result.defaultableString should equal 'default'")
-        XCTAssert(resultWithChangedDefaults.defaultableString == "not default", "resultWithChangedDefaults.defaultableString should equal 'not default'")
+        XCTAssertEqual(result.defaultableString, "default", "result.defaultableString should equal 'default'")
+        XCTAssertEqual(resultWithChangedDefaults.defaultableString, "not default", "resultWithChangedDefaults.defaultableString should equal 'not default'")
     }
     
     func testInt() {
-        XCTAssert(result.intVal == 1, "result.intVal should equal 1")
+        XCTAssertEqual(result.intVal!, 1, "result.intVal should equal 1")
     }
 
     func testDefaultableInt() {
-        XCTAssert(result.defaultableInt == 91, "result.defaultableInt should equal 91")
-        XCTAssert(resultWithChangedDefaults.defaultableInt == 99, "resultWithChangedDefaults.defaultableInt should equal 99")
+        XCTAssertEqual(result.defaultableInt, 91, "result.defaultableInt should equal 91")
+        XCTAssertEqual(resultWithChangedDefaults.defaultableInt, 99, "resultWithChangedDefaults.defaultableInt should equal 99")
     }
 
     func testBool() {
-        XCTAssert(result.boolVal == true, "result.boolVal should be true")
+        XCTAssertEqual(result.boolVal!, true, "result.boolVal should be true")
     }
 
     func testDefaultableBool() {
-        XCTAssert(result.defaultableBool == true, "result.defaultableBool should be true")
-        XCTAssert(resultWithChangedDefaults.defaultableBool == false, "resultWithChangedDefaults.defaultableBool should be false")
+        XCTAssertEqual(result.defaultableBool, true, "result.defaultableBool should be true")
+        XCTAssertEqual(resultWithChangedDefaults.defaultableBool, false, "resultWithChangedDefaults.defaultableBool should be false")
     }
 
     func testDate() {
@@ -92,7 +92,7 @@ class JSONHelperTests: XCTestCase {
 
         let testDate = dateFormatter.dateFromString("2014-09-19")
 
-        XCTAssert(result.dateVal!.compare(testDate!) == NSComparisonResult.OrderedSame, "result.dateVal should be 2014-09-19")
+        XCTAssertEqual(result.dateVal!.compare(testDate!), NSComparisonResult.OrderedSame, "result.dateVal should be 2014-09-19")
     }
 
     func testDefaultableDate() {
@@ -101,36 +101,36 @@ class JSONHelperTests: XCTestCase {
 
         let testDate = dateFormatter.dateFromString("2015-09-19")
 
-        XCTAssert(resultWithChangedDefaults.defaultableDate.compare(testDate!) == NSComparisonResult.OrderedSame, "resultWithChangedDefaults.defaultableDate should be 2015-09-19")
+        XCTAssertEqual(resultWithChangedDefaults.defaultableDate.compare(testDate!), NSComparisonResult.OrderedSame, "resultWithChangedDefaults.defaultableDate should be 2015-09-19")
     }
 
     func testURL() {
-        XCTAssert(result.urlVal!.host == "github.com", "result.urlVal's host should be github.com")
+        XCTAssertEqual(result.urlVal!.host!, "github.com", "result.urlVal's host should be github.com")
     }
 
     func testDefaultableURL() {
-        XCTAssert(result.defaultableURL.host == "google.com", "result.defaultableURL's host should be google.com")
-        XCTAssert(resultWithChangedDefaults.defaultableURL.host == "quora.com", "resultWithChangedDefaults.defaultableURL's host should be quora.com")
+        XCTAssertEqual(result.defaultableURL.host!, "google.com", "result.defaultableURL's host should be google.com")
+        XCTAssertEqual(resultWithChangedDefaults.defaultableURL.host!, "quora.com", "resultWithChangedDefaults.defaultableURL's host should be quora.com")
     }
 
     func testStringArray() {
-        XCTAssert(result.stringArrayVal?.count == 3, "result.stringArrayVal should have 3 members")
+        XCTAssertEqual(result.stringArrayVal!.count, 3, "result.stringArrayVal should have 3 members")
     }
 
     func testIntArray() {
-        XCTAssert(result.intArrayVal?.count == 5, "result.intArrayVal should have 5 members")
+        XCTAssertEqual(result.intArrayVal!.count, 5, "result.intArrayVal should have 5 members")
     }
 
     func testBoolArray() {
-        XCTAssert(result.boolArrayVal?.count == 3, "result.boolArrayVal should have 3 members")
+        XCTAssertEqual(result.boolArrayVal!.count, 3, "result.boolArrayVal should have 3 members")
     }
 
     func testInstance() {
-        XCTAssert(result.instanceVal?.stringVal == "Mark", "result.instanceVal?.stringVal should equal 'Mark'")
+        XCTAssertEqual(result.instanceVal!.stringVal!, "Mark", "result.instanceVal?.stringVal should equal 'Mark'")
     }
 
     func testInstanceArray() {
-        XCTAssert(result.instanceArrayVal?.count == 2, "result.instanceArrayVal should have 2 members")
+        XCTAssertEqual(result.instanceArrayVal!.count, 2, "result.instanceArrayVal should have 2 members")
     }
 
     func testJSONStringParsing() {
@@ -152,6 +152,6 @@ class JSONHelperTests: XCTestCase {
             areYouGroot += person.name
         }
 
-        XCTAssert(areYouGroot == "I am Groot!", "Groot should be Groot")
+        XCTAssertEqual(areYouGroot, "I am Groot!", "Groot should be Groot")
     }
 }
