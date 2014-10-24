@@ -166,6 +166,9 @@ let partyDates: [NSDate]?
 
 meetingDate <<< (value: "2014-09-18", format: "yyyy-MM-dd")
 partyDates <<<* (value: ["2014-09-19", "2014-09-20"], format: "yyyy-MM-dd")
+
+let myDayOff: NSDate?
+myDayOff <<< 1414172803 // You can also use unix timestamps.
 ````
 
 JSON String Deserialization
