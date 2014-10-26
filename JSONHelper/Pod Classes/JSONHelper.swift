@@ -94,6 +94,14 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
             didDeserialize = true
         } else {
             property = nil
+            
+            // Special case where the passed in value is a String,
+            // but we really want it to be an Int
+            if let convertedValue = unwrappedValue as? String {
+                if let newValue = convertedValue.toInt() as? T {
+                    property = newValue
+                }
+            }
         }
     } else {
         property = nil
