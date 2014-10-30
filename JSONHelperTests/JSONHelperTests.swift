@@ -77,6 +77,20 @@ class JSONHelperTests: XCTestCase {
         XCTAssertEqual(resultWithChangedDefaults.defaultableInt, 99, "resultWithChangedDefaults.defaultableInt should equal 99")
     }
 
+    func testStringToOptionalInt() {
+        var number: Int?
+        number <<< "5"
+
+        XCTAssertEqual(number!, 5, "Strings containing numbers should successfully deserialize into optional Ints.")
+    }
+
+    func testStringToInt() {
+        var number = 0
+        number <<< "5"
+
+        XCTAssertEqual(number, 5, "Strings containing numbers should successfully deserialize into Ints.")
+    }
+
     func testBool() {
         XCTAssertEqual(result.boolVal!, true, "result.boolVal should be true")
     }

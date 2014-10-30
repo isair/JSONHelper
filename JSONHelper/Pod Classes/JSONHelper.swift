@@ -92,16 +92,21 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
         if let convertedValue = unwrappedValue as? T {
             property = convertedValue
             didDeserialize = true
+        } else if property is Int? && unwrappedValue is String {
+
+            if let intValue = "\(unwrappedValue)".toInt() {
+
+                if let propertyValue = intValue as? T {
+                    property = propertyValue
+                    didDeserialize = true
+                } else {
+                    property = nil
+                }
+            } else {
+                property = nil
+            }
         } else {
             property = nil
-            
-            // Special case where the passed in value is a String,
-            // but we really want it to be an Int
-            if let convertedValue = unwrappedValue as? String {
-                if let newValue = convertedValue.toInt() as? T {
-                    property = newValue
-                }
-            }
         }
     } else {
         property = nil
@@ -122,6 +127,15 @@ public func <<<<T>(inout property: T, value: AnyObject?) -> T {
         if let convertedValue = unwrappedValue as? T {
             property = convertedValue
             didDeserialize = true
+        } else if property is Int && unwrappedValue is String {
+
+            if let intValue = "\(unwrappedValue)".toInt() {
+
+                if let propertyValue = intValue as? T {
+                    property = propertyValue
+                    didDeserialize = true
+                }
+            }
         }
     }
 
