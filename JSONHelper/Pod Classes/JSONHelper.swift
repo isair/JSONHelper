@@ -95,13 +95,8 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
         } else if property is Int? && unwrappedValue is String {
 
             if let intValue = "\(unwrappedValue)".toInt() {
-
-                if let propertyValue = intValue as? T {
-                    property = propertyValue
-                    didDeserialize = true
-                } else {
-                    property = nil
-                }
+                property = intValue as T
+                didDeserialize = true
             } else {
                 property = nil
             }
@@ -130,11 +125,8 @@ public func <<<<T>(inout property: T, value: AnyObject?) -> T {
         } else if property is Int && unwrappedValue is String {
 
             if let intValue = "\(unwrappedValue)".toInt() {
-
-                if let propertyValue = intValue as? T {
-                    property = propertyValue
-                    didDeserialize = true
-                }
+                property = intValue as T
+                didDeserialize = true
             }
         }
     }
