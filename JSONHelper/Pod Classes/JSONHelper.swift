@@ -92,12 +92,24 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
 
     if let unwrappedValue: AnyObject = value {
 
-        if let convertedValue = unwrappedValue as? T {
+        if let convertedValue = unwrappedValue as? T { // Direct conversion.
             newValue = convertedValue
-        } else if property is Int? && unwrappedValue is String {
+        } else if property is Int? && unwrappedValue is String { // String -> Int
 
             if let intValue = "\(unwrappedValue)".toInt() {
                 newValue = intValue as T
+            }
+        } else if property is NSURL? { // String -> NSURL
+
+            if let stringValue = unwrappedValue as? String {
+                newValue = NSURL(string: stringValue) as T?
+            }
+        } else if property is NSDate? { // Double || NSNumber -> NSDate
+
+            if let timestamp = value as? Double {
+                newValue = NSDate(timeIntervalSince1970: timestamp) as T
+            } else if let timestamp = value as? NSNumber {
+                newValue = NSDate(timeIntervalSince1970: timestamp.doubleValue) as T
             }
         }
     }
@@ -113,28 +125,9 @@ public func <<<<T>(inout property: T, value: AnyObject?) -> T {
     return property
 }
 
-// Special handling for NSURLs.
-public func <<<(inout property: NSURL?, value: AnyObject?) -> NSURL? {
-
-    if let stringURL = value >>> JSONString {
-        property = NSURL(string: stringURL)
-    } else {
-        property = nil
-    }
-
-    return property
-}
-
-public func <<<(inout property: NSURL, value: AnyObject?) -> NSURL {
-    var url: NSURL?
-    url <<< value
-    if let url = url { property = url }
-    return property
-}
-
-// Special handling for NSDates.
+// Special handling for value and format pair to NSDate conversion.
 public func <<<(inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
-    var didDeserialize = false
+    var newValue: NSDate?
 
     if let dateString = valueAndFormat.value >>> JSONString {
 
@@ -143,22 +136,11 @@ public func <<<(inout property: NSDate?, valueAndFormat: (value: AnyObject?, for
             dateFormatter.dateFormat = formatString
 
             if let newDate = dateFormatter.dateFromString(dateString) {
-                property = newDate
-                didDeserialize = true
-            } else {
-                property = nil
+                newValue = newDate
             }
-        } else {
-            property = nil
         }
-    } else {
-        property = nil
     }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-    
+    property = newValue
     return property
 }
 
@@ -168,26 +150,6 @@ public func <<<(inout property: NSDate, valueAndFormat: (value: AnyObject?, form
     if let date = date { property = date }
     return property
 }
-
-//public func <<<(inout property: NSDate?, value: AnyObject?) -> NSDate? {
-//
-//    if let timestamp = value as? Double {
-//        property = NSDate(timeIntervalSince1970: timestamp)
-//    } else if let timestamp = value as? NSNumber {
-//        property = NSDate(timeIntervalSince1970: timestamp.doubleValue)
-//    } else {
-//        property = nil
-//    }
-//
-//    return property
-//}
-//
-//public func <<<(inout property: NSDate, value: AnyObject?) -> NSDate {
-//    var date: NSDate?
-//    date <<< value
-//    if let date = date { property = date }
-//    return property
-//}
 
 // MARK: - Operator for quick primitive array deserialization.
 
@@ -200,7 +162,6 @@ public func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
     } else {
         array = nil
     }
-
     return array
 }
 
@@ -218,7 +179,6 @@ public func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
     } else {
         array = nil
     }
-
     return array
 }
 
@@ -236,7 +196,6 @@ public func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
     } else {
         array = nil
     }
-
     return array
 }
 
@@ -261,7 +220,6 @@ public func <<<*(inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
     } else {
         array = nil
     }
-
     return array
 }
 
@@ -279,7 +237,6 @@ public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, for
         if let formatString = valueAndFormat.format >>> JSONString {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = formatString
-
             array = [NSDate]()
 
             for dateString in dateStringArray {
@@ -364,7 +321,6 @@ public func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) 
     } else {
         instance = nil
     }
-
     return instance
 }
 
@@ -390,7 +346,6 @@ public func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) 
     } else {
         array = nil
     }
-
     return array
 }
 
@@ -406,7 +361,6 @@ public func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -
 private func dataStringToObject(dataString: String) -> AnyObject? {
     var data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
     var error: NSError?
-
     return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
 }
 
@@ -425,4 +379,3 @@ public func <<<<*<T: Deserializable>(inout array: [T]?, dataString: String) -> [
 public func <<<<*<T: Deserializable>(inout array: [T], dataString: String) -> [T] {
     return array <<<<* dataStringToObject(dataString)
 }
-
