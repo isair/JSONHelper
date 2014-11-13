@@ -106,7 +106,9 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
             }
         } else if property is NSDate? { // Double || NSNumber -> NSDate
 
-            if let timestamp = value as? Double {
+            if let timestamp = value as? Int {
+                newValue = NSDate(timeIntervalSince1970: Double(timestamp)) as T
+            } else if let timestamp = value as? Double {
                 newValue = NSDate(timeIntervalSince1970: timestamp) as T
             } else if let timestamp = value as? NSNumber {
                 newValue = NSDate(timeIntervalSince1970: timestamp.doubleValue) as T
@@ -231,27 +233,24 @@ public func <<<*(inout array: [NSURL], value: AnyObject?) -> [NSURL] {
 }
 
 public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
+    var newValue: [NSDate]?
 
     if let dateStringArray = valueAndFormat.value >>> JSONStrings {
 
         if let formatString = valueAndFormat.format >>> JSONString {
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = formatString
-            array = [NSDate]()
+            newValue = [NSDate]()
 
             for dateString in dateStringArray {
 
                 if let date = dateFormatter.dateFromString(dateString) {
-                    array!.append(date)
+                    newValue!.append(date)
                 }
             }
-        } else {
-            array = nil
         }
-    } else {
-        array = nil
     }
-
+    array = newValue
     return array
 }
 
@@ -262,49 +261,28 @@ public func <<<*(inout array: [NSDate], valueAndFormat: (value: AnyObject?, form
     return array
 }
 
-//public func <<<*(inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
-//    var didDeserialize = false
-//
-//    if let timestamps = value >>> JSONInts {
-//        array = [NSDate]()
-//        didDeserialize = true
-//
-//        for timestamp in timestamps {
-//            var date: NSDate?
-//            date <<< timestamp
-//            if date != nil { array!.append(date!) }
-//        }
-//    } else {
-//        array = nil
-//    }
-//
-//    if !didDeserialize {
-//        // TODO: Error reporting support.
-//    }
-//
-//    return array
-//}
-//
-//public func <<<*(inout array: [NSDate], value: AnyObject?) -> [NSDate] {
-//    var didDeserialize = false
-//
-//    if let timestamps = value >>> JSONInts {
-//        array = [NSDate]()
-//        didDeserialize = true
-//
-//        for timestamp in timestamps {
-//            var date: NSDate?
-//            date <<< timestamp
-//            if date != nil { array.append(date!) }
-//        }
-//    }
-//
-//    if !didDeserialize {
-//        // TODO: Error reporting support.
-//    }
-//
-//    return array
-//}
+public func <<<*(inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
+
+    if let timestamps = value as? [AnyObject] {
+        array = [NSDate]()
+
+        for timestamp in timestamps {
+            var date: NSDate?
+            date <<< timestamp
+            if date != nil { array!.append(date!) }
+        }
+    } else {
+        array = nil
+    }
+    return array
+}
+
+public func <<<*(inout array: [NSDate], value: AnyObject?) -> [NSDate] {
+    var newValue: [NSDate]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
+    return array
+}
 
 // MARK: - Operator for quick class deserialization.
 
