@@ -61,6 +61,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5F6854241A142E8500DCFCCA /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				5FC3E26E19B00BD300330914 /* Main.storyboard */,
+			);
+			name = Storyboards;
+			sourceTree = "<group>";
+		};
 		5FC3E25C19B00BD300330914 = {
 			isa = PBXGroup;
 			children = (
@@ -85,7 +93,7 @@
 				5FC3E26A19B00BD300330914 /* AppDelegate.swift */,
 				5FC3E26C19B00BD300330914 /* ViewController.swift */,
 				5FC3E27119B00BD300330914 /* Images.xcassets */,
-				5FC3E26E19B00BD300330914 /* Main.storyboard */,
+				5F6854241A142E8500DCFCCA /* Storyboards */,
 				5FC3E28719B00C0600330914 /* Pod Classes */,
 				5FC3E26819B00BD300330914 /* Supporting Files */,
 			);
