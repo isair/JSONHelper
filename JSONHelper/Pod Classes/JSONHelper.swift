@@ -104,7 +104,7 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
             if let stringValue = unwrappedValue as? String {
                 newValue = NSURL(string: stringValue) as T?
             }
-        } else if property is NSDate? { // Double || NSNumber -> NSDate
+        } else if property is NSDate? { // Int || Double || NSNumber -> NSDate
 
             if let timestamp = value as? Int {
                 newValue = NSDate(timeIntervalSince1970: Double(timestamp)) as T
