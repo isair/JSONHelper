@@ -333,7 +333,7 @@ public func <<<<<T: Deserializable>(inout instance: T, dataObject: AnyObject?) -
 
 // MARK: - Operator for quick deserialization into an array of instances of a deserializable class.
 
-infix operator <<<<* {associativity right precedence 150 }
+infix operator <<<<* { associativity right precedence 150 }
 
 public func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
 
