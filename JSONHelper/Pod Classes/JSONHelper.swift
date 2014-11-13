@@ -1,7 +1,7 @@
 //
 //  JSONHelper.swift
 //
-//  Version 1.3.2
+//  Version 1.3.3
 //
 //  Created by Baris Sencan on 28/08/2014.
 //  Copyright 2014 Baris Sencan
@@ -32,7 +32,8 @@
 
 import Foundation
 
-// Internally used functions.
+// Internally used functions, but defined as public as they might serve some
+// purpose outside this library.
 public func JSONString(object: AnyObject?) -> String? {
     return object as? String
 }
@@ -81,22 +82,21 @@ public func >>><A, B>(a: A?, f: A -> B?) -> B? {
     }
 }
 
-// Operator for quick primitive type deserialization.
+// MARK: - Operator for quick primitive type deserialization.
+
 infix operator <<< { associativity right precedence 150 }
 
+// For optionals.
 public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
-    var didDeserialize = false
 
     if let unwrappedValue: AnyObject = value {
 
         if let convertedValue = unwrappedValue as? T {
             property = convertedValue
-            didDeserialize = true
         } else if property is Int? && unwrappedValue is String {
 
             if let intValue = "\(unwrappedValue)".toInt() {
                 property = intValue as T
-                didDeserialize = true
             } else {
                 property = nil
             }
@@ -107,71 +107,37 @@ public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
         property = nil
     }
 
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
     return property
 }
 
+// For non-optionals.
 public func <<<<T>(inout property: T, value: AnyObject?) -> T {
-    var didDeserialize = false
-
-    if let unwrappedValue: AnyObject = value {
-
-        if let convertedValue = unwrappedValue as? T {
-            property = convertedValue
-            didDeserialize = true
-        } else if property is Int && unwrappedValue is String {
-
-            if let intValue = "\(unwrappedValue)".toInt() {
-                property = intValue as T
-                didDeserialize = true
-            }
-        }
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newValue: T?
+    newValue <<< value
+    if let newValue = newValue { property = newValue }
     return property
 }
 
+// Special handling for NSURLs.
 public func <<<(inout property: NSURL?, value: AnyObject?) -> NSURL? {
-    var didDeserialize = false
 
     if let stringURL = value >>> JSONString {
         property = NSURL(string: stringURL)
-        didDeserialize = true
     } else {
         property = nil
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
     }
 
     return property
 }
 
 public func <<<(inout property: NSURL, value: AnyObject?) -> NSURL {
-    var didDeserialize = false
-
-    if let stringURL = value >>> JSONString {
-        if let prop = NSURL(string: stringURL) {
-            property = prop
-            didDeserialize = true
-        }
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var url: NSURL?
+    url <<< value
+    if let url = url { property = url }
     return property
 }
 
+// Special handling for NSDates.
 public func <<<(inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
     var didDeserialize = false
 
@@ -202,192 +168,97 @@ public func <<<(inout property: NSDate?, valueAndFormat: (value: AnyObject?, for
 }
 
 public func <<<(inout property: NSDate, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate {
-    var didDeserialize = false
-
-    if let dateString = valueAndFormat.value >>> JSONString {
-
-        if let formatString = valueAndFormat.format >>> JSONString {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = formatString
-
-            if let newDate = dateFormatter.dateFromString(dateString) {
-                property = newDate
-                didDeserialize = true
-            }
-        }
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-    
+    var date: NSDate?
+    date <<< valueAndFormat
+    if let date = date { property = date }
     return property
 }
 
-// Internal function to convert from NSNumber -> NSDate
-internal func dateFromSecondsSince1970(t: NSNumber) -> NSDate {
-    return NSDate(timeIntervalSince1970: t.doubleValue)
-}
+//public func <<<(inout property: NSDate?, value: AnyObject?) -> NSDate? {
+//
+//    if let timestamp = value as? Double {
+//        property = NSDate(timeIntervalSince1970: timestamp)
+//    } else if let timestamp = value as? NSNumber {
+//        property = NSDate(timeIntervalSince1970: timestamp.doubleValue)
+//    } else {
+//        property = nil
+//    }
+//
+//    return property
+//}
+//
+//public func <<<(inout property: NSDate, value: AnyObject?) -> NSDate {
+//    var date: NSDate?
+//    date <<< value
+//    if let date = date { property = date }
+//    return property
+//}
 
-// Overrides for <<< which creates a date from a JSON number assuming the
-// number represents unix time (seconds since Jan 1, 1970)
-public func <<<(inout property: NSDate?, value: AnyObject?) -> NSDate? {
-    return property <<< (value, dateFromSecondsSince1970)
-}
+// MARK: - Operator for quick primitive array deserialization.
 
-public func <<<(inout property: NSDate, value: AnyObject?) -> NSDate {
-    return property <<< (value, dateFromSecondsSince1970)
-}
-
-// Override for <<< which creates a date from a JSON number and allows the
-// caller to specify a function which provides the conversion from NSNumber to NSDate.
-public func <<<(inout property: NSDate?, valueAndConverter: (value: AnyObject?, converter: (NSNumber) -> NSDate)) -> NSDate? {
-    var didDeserialize = false
-    
-    if let unwrappedValue: AnyObject = valueAndConverter.value {
-        
-        if let convertedValue = unwrappedValue as? NSNumber {
-            property = valueAndConverter.converter(convertedValue)
-            didDeserialize = true
-        } else {
-            property = nil
-        }
-    } else {
-        property = nil
-    }
-    
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-    
-    return property
-}
-
-public func <<<(inout property: NSDate, valueAndConverter: (value: AnyObject?, converter: (NSNumber) -> NSDate)) -> NSDate {
-    var didDeserialize = false
-    
-    if let unwrappedValue: AnyObject = valueAndConverter.value {
-        
-        if let convertedValue = unwrappedValue as? NSNumber {
-            property = valueAndConverter.converter(convertedValue)
-            didDeserialize = true
-        }
-    }
-    
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-    
-    return property
-}
-
-// Operator for quick primitive array deserialization.
 infix operator <<<* { associativity right precedence 150 }
 
 public func <<<*(inout array: [String]?, value: AnyObject?) -> [String]? {
-    var didDeserialize = false
 
     if let stringArray = value >>> JSONStrings {
         array = stringArray
-        didDeserialize = true
     } else {
         array = nil
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
     }
 
     return array
 }
 
 public func <<<*(inout array: [String], value: AnyObject?) -> [String] {
-    var didDeserialize = false
-
-    if let stringArray = value >>> JSONStrings {
-        array = stringArray
-        didDeserialize = true
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newValue: [String]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
     return array
 }
 
 public func <<<*(inout array: [Int]?, value: AnyObject?) -> [Int]? {
-    var didDeserialize = false
 
     if let intArray = value >>> JSONInts {
         array = intArray
-        didDeserialize = true
     } else {
         array = nil
-    }
-
-    if (!didDeserialize) {
-        // TODO: Error reporting support.
     }
 
     return array
 }
 
 public func <<<*(inout array: [Int], value: AnyObject?) -> [Int] {
-    var didDeserialize = false
-
-    if let intArray = value >>> JSONInts {
-        array = intArray
-        didDeserialize = true
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newValue: [Int]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
     return array
 }
 
 public func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
-    var didDeserialize = false
 
     if let boolArray = value >>> JSONBools {
         array = boolArray
-        didDeserialize = true
     } else {
         array = nil
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
     }
 
     return array
 }
 
 public func <<<*(inout array: [Bool], value: AnyObject?) -> [Bool] {
-    var didDeserialize = false
-
-    if let boolArray = value >>> JSONBools {
-        array = boolArray
-        didDeserialize = true
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newValue: [Bool]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
     return array
 }
 
 public func <<<*(inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
-    var didDeserialize = false
 
     if let stringURLArray = value >>> JSONStrings {
         array = [NSURL]()
-        didDeserialize = true
 
         for stringURL in stringURLArray {
+
             if let url = NSURL(string: stringURL) {
                 array!.append(url)
             }
@@ -396,36 +267,17 @@ public func <<<*(inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
         array = nil
     }
 
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
     return array
 }
 
 public func <<<*(inout array: [NSURL], value: AnyObject?) -> [NSURL] {
-    var didDeserialize = false
-
-    if let stringURLArray = value >>> JSONStrings {
-        array = [NSURL]()
-        didDeserialize = true
-
-        for stringURL in stringURLArray {
-            if let url = NSURL(string: stringURL) {
-                array.append(url)
-            }
-        }
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newValue: [NSURL]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
     return array
 }
 
 public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
-    var didDeserialize = false
 
     if let dateStringArray = valueAndFormat.value >>> JSONStrings {
 
@@ -434,7 +286,6 @@ public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, for
             dateFormatter.dateFormat = formatString
 
             array = [NSDate]()
-            didDeserialize = true
 
             for dateString in dateStringArray {
 
@@ -449,42 +300,62 @@ public func <<<*(inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, for
         array = nil
     }
 
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
     return array
 }
 
 public func <<<*(inout array: [NSDate], valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate] {
-    var didDeserialize = false
-
-    if let dateStringArray = valueAndFormat.value >>> JSONStrings {
-
-        if let formatString = valueAndFormat.format >>> JSONString {
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = formatString
-
-            array = [NSDate]()
-            didDeserialize = true
-
-            for dateString in dateStringArray {
-
-                if let date = dateFormatter.dateFromString(dateString) {
-                    array.append(date)
-                }
-            }
-        }
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-    
+    var newValue: [NSDate]?
+    newValue <<<* valueAndFormat
+    if let newValue = newValue { array = newValue }
     return array
 }
 
-// Operator for quick class deserialization.
+//public func <<<*(inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
+//    var didDeserialize = false
+//
+//    if let timestamps = value >>> JSONInts {
+//        array = [NSDate]()
+//        didDeserialize = true
+//
+//        for timestamp in timestamps {
+//            var date: NSDate?
+//            date <<< timestamp
+//            if date != nil { array!.append(date!) }
+//        }
+//    } else {
+//        array = nil
+//    }
+//
+//    if !didDeserialize {
+//        // TODO: Error reporting support.
+//    }
+//
+//    return array
+//}
+//
+//public func <<<*(inout array: [NSDate], value: AnyObject?) -> [NSDate] {
+//    var didDeserialize = false
+//
+//    if let timestamps = value >>> JSONInts {
+//        array = [NSDate]()
+//        didDeserialize = true
+//
+//        for timestamp in timestamps {
+//            var date: NSDate?
+//            date <<< timestamp
+//            if date != nil { array.append(date!) }
+//        }
+//    }
+//
+//    if !didDeserialize {
+//        // TODO: Error reporting support.
+//    }
+//
+//    return array
+//}
+
+// MARK: - Operator for quick class deserialization.
+
 infix operator <<<< { associativity right precedence 150 }
 
 public protocol Deserializable {
@@ -492,42 +363,28 @@ public protocol Deserializable {
 }
 
 public func <<<<<T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
-    var didDeserialize = false
 
     if let data = dataObject >>> JSONObject {
         instance = T(data: data)
-        didDeserialize = true
     } else {
         instance = nil
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
     }
 
     return instance
 }
 
 public func <<<<<T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
-    var didDeserialize = false
-
-    if let data = dataObject >>> JSONObject {
-        instance = T(data: data)
-        didDeserialize = true
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newInstance: T?
+    newInstance <<<< dataObject
+    if let newInstance = newInstance { instance = newInstance }
     return instance
 }
 
-// Operator for quick deserialization into an array of instances of a deserializable class.
+// MARK: - Operator for quick deserialization into an array of instances of a deserializable class.
+
 infix operator <<<<* {associativity right precedence 150 }
 
 public func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
-    var didDeserialize = false
 
     if let dataArray = dataObject >>> JSONObjects {
         array = [T]()
@@ -535,40 +392,22 @@ public func <<<<*<T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) 
         for data in dataArray {
             array!.append(T(data: data))
         }
-
-        didDeserialize = true
     } else {
         array = nil
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
     }
 
     return array
 }
 
 public func <<<<*<T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
-    var didDeserialize = false
-
-    if let dataArray = dataObject >>> JSONObjects {
-        array = [T]()
-
-        for data in dataArray {
-            array.append(T(data: data))
-        }
-
-        didDeserialize = true
-    }
-
-    if !didDeserialize {
-        // TODO: Error reporting support.
-    }
-
+    var newArray: [T]?
+    newArray <<<<* dataObject
+    if let newArray = newArray { array = newArray }
     return array
 }
 
-// Overloading of own operators for deserialization of JSON strings.
+// MARK: - Overloading of own operators for deserialization of JSON strings.
+
 private func dataStringToObject(dataString: String) -> AnyObject? {
     var data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
     var error: NSError?
