@@ -191,6 +191,40 @@ public func <<<*(inout array: [Int], value: AnyObject?) -> [Int] {
     return array
 }
 
+public func <<<*(inout array: [Float]?, value: AnyObject?) -> [Float]? {
+
+    if let floatArray = value as? [Float] {
+        array = floatArray
+    } else {
+        array = nil
+    }
+    return array
+}
+
+public func <<<*(inout array: [Float], value: AnyObject?) -> [Float] {
+    var newValue: [Float]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
+    return array
+}
+
+public func <<<*(inout array: [Double]?, value: AnyObject?) -> [Double]? {
+
+    if let doubleArrayDoubleExcitement = value as? [Double] {
+        array = doubleArrayDoubleExcitement
+    } else {
+        array = nil
+    }
+    return array
+}
+
+public func <<<*(inout array: [Double], value: AnyObject?) -> [Double] {
+    var newValue: [Double]?
+    newValue <<<* value
+    if let newValue = newValue { array = newValue }
+    return array
+}
+
 public func <<<*(inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
 
     if let boolArray = value >>> JSONBools {
