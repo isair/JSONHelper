@@ -10,162 +10,178 @@ import UIKit
 import XCTest
 
 class JSONHelperTests: XCTestCase {
-    // Initialize our test subject with a dummy API response.
-    let result = TestModel(data: [
-        "string_val": "a",
-        "int_val": 1,
-        "bool_val": true,
-        "date_val": "2014-09-19",
-        "url_val": "http://github.com/",
-        "string_array_val": ["a", "b", "c"],
-        "int_array_val": [2, 2, 2, 2, 1],
-        "bool_array_val": [true, false, true],
-        "instance_val": [
-            "string_val": "Mark"
+    let dummyResponse = [
+        "string": "a",
+        "int": 1,
+        "int_string": "1",
+        "bool": true,
+        "date": "2014-09-19",
+        "url": "http://github.com/",
+        "stringArray": ["a", "b", "c"],
+        "intArray": [1, 2, 3, 4, 5],
+        "boolArray": [true, false],
+        "instance": [
+            "name": "b"
         ],
-        "instance_array_val": [
+        "instanceArray": [
             [
-                "string_val": "Hannibal"
+                "name": "c"
             ], [
-                "string_val": "Sabrina"
+                "name": "d"
             ]
         ]
-        ])
+    ]
 
-    let resultWithChangedDefaults = TestModel(data: [
-        "string_val": "a",
-        "defaultable_string": "not default",
-        "int_val": 1,
-        "defaultable_int": 99,
-        "bool_val": true,
-        "defaultable_bool": false,
-        "date_val": "2014-09-19",
-        "defaultable_date": "2015-09-19",
-        "url_val": "http://github.com/",
-        "defaultable_url": "http://quora.com/",
-        "string_array_val": ["a", "b", "c"],
-        "int_array_val": [2, 2, 2, 2, 1],
-        "bool_array_val": [true, false, true],
-        "instance_val": [
-            "string_val": "Mark"
-        ],
-        "instance_array_val": [
-            [
-                "string_val": "Hannibal"
-            ], [
-                "string_val": "Sabrina"
-            ]
-        ]
-        ])
+    class Person: Deserializable {
+        var name = ""
 
-    // Test different deserializations.
+        required init(data: [String: AnyObject]) {
+            name <<< data["name"]
+        }
+
+        init() {}
+    }
+
+    func testOptionalString() {
+        var property: String?
+        property <<< dummyResponse["string"]
+        XCTAssertEqual(property!, "a", "String? property should equal 'a'")
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertNil(property, "String? property should equal nil after invalid assignment")
+    }
+
     func testString() {
-        XCTAssertEqual(result.stringVal!, "a", "result.stringVal should equal 'a'")
+        var property = "b"
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertEqual(property, "b", "String property should have the default value 'b'")
+        property <<< dummyResponse["string"]
+        XCTAssertEqual(property, "a", "String property should equal 'a'")
     }
 
-    func testDefaultableString() {
-        XCTAssertEqual(result.defaultableString, "default", "result.defaultableString should equal 'default'")
-        XCTAssertEqual(resultWithChangedDefaults.defaultableString, "not default", "resultWithChangedDefaults.defaultableString should equal 'not default'")
+    func testOptionalInt() {
+        var property: Int?
+        property <<< dummyResponse["int"]
+        XCTAssertEqual(property!, 1, "Int? property should equal 1")
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertNil(property, "Int? property should equal nil after invalid assignment")
     }
-    
+
     func testInt() {
-        XCTAssertEqual(result.intVal!, 1, "result.intVal should equal 1")
-    }
-
-    func testDefaultableInt() {
-        XCTAssertEqual(result.defaultableInt, 91, "result.defaultableInt should equal 91")
-        XCTAssertEqual(resultWithChangedDefaults.defaultableInt, 99, "resultWithChangedDefaults.defaultableInt should equal 99")
+        var property = 2
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertEqual(property, 2, "Int property should have the default value 2")
+        property <<< dummyResponse["int"]
+        XCTAssertEqual(property, 1, "Int property should equal 1")
     }
 
     func testStringToOptionalInt() {
         var number: Int?
-        number <<< "5"
-
-        XCTAssertEqual(number!, 5, "Strings containing numbers should successfully deserialize into optional Ints.")
+        number <<< dummyResponse["int_string"]
+        XCTAssertEqual(number!, 1, "Strings containing numbers should successfully deserialize into optional Ints.")
     }
 
     func testStringToInt() {
         var number = 0
-        number <<< "5"
+        number <<< dummyResponse["int_string"]
+        XCTAssertEqual(number, 1, "Strings containing numbers should successfully deserialize into Ints.")
+    }
 
-        XCTAssertEqual(number, 5, "Strings containing numbers should successfully deserialize into Ints.")
+    func testOptionalBool() {
+        var property: Bool?
+        property <<< dummyResponse["bool"]
+        XCTAssertEqual(property!, true, "Bool? property should equal true")
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertNil(property, "Bool? property should equal nil after invalid assignment")
     }
 
     func testBool() {
-        XCTAssertEqual(result.boolVal!, true, "result.boolVal should be true")
+        var property = true
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertEqual(property, true, "Bool property should have the default value true")
+        property <<< dummyResponse["bool"]
+        XCTAssertEqual(property, true, "Bool property should equal true")
     }
 
-    func testDefaultableBool() {
-        XCTAssertEqual(result.defaultableBool, true, "result.defaultableBool should be true")
-        XCTAssertEqual(resultWithChangedDefaults.defaultableBool, false, "resultWithChangedDefaults.defaultableBool should be false")
-    }
-
-    func testDate() {
+    func testOptionalNSDate() {
+        var property: NSDate?
+        property <<< (value: dummyResponse["date"], format: "yyyy-MM-dd")
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-
         let testDate = dateFormatter.dateFromString("2014-09-19")
-
-        XCTAssertEqual(result.dateVal!.compare(testDate!), NSComparisonResult.OrderedSame, "result.dateVal should be 2014-09-19")
+        XCTAssertEqual(property!.compare(testDate!), NSComparisonResult.OrderedSame, "NSDate? property should equal 2014-09-19")
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertNil(property, "NSDate? property should equal nil after invalid assignment")
     }
 
-    func testDefaultableDate() {
+    func testNSDate() {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
-
-        let testDate = dateFormatter.dateFromString("2015-09-19")
-
-        XCTAssertEqual(resultWithChangedDefaults.defaultableDate.compare(testDate!), NSComparisonResult.OrderedSame, "resultWithChangedDefaults.defaultableDate should be 2015-09-19")
+        let defaultTestDate = dateFormatter.dateFromString("2015-09-19")
+        var property = defaultTestDate!
+        property <<< (value: dummyResponse["invalidKey"], format: "yyyy-MM-dd")
+        XCTAssertEqual(property.compare(defaultTestDate!), NSComparisonResult.OrderedSame, "NSDate should have the default value 2015-09-19")
+        property <<< (value: dummyResponse["date"], format: "yyyy-MM-dd")
+        let testDate = dateFormatter.dateFromString("2014-09-19")
+        XCTAssertEqual(property.compare(testDate!), NSComparisonResult.OrderedSame, "NSDate should have the value 2015-09-19")
     }
 
-    func testURL() {
-        XCTAssertEqual(result.urlVal!.host!, "github.com", "result.urlVal's host should be github.com")
+    func testOptionalNSURL() {
+        var property: NSURL?
+        property <<< dummyResponse["url"]
+        XCTAssertEqual(property!.host!, "github.com", "NSURL? property should equal github.com")
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertNil(property, "NSURL? property should equal nil after invalid assignment")
     }
 
-    func testDefaultableURL() {
-        XCTAssertEqual(result.defaultableURL.host!, "google.com", "result.defaultableURL's host should be google.com")
-        XCTAssertEqual(resultWithChangedDefaults.defaultableURL.host!, "quora.com", "resultWithChangedDefaults.defaultableURL's host should be quora.com")
+    func testNSURL() {
+        var property = NSURL(string: "http://google.com")!
+        property <<< dummyResponse["invalidKey"]
+        XCTAssertEqual(property.host!, "google.com", "NSURL should have the default value google.com")
+        property <<< dummyResponse["url"]
+        XCTAssertEqual(property.host!, "github.com", "NSURL should have the value github.com")
     }
 
     func testStringArray() {
-        XCTAssertEqual(result.stringArrayVal!.count, 3, "result.stringArrayVal should have 3 members")
+        var property = [String]()
+        property <<<* dummyResponse["stringArray"]
+        XCTAssertEqual(property.count, 3, "[String] property should have 3 members")
     }
 
     func testIntArray() {
-        XCTAssertEqual(result.intArrayVal!.count, 5, "result.intArrayVal should have 5 members")
+        var property = [Int]()
+        property <<<* dummyResponse["intArray"]
+        XCTAssertEqual(property.count, 5, "[Int] property should have 5 members")
     }
 
     func testBoolArray() {
-        XCTAssertEqual(result.boolArrayVal!.count, 3, "result.boolArrayVal should have 3 members")
+        var property = [Bool]()
+        property <<<* dummyResponse["boolArray"]
+        XCTAssertEqual(property.count, 2, "[Bool] property should have 2 members")
     }
 
     func testInstance() {
-        XCTAssertEqual(result.instanceVal!.stringVal!, "Mark", "result.instanceVal?.stringVal should equal 'Mark'")
+        var instance = Person()
+        instance <<<< dummyResponse["instance"]
+        XCTAssertEqual(instance.name, "b", "Person instance's name property should equal 'b'")
     }
 
     func testInstanceArray() {
-        XCTAssertEqual(result.instanceArrayVal!.count, 2, "result.instanceArrayVal should have 2 members")
+        var property = [Person]()
+        property <<<<* dummyResponse["instanceArray"]
+        XCTAssertEqual(property.count, 2, "[Person] property should have 2 members")
     }
 
     func testJSONStringParsing() {
-        class Person: Deserializable {
-            var name = ""
-
-            required init(data: [String: AnyObject]) {
-                name <<< data["name"]
-            }
-        }
-
         var jsonString = "[{\"name\": \"I am \"},{\"name\": \"Groot!\"}]"
         var people = [Person]()
         var areYouGroot = ""
 
         people <<<<* jsonString
-        
+
         for person in people {
             areYouGroot += person.name
         }
-
+        
         XCTAssertEqual(areYouGroot, "I am Groot!", "Groot should be Groot")
     }
 }
