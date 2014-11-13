@@ -88,25 +88,20 @@ infix operator <<< { associativity right precedence 150 }
 
 // For optionals.
 public func <<<<T>(inout property: T?, value: AnyObject?) -> T? {
+    var newValue: T?
 
     if let unwrappedValue: AnyObject = value {
 
         if let convertedValue = unwrappedValue as? T {
-            property = convertedValue
+            newValue = convertedValue
         } else if property is Int? && unwrappedValue is String {
 
             if let intValue = "\(unwrappedValue)".toInt() {
-                property = intValue as T
-            } else {
-                property = nil
+                newValue = intValue as T
             }
-        } else {
-            property = nil
         }
-    } else {
-        property = nil
     }
-
+    property = newValue
     return property
 }
 
