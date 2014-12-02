@@ -19,10 +19,10 @@ Table of Contents
 6. [NSDate and NSURL Deserialization](#nsdate-and-nsurl-deserialization)
 7. [JSON String Deserialization](#json-string-deserialization)
 
-Purpose
+Introduction
 --------------
 
-There are wonderful third party libraries out there that let you get data from an API end-point easily in just a couple lines. Wouldn't it be cool if deserializing that data was always just as easy, or perhaps even easier? Well, it is with JSONHelper! The sole purpose of JSONHelper is to make deserializing super easy even when working with data that contains lots of optional parameters and nested objects.
+JSONHelper is a library written to make sure that deserializing data obtained from an API is as easy as inhumanly possible. It doesn't depend on any networking libraries, and works equally well with any of them.
 
 __Requires iOS 7 or later and Xcode 6.1+.__
 
