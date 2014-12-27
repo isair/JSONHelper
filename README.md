@@ -22,14 +22,14 @@ Table of Contents
 Introduction
 --------------
 
-JSONHelper is a library written to make sure that deserializing data obtained from an API is as easy as inhumanly possible. It doesn't depend on any networking libraries, and works equally well with any of them.
+JSONHelper is a library written to make sure that deserializing data obtained from an API is as easy as possible. It doesn't depend on any networking libraries, and works equally well with any of them.
 
-__Requires iOS 7 or later and Xcode 6.1+.__
+__Requires iOS 7 or later and Xcode 6.1+__
 
 Installation
 --------------
 
-I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a birt dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/Pod%20Classes/JSONHelper.swift) into your project.
+I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a bit dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/Pod%20Classes/JSONHelper.swift) into your project.
 
 Operator List
 --------------
@@ -44,108 +44,73 @@ Operator List
 Simple Tutorial
 --------------
 
-Let's assume you have two models like the ones given below, and an api end-point where you can submit a search query to search among your friends.
+Please take a good look at the operator list before you start reading this tutorial. Also, for simplicity, I'm going to assume you use [AFNetworking](https://github.com/AFNetworking/AFNetworking) as your networking library. Let's say we have an endpoint at __http://yoursite.com/your-endpoint/__ which gives the following response when a simple __GET__ request is sent to it.
+
+```json
+{
+	"books": [
+		{
+			"author": "Irvine Welsh",
+			"name": "Filth"				},
+		{
+			"author": "Bret Easton Ellis",
+			"name": "American Psycho"		}	
+	]}
+```
+
+From this response it is clear that we have a book model similar to the implementation below.
 
 ```swift
-class User {
-    var name: String?
-    var age: Int?
-}
-````
+class Book {
+	var author: String?
+	var name: String?}
+```
 
-````swift
-class FriendSearchResult {
-    var currentPage: Int?
-    var pageCount: Int?
-    var suggestedFriend: User?
-    var friends: [User]?
-}
-````
+We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer. The complete model should look like this:
 
-Let's say you send the request using your favorite networking library and get back a response like this (of type [String: AnyObject]):
+```swift
+class Book: Deserializable {
+	var author: String? // You can also use let instead of var if you want.
+	var name: String?
+	
+	required init(data: [String: AnyObject]) {
+		author <<< data["author"]
+		name <<< data["name"]	}}
+```
 
-````swift
-let dummyAPIResponse = [
-    "current_page": 1,
-    "page_count": 10,
-    "suggested_friend": [
-        "name": "Mark",
-        "age": 30
-    ],
-    "friends": [
-        [
-            "name": "Hannibal",
-            "age": 76
-        ], [
-            "name": "Sabrina",
-            "age": 18
-        ]
-    ]
-]
-````
+And finally, requesting and deserializing the response from our endpoint becomes as easy as the following piece of code.
 
-Deserializing this data is one line after you set your models up to use JSONHelper.
-
-````swift
-var searchResult = FriendSearchResult(data: dummyAPIResponse)
-````
-
-Or if your JSON response object is of type AnyObject and you don't want to bother casting it to a [String: AnyObject], you can do the following:
-
-````swift
-var searchResult: FriendSearchResult?
-
-...
-
-searchResult <<<< dummyAPIResponse
-````
-
-The good thing is your models will only look like this after you set them up:
-
-````swift
-class User: Deserializable {
-    var name: String?
-    var age: Int?
-
-    required init(data: [String: AnyObject]) {
-        name <<< data["name"]
-        age <<< data["age"]
-    }
-}
-````
-
-````swift
-class FriendSearchResult: Deserializable {
-    var currentPage: Int?
-    var pageCount: Int?
-    var suggestedFriend: User?
-    var friends: [User]?
-
-    required init(data: [String : AnyObject]) {
-        currentPage <<< data["current_page"]
-        pageCount <<< data["page_count"]
-        suggestedFriend <<<< data["suggested_friend"]
-        friends <<<<* data["friends"]
-    }
-}
-````
+```swift
+AFHTTPRequestOperationManager().GET(
+	"http://yoursite.com/your-endpoint/"
+	parameters: nil,
+	success: { operation, data in
+		var books: [Book]?
+		books <<<<* data["books"]
+		
+		if let books = books {
+			// Response contained a books array, and we deserialized it. Do what you want here.
+		} else {
+			// Server gave us a response but there was no books key in it, so the books variable
+			// is equal to nil. Do some error handling here.
+		}
+	},
+	failure: { operation, error in
+		// Handle error.
+})
+```
 
 Assigning Default Values
 --------------
 
-JSONHelper also supports non-optional deserialization, which lets you easily assign default values in case deserialization fails.
+You can easily assign default values to variables in cases where you want them to have a certain value when deserialization fails.
 
 ````swift
 class User: Deserializable {
     var name = "Guest"
 
-    ...
-
     required init(data: [String: AnyObject]) {
         name <<< data["name"]
-
-        ...
-
     }
 }
 ````
