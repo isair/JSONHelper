@@ -142,7 +142,7 @@ myDayOff <<< 1414172803 // You can also use unix timestamps.
 JSON String Deserialization
 --------------
 
-You can swiftly deserialize instances and arrays of instances directly from a JSON string with JSONHelper as well. Here is a quick and Groot-y example.
+You can deserialize instances and arrays of instances directly from a JSON string as well. Here is a quick example.
 
 ````swift
 class Person: Deserializable {
@@ -153,7 +153,7 @@ class Person: Deserializable {
     }
 }
 
-var jsonString = "[{\"name\": \"I am \"},{\"name\": \"Groot!\"}]"
+var jsonString = "[{\"name\": \"Rocket Raccoon\"}, {\"name\": \"Groot\"}]"
 var people = [Person]()
 
 people <<<<* jsonString
