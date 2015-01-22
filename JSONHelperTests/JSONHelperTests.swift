@@ -8,6 +8,7 @@
 
 import UIKit
 import XCTest
+import JSONHelper
 
 class JSONHelperTests: XCTestCase {
     let dummyResponse = [
