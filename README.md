@@ -29,7 +29,7 @@ __Requires iOS 7 or later and Xcode 6.1+__
 Installation
 --------------
 
-I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a bit dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/Pod%20Classes/JSONHelper.swift) into your project.
+I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a bit dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/JSONHelper.swift) into your project.
 
 Operator List
 --------------
@@ -51,11 +51,14 @@ Please take a good look at the operator list before you start reading this tutor
 	"books": [
 		{
 			"author": "Irvine Welsh",
-			"name": "Filth"				},
+			"name": "Filth"		
+		},
 		{
 			"author": "Bret Easton Ellis",
-			"name": "American Psycho"		}	
-	]}
+			"name": "American Psycho"
+		}	
+	]
+}
 ```
 
 From this response it is clear that we have a book model similar to the implementation below.
@@ -63,7 +66,8 @@ From this response it is clear that we have a book model similar to the implemen
 ```swift
 class Book {
 	var author: String?
-	var name: String?}
+	var name: String?
+}
 ```
 
 We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer. The complete model should look like this:
@@ -75,7 +79,9 @@ class Book: Deserializable {
 	
 	required init(data: [String: AnyObject]) {
 		author <<< data["author"]
-		name <<< data["name"]	}}
+		name <<< data["name"]
+	}
+}
 ```
 
 And finally, requesting and deserializing the response from our endpoint becomes as easy as the following piece of code.
