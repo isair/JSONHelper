@@ -1,15 +1,15 @@
 //
 //  ViewController.swift
-//  JSONHelper
+//  JSONHelperExample
 //
-//  Created by Baris Sencan on 28/08/14.
-//  Copyright (c) 2014 Baris Sencan. All rights reserved.
+//  Created by Baris Sencan on 22/01/15.
+//  Copyright (c) 2015 Baris Sencan. All rights reserved.
 //
 
 import UIKit
 
 class ViewController: UIViewController {
-                            
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
