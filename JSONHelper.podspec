@@ -12,7 +12,6 @@ Pod::Spec.new do |spec|
 
   spec.source       = { :git => 'https://github.com/isair/JSONHelper.git', :tag => '1.4.1' }
   spec.source_files = 'JSONHelper/*.swift'
-  spec.module_name  = 'JSONHelper'
   spec.frameworks   = 'Foundation'
   spec.requires_arc = true
 end
