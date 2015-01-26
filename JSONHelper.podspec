@@ -8,7 +8,7 @@ Pod::Spec.new do |spec|
   spec.author       = { 'Baris Sencan' => 'barissncn@gmail.com' }
 
   spec.ios.deployment_target = '8.0'
-  spec.osx.deployment_target = '10.10'
+  spec.osx.deployment_target = '10.9'
 
   spec.source       = { :git => 'https://github.com/isair/JSONHelper.git', :tag => '1.4.1' }
   spec.source_files = 'JSONHelper/*.swift'
