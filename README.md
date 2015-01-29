@@ -97,7 +97,8 @@ We now have to make it extend the protocol __Deserializable__ and implement the 
 class Book: Deserializable {
 	var author: String? // You can also use let instead of var if you want.
 	var name: String?
-	
+	var translations: [String:Translation]?
+
 	required init(data: [String: AnyObject]) {
 		author <<< data["author"]
 		name <<< data["name"]
