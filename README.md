@@ -37,9 +37,9 @@ Operator List
 | Operator  | Functionality                                                                                              |
 | --------- | ---------------------------------------------------------------------------------------------------------- |
 | __<<<__   | For deserializing data into primitive types, NSDate or NSURL.                                              |
-| __<<<*__  | For deserializing data into an array of primitive types, NSDate or NSURL.                                  |
+| __<<<*__  | For deserializing data into an array or dictionary of primitive types, NSDate or NSURL.                                  |
 | __<<<<__  | For deserializing data into an instance of a class. __Supports JSON strings__                              |
-| __<<<<*__ | For deserializing data into an array that contains instances of a certain class. __Supports JSON strings__ |
+| __<<<<*__ | For deserializing data into an array or dicrionary that contains instances of a certain class. __Supports JSON strings__ |
 
 Simple Tutorial
 --------------
@@ -51,11 +51,27 @@ Please take a good look at the operator list before you start reading this tutor
 	"books": [
 		{
 			"author": "Irvine Welsh",
-			"name": "Filth"		
+			"name": "Filth",
+			"translations": {
+				"fr": {
+					"localized-name": "saleté",
+					"print-run": 10000
+				},
+				"de": {
+					"localized-name": "Schmutz",
+					"print-run": 150000
+				}
+			}
 		},
 		{
 			"author": "Bret Easton Ellis",
-			"name": "American Psycho"
+			"name": "American Psycho",
+			"translations": {
+				"de": {
+					"localized-name": "Amerikanisch Psychopath",
+					"print-run": 69000
+				}
+			}
 		}	
 	]
 }
@@ -67,6 +83,11 @@ From this response it is clear that we have a book model similar to the implemen
 class Book {
 	var author: String?
 	var name: String?
+	var translations: [String:Translation]?
+}
+class Translation {
+	var localizedName: String?
+	var printRun: Int?
 }
 ```
 
@@ -80,6 +101,16 @@ class Book: Deserializable {
 	required init(data: [String: AnyObject]) {
 		author <<< data["author"]
 		name <<< data["name"]
+		translations <<<<* data["translations"]
+	}
+}
+class Translation {
+	var localizedName: String?
+	var printRun: Int?
+
+	required init(data: [String: AnyObject]) {
+		localizedName <<< data["localized-name"]
+		printRun <<< data["print-run"]
 	}
 }
 ```
