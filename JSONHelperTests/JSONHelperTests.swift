@@ -21,6 +21,9 @@ class JSONHelperTests: XCTestCase {
     "stringArray": ["a", "b", "c"],
     "intArray": [1, 2, 3, 4, 5],
     "boolArray": [true, false],
+    "stringMap": ["m": "a", "n": "b", "o": "c"],
+    "intMap": ["m": 1, "n": 2, "o": 3, "p": 4, "q": 5],
+    "boolMap": ["m": true, "n": false],
     "instance": [
       "name": "b"
     ],
@@ -29,6 +32,14 @@ class JSONHelperTests: XCTestCase {
         "name": "c"
       ], [
         "name": "d"
+      ]
+    ],
+    "instanceDictionary": [
+      "m": [
+        "name": "e"
+      ],
+      "n": [
+        "name": "f"
       ]
     ]
   ]
@@ -160,6 +171,24 @@ class JSONHelperTests: XCTestCase {
     XCTAssertEqual(property.count, 2, "[Bool] property should have 2 members")
   }
 
+  func testStringMap() {
+    var property = [String: String]()
+    property <<<* dummyResponse["stringMap"]
+    XCTAssertEqual(property["m"]!, "a", "the value of [String: String][\"m\"] should be equal to 'a'")
+  }
+
+  func testIntMap() {
+    var property = [String: Int]()
+    property <<<* dummyResponse["intMap"]
+    XCTAssertEqual(property["m"]!, 1, "the value of [String: Int][\"m\"] should be equal to 1")
+  }
+
+  func testBoolMap() {
+    var property = [String: Bool]()
+    property <<<* dummyResponse["boolMap"]
+    XCTAssertEqual(property["m"]!, true, "the value of [String: Bool][\"m\"] should be true")
+  }
+
   func testInstance() {
     var instance = Person()
     instance <<<< dummyResponse["instance"]
@@ -170,6 +199,12 @@ class JSONHelperTests: XCTestCase {
     var property = [Person]()
     property <<<<* dummyResponse["instanceArray"]
     XCTAssertEqual(property.count, 2, "[Person] property should have 2 members")
+  }
+
+  func testInstanceDictionary() {
+    var property = [String: Person]()
+    property <<<<* dummyResponse["instanceDictionary"]
+    XCTAssertEqual(property["m"]!.name, "e", "the name of [String:Person][\"e\"] should be equal to 'e'")
   }
 
   func testJSONStringParsing() {

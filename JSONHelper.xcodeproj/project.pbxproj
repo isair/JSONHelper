@@ -42,7 +42,7 @@
 		5FAD07691A70F2FC00C4D09E /* JSONHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSONHelper.h; sourceTree = "<group>"; };
 		5FAD076F1A70F2FC00C4D09E /* JSONHelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONHelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FAD07751A70F2FC00C4D09E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5FAD07761A70F2FC00C4D09E /* JSONHelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelperTests.swift; sourceTree = "<group>"; };
+		5FAD07761A70F2FC00C4D09E /* JSONHelperTests.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = JSONHelperTests.swift; sourceTree = "<group>"; tabWidth = 2; };
 		5FAD07841A70F31300C4D09E /* JSONHelperExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONHelperExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FAD07871A70F31300C4D09E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FAD07881A70F31300C4D09E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 		5FAD07981A70F31300C4D09E /* JSONHelperExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONHelperExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FAD079D1A70F31300C4D09E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FAD079E1A70F31300C4D09E /* JSONHelperExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelperExampleTests.swift; sourceTree = "<group>"; };
-		5FC4468E1A70F3750038EE4E /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
+		5FC4468E1A70F3750038EE4E /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; tabWidth = 2; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
