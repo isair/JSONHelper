@@ -48,16 +48,16 @@ Please take a good look at the operator list before you start reading this tutor
 
 ```json
 {
-	"books": [
-		{
-			"author": "Irvine Welsh",
-			"name": "Filth"		
-		},
-		{
-			"author": "Bret Easton Ellis",
-			"name": "American Psycho"
-		}	
-	]
+  "books": [
+    {
+      "author": "Irvine Welsh",
+      "name": "Filth"
+    },
+    {
+      "author": "Bret Easton Ellis",
+      "name": "American Psycho"
+    }
+  ]
 }
 ```
 
