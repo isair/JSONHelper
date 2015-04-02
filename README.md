@@ -1,6 +1,6 @@
 
-JSONHelper
-==========
+#JSONHelper
+
 [![Build Status](https://travis-ci.org/isair/JSONHelper.svg?branch=master)](https://travis-ci.org/isair/JSONHelper)
 [![Stories in Ready](https://badge.waffle.io/isair/JSONHelper.png?label=ready&title=Ready)](https://waffle.io/isair/JSONHelper)
 [![Gratipay](https://img.shields.io/gratipay/bsencan91.svg)](https://gratipay.com/bsencan91/)
@@ -8,8 +8,7 @@ JSONHelper
 
 Lightning fast JSON deserialization for iOS &amp; OS X written in Swift. Expanded upon the ideas found in [this blog post](http://robots.thoughtbot.com/efficient-json-in-swift-with-functional-concepts-and-generics).
 
-Table of Contents
---------------
+##Table of Contents
 
 1. [Introduction](#introduction)
 2. [Installation](#installation)
@@ -19,8 +18,7 @@ Table of Contents
 6. [NSDate and NSURL Deserialization](#nsdate-and-nsurl-deserialization)
 7. [JSON String Deserialization](#json-string-deserialization)
 
-Introduction
---------------
+##Introduction
 
 JSONHelper is a library written to make sure that deserializing data obtained from an API is as easy as possible. It doesn't depend on any networking libraries, and works equally well with any of them.
 
@@ -46,12 +44,11 @@ Add the following line in your `Podfile`.
 pod "JSONHelper"
 ```	
 
-### Drag & Drop
+###Drag & Drop
 
 You can also add [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/JSONHelper.swift) directly into your project.
 
-Operator List
---------------
+##Operator List
 
 | Operator  | Functionality                                                                                              |
 | --------- | ---------------------------------------------------------------------------------------------------------- |
@@ -60,8 +57,7 @@ Operator List
 | __<<<<__  | For deserializing data into an instance of a class. __Supports JSON strings__                              |
 | __<<<<*__ | For deserializing data into an array that contains instances of a certain class. __Supports JSON strings__ |
 
-Simple Tutorial
---------------
+##Simple Tutorial
 
 Please take a good look at the operator list before you start reading this tutorial. Also, for simplicity, I'm going to assume you use [AFNetworking](https://github.com/AFNetworking/AFNetworking) as your networking library. Let's say we have an endpoint at __http://yoursite.com/your-endpoint/__ which gives the following response when a simple __GET__ request is sent to it.
 
@@ -125,8 +121,7 @@ AFHTTPRequestOperationManager().GET(
 })
 ```
 
-Assigning Default Values
---------------
+##Assigning Default Values
 
 You can easily assign default values to variables in cases where you want them to have a certain value when deserialization fails.
 
@@ -140,8 +135,7 @@ internal struct User: Deserializable {
 }
 ````
 
-NSDate and NSURL Deserialization
---------------
+##NSDate and NSURL Deserialization
 
 The __<<<__ and __<<<*__ operators also support deserializing data into NSDate and NSURL variables.
 
@@ -164,8 +158,7 @@ let myDayOff: NSDate?
 myDayOff <<< 1414172803 // You can also use unix timestamps.
 ````
 
-JSON String Deserialization
---------------
+##JSON String Deserialization
 
 You can deserialize instances and arrays of instances directly from a JSON string as well. Here is a quick example.
 
