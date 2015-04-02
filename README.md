@@ -26,10 +26,29 @@ JSONHelper is a library written to make sure that deserializing data obtained fr
 
 __Requires iOS 7 or later and Xcode 6.1.x__
 
-Installation
---------------
+##Installation
 
-I plan to support [CocoaPods](http://cocoapods.org) when it starts working with Swift libraries. Until then, as a quick and easy (yet a bit dirty) method, I recommend directly adding [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/JSONHelper.swift) into your project.
+###[Carthage](https://github.com/Carthage/Carthage#installing-carthage)
+
+Add the following line to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
+
+```
+github "isair/ManualLayout"
+```
+
+Then do `carthage update`. After that, add the framework to your project.
+
+###[Cocoapods](https://github.com/CocoaPods/CocoaPods)
+
+Add the following line in your `Podfile`.
+
+```
+pod "ManualLayout"
+```	
+
+### Drag & Drop
+
+You can also add [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/JSONHelper.swift) directly into your project.
 
 Operator List
 --------------
