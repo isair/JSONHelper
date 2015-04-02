@@ -30,86 +30,39 @@
 
 import Foundation
 
-// Internally used functions, but defined as public as they might serve some
-// purpose outside this library.
-public func JSONString(object: AnyObject?) -> String? {
-  return object as? String
-}
-
-public func JSONStrings(object: AnyObject?) -> [String]? {
-  return object as? [String]
-}
-
-public func JSONInt(object: AnyObject?) -> Int? {
-  return object as? Int
-}
-
-public func JSONInts(object: AnyObject?) -> [Int]? {
-  return object as? [Int]
-}
-
-public func JSONBool(object: AnyObject?) -> Bool? {
-  return object as? Bool
-}
-
-public func JSONBools(object: AnyObject?) -> [Bool]? {
-  return object as? [Bool]
-}
-
-public func JSONArray(object: AnyObject?) -> [AnyObject]? {
-  return object as? [AnyObject]
-}
-
-public func JSONObject(object: AnyObject?) -> [String: AnyObject]? {
-  return object as? [String: AnyObject]
-}
-
-public func JSONObjects(object: AnyObject?) -> [[String: AnyObject]]? {
-  return object as? [[String: AnyObject]]
-}
-
-// Operator for use in "if let" conversions.
-infix operator >>> { associativity left precedence 150 }
-
-public func >>> <A, B>(a: A?, f: A -> B?) -> B? {
-
-  if let x = a {
-    return f(x)
-  } else {
-    return nil
-  }
-}
-
-// MARK: - Operator for quick primitive type deserialization.
+// MARK: Operator for quick primitive type deserialization.
 
 infix operator <<< { associativity right precedence 150 }
 
 // For optionals.
 public func <<< <T>(inout property: T?, value: AnyObject?) -> T? {
   var newValue: T?
-
   if let unwrappedValue: AnyObject = value {
-
-    if let convertedValue = unwrappedValue as? T { // Direct conversion.
+    // We unwrapped the given value successfully, try to convert.
+    if let convertedValue = unwrappedValue as? T {
+      // Convert by just type-casting.
       newValue = convertedValue
-    } else if property is Int? && unwrappedValue is String { // String -> Int
-
-      if let intValue = "\(unwrappedValue)".toInt() {
-        newValue = intValue as T
-      }
-    } else if property is NSURL? { // String -> NSURL
-
-      if let stringValue = unwrappedValue as? String {
-        newValue = NSURL(string: stringValue) as T?
-      }
-    } else if property is NSDate? { // Int || Double || NSNumber -> NSDate
-
-      if let timestamp = value as? Int {
-        newValue = NSDate(timeIntervalSince1970: Double(timestamp)) as T
-      } else if let timestamp = value as? Double {
-        newValue = NSDate(timeIntervalSince1970: timestamp) as T
-      } else if let timestamp = value as? NSNumber {
-        newValue = NSDate(timeIntervalSince1970: timestamp.doubleValue) as T
+    } else {
+      // Convert by processing the value first.
+      switch property {
+      case is Int?:
+        if unwrappedValue is String {
+          if let intValue = "\(unwrappedValue)".toInt() {
+            newValue = intValue as? T
+          }
+        }
+      case is NSURL?:
+        newValue = NSURL(string: "\(unwrappedValue)") as? T
+      case is NSDate?:
+        if let timestamp = value as? Int {
+          newValue = NSDate(timeIntervalSince1970: Double(timestamp)) as? T
+        } else if let timestamp = value as? Double {
+          newValue = NSDate(timeIntervalSince1970: timestamp) as? T
+        } else if let timestamp = value as? NSNumber {
+          newValue = NSDate(timeIntervalSince1970: timestamp.doubleValue) as? T
+        }
+      default:
+        break
       }
     }
   }
@@ -128,13 +81,10 @@ public func <<< <T>(inout property: T, value: AnyObject?) -> T {
 // Special handling for value and format pair to NSDate conversion.
 public func <<< (inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
   var newValue: NSDate?
-
-  if let dateString = valueAndFormat.value >>> JSONString {
-
-    if let formatString = valueAndFormat.format >>> JSONString {
+  if let dateString = valueAndFormat.value as? String {
+    if let formatString = valueAndFormat.format as? String {
       let dateFormatter = NSDateFormatter()
       dateFormatter.dateFormat = formatString
-
       if let newDate = dateFormatter.dateFromString(dateString) {
         newValue = newDate
       }
@@ -156,8 +106,7 @@ public func <<< (inout property: NSDate, valueAndFormat: (value: AnyObject?, for
 infix operator <<<* { associativity right precedence 150 }
 
 public func <<<* (inout array: [String]?, value: AnyObject?) -> [String]? {
-
-  if let stringArray = value >>> JSONStrings {
+  if let stringArray = value as? [String] {
     array = stringArray
   } else {
     array = nil
@@ -173,8 +122,7 @@ public func <<<* (inout array: [String], value: AnyObject?) -> [String] {
 }
 
 public func <<<* (inout array: [Int]?, value: AnyObject?) -> [Int]? {
-
-  if let intArray = value >>> JSONInts {
+  if let intArray = value as? [Int] {
     array = intArray
   } else {
     array = nil
@@ -207,7 +155,6 @@ public func <<<* (inout array: [Float], value: AnyObject?) -> [Float] {
 }
 
 public func <<<* (inout array: [Double]?, value: AnyObject?) -> [Double]? {
-
   if let doubleArrayDoubleExcitement = value as? [Double] {
     array = doubleArrayDoubleExcitement
   } else {
@@ -224,8 +171,7 @@ public func <<<* (inout array: [Double], value: AnyObject?) -> [Double] {
 }
 
 public func <<<* (inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
-
-  if let boolArray = value >>> JSONBools {
+  if let boolArray = value as? [Bool] {
     array = boolArray
   } else {
     array = nil
@@ -241,12 +187,9 @@ public func <<<* (inout array: [Bool], value: AnyObject?) -> [Bool] {
 }
 
 public func <<<* (inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
-
-  if let stringURLArray = value >>> JSONStrings {
+  if let stringURLArray = value as? [String] {
     array = [NSURL]()
-
     for stringURL in stringURLArray {
-
       if let url = NSURL(string: stringURL) {
         array!.append(url)
       }
@@ -266,16 +209,12 @@ public func <<<* (inout array: [NSURL], value: AnyObject?) -> [NSURL] {
 
 public func <<<* (inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
   var newValue: [NSDate]?
-
-  if let dateStringArray = valueAndFormat.value >>> JSONStrings {
-
-    if let formatString = valueAndFormat.format >>> JSONString {
+  if let dateStringArray = valueAndFormat.value as? [String] {
+    if let formatString = valueAndFormat.format as? String {
       let dateFormatter = NSDateFormatter()
       dateFormatter.dateFormat = formatString
       newValue = [NSDate]()
-
       for dateString in dateStringArray {
-
         if let date = dateFormatter.dateFromString(dateString) {
           newValue!.append(date)
         }
@@ -325,8 +264,7 @@ public protocol Deserializable {
 }
 
 public func <<<< <T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
-
-  if let data = dataObject >>> JSONObject {
+  if let data = dataObject as? [String: AnyObject] {
     instance = T(data: data)
   } else {
     instance = nil
@@ -346,10 +284,8 @@ public func <<<< <T: Deserializable>(inout instance: T, dataObject: AnyObject?) 
 infix operator <<<<* { associativity right precedence 150 }
 
 public func <<<<* <T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
-
-  if let dataArray = dataObject >>> JSONObjects {
+  if let dataArray = dataObject as? [[String: AnyObject]] {
     array = [T]()
-
     for data in dataArray {
       array!.append(T(data: data))
     }
