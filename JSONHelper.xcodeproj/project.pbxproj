@@ -17,6 +17,8 @@
 		5FAD07931A70F31300C4D09E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FAD07911A70F31300C4D09E /* LaunchScreen.xib */; };
 		5FAD079F1A70F31300C4D09E /* JSONHelperExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FAD079E1A70F31300C4D09E /* JSONHelperExampleTests.swift */; };
 		5FC4468F1A70F3750038EE4E /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4468E1A70F3750038EE4E /* JSONHelper.swift */; };
+		D76C52021ACD46B100B49735 /* JSONHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FC4468E1A70F3750038EE4E /* JSONHelper.swift */; };
+		D76C52051ACD46B100B49735 /* JSONHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FAD07691A70F2FC00C4D09E /* JSONHelper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		5FAD079D1A70F31300C4D09E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FAD079E1A70F31300C4D09E /* JSONHelperExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelperExampleTests.swift; sourceTree = "<group>"; };
 		5FC4468E1A70F3750038EE4E /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
+		D76C520A1ACD46B100B49735 /* JSONHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSONHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D76C520B1ACD46B200B49735 /* InfoMac.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = InfoMac.plist; path = /Users/lex/Git/JSONHelper/InfoMac.plist; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +90,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D76C52031ACD46B100B49735 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -107,6 +118,7 @@
 				5FAD076F1A70F2FC00C4D09E /* JSONHelperTests.xctest */,
 				5FAD07841A70F31300C4D09E /* JSONHelperExample.app */,
 				5FAD07981A70F31300C4D09E /* JSONHelperExampleTests.xctest */,
+				D76C520A1ACD46B100B49735 /* JSONHelper.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -124,6 +136,7 @@
 		5FAD07671A70F2FC00C4D09E /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D76C520B1ACD46B200B49735 /* InfoMac.plist */,
 				5FAD07681A70F2FC00C4D09E /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -192,6 +205,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FAD076A1A70F2FC00C4D09E /* JSONHelper.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D76C52041ACD46B100B49735 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D76C52051ACD46B100B49735 /* JSONHelper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,6 +290,24 @@
 			productReference = 5FAD07981A70F31300C4D09E /* JSONHelperExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D76C52001ACD46B100B49735 /* JSONHelperMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D76C52071ACD46B100B49735 /* Build configuration list for PBXNativeTarget "JSONHelperMac" */;
+			buildPhases = (
+				D76C52011ACD46B100B49735 /* Sources */,
+				D76C52031ACD46B100B49735 /* Frameworks */,
+				D76C52041ACD46B100B49735 /* Headers */,
+				D76C52061ACD46B100B49735 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSONHelperMac;
+			productName = JSONHelper;
+			productReference = D76C520A1ACD46B100B49735 /* JSONHelper.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -307,6 +346,7 @@
 			projectRoot = "";
 			targets = (
 				5FAD07631A70F2FC00C4D09E /* JSONHelper */,
+				D76C52001ACD46B100B49735 /* JSONHelperMac */,
 				5FAD076E1A70F2FC00C4D09E /* JSONHelperTests */,
 				5FAD07831A70F31300C4D09E /* JSONHelperExample */,
 				5FAD07971A70F31300C4D09E /* JSONHelperExampleTests */,
@@ -346,6 +386,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D76C52061ACD46B100B49735 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -379,6 +426,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FAD079F1A70F31300C4D09E /* JSONHelperExampleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D76C52011ACD46B100B49735 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D76C52021ACD46B100B49735 /* JSONHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -623,6 +678,41 @@
 			};
 			name = Release;
 		};
+		D76C52081ACD46B100B49735 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/InfoMac.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = JSONHelper;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		D76C52091ACD46B100B49735 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "$(SRCROOT)/InfoMac.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = JSONHelper;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -667,6 +757,15 @@
 			buildConfigurations = (
 				5FAD07A41A70F31300C4D09E /* Debug */,
 				5FAD07A51A70F31300C4D09E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D76C52071ACD46B100B49735 /* Build configuration list for PBXNativeTarget "JSONHelperMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D76C52081ACD46B100B49735 /* Debug */,
+				D76C52091ACD46B100B49735 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
