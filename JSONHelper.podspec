@@ -1,17 +1,17 @@
-Pod::Spec.new do |spec|
-  spec.name         = 'JSONHelper'
-  spec.version      = '1.4.1'
-  spec.summary      = 'Lightning fast JSON deserialization and value conversion library for iOS & OS X written in Swift.'
+Pod::Spec.new do |s|
+  s.name = 'JSONHelper'
+  s.version = '1.4.2'
+  s.license = { :type => 'zlib', :file => 'LICENSE' }
+  s.summary = 'Lightning fast JSON deserialization and value conversion library for iOS & OS X written in Swift.'
 
-  spec.homepage     = 'https://github.com/isair/JSONHelper'
-  spec.license      = { :type => 'zlib', :file => 'LICENSE' }
-  spec.author       = { 'Baris Sencan' => 'barissncn@gmail.com' }
+  s.homepage = 'https://github.com/isair/JSONHelper'
+  s.author = { 'Baris Sencan' => 'barissncn@gmail.com' }
+  s.social_media_url = 'https://twitter.com/bsencan91'
 
-  spec.ios.deployment_target = '8.0'
-  spec.osx.deployment_target = '10.9'
-
-  spec.source       = { :git => 'https://github.com/isair/JSONHelper.git', :tag => '1.4.1' }
-  spec.source_files = 'JSONHelper/*.swift'
-  spec.frameworks   = 'Foundation'
-  spec.requires_arc = true
+  s.ios.deployment_target = '8.0'
+  s.osx.deployment_target = '10.9'
+  s.source       = { :git => 'https://github.com/isair/JSONHelper.git', :tag => s.version }
+  s.source_files = 'JSONHelper'
+  s.frameworks   = 'Foundation'
+  s.requires_arc = true
 end
