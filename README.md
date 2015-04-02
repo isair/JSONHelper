@@ -33,7 +33,7 @@ __Requires iOS 7 or later and Xcode 6.1.x__
 Add the following line to your [Cartfile](https://github.com/Carthage/Carthage/blob/master/Documentation/Artifacts.md#cartfile).
 
 ```
-github "isair/ManualLayout"
+github "isair/JSONHelper"
 ```
 
 Then do `carthage update`. After that, add the framework to your project.
@@ -43,7 +43,7 @@ Then do `carthage update`. After that, add the framework to your project.
 Add the following line in your `Podfile`.
 
 ```
-pod "ManualLayout"
+pod "JSONHelper"
 ```	
 
 ### Drag & Drop
