@@ -30,6 +30,10 @@
 
 import Foundation
 
+/// A type of dictionary that only uses strings for keys and can contain any
+/// type of object as a value.
+public typealias JSONDictionary = [String: AnyObject]
+
 // MARK: Operator for quick primitive type deserialization.
 
 infix operator <<< { associativity right precedence 150 }
@@ -260,11 +264,11 @@ public func <<<* (inout array: [NSDate], value: AnyObject?) -> [NSDate] {
 infix operator <<<< { associativity right precedence 150 }
 
 public protocol Deserializable {
-  init(data: [String: AnyObject])
+  init(data: JSONDictionary)
 }
 
 public func <<<< <T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
-  if let data = dataObject as? [String: AnyObject] {
+  if let data = dataObject as? JSONDictionary {
     instance = T(data: data)
   } else {
     instance = nil
@@ -284,7 +288,7 @@ public func <<<< <T: Deserializable>(inout instance: T, dataObject: AnyObject?) 
 infix operator <<<<* { associativity right precedence 150 }
 
 public func <<<<* <T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
-  if let dataArray = dataObject as? [[String: AnyObject]] {
+  if let dataArray = dataObject as? [JSONDictionary] {
     array = [T]()
     for data in dataArray {
       array!.append(T(data: data))
