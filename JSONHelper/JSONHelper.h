@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Baris Sencan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for JSONHelper.
 FOUNDATION_EXPORT double JSONHelperVersionNumber;
