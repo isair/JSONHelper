@@ -1,1 +1,5 @@
 language: objective-c
+osx_image: xcode61
+script:
+  - xctool -project JSONHelper.xcodeproj -scheme JSONHelperiOS build
+  - xctool -project JSONHelper.xcodeproj -scheme JSONHelperMac build
