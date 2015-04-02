@@ -101,7 +101,7 @@ public func <<< (inout property: NSDate, valueAndFormat: (value: AnyObject?, for
   return property
 }
 
-// MARK: - Operator for quick primitive array deserialization.
+// MARK: Operator for quick primitive array deserialization.
 
 infix operator <<<* { associativity right precedence 150 }
 
@@ -255,7 +255,7 @@ public func <<<* (inout array: [NSDate], value: AnyObject?) -> [NSDate] {
   return array
 }
 
-// MARK: - Operator for quick class deserialization.
+// MARK: Operator for quick class deserialization.
 
 infix operator <<<< { associativity right precedence 150 }
 
@@ -279,7 +279,7 @@ public func <<<< <T: Deserializable>(inout instance: T, dataObject: AnyObject?) 
   return instance
 }
 
-// MARK: - Operator for quick deserialization into an array of instances of a deserializable class.
+// MARK: Operator for quick deserialization into an array of instances of a deserializable class.
 
 infix operator <<<<* { associativity right precedence 150 }
 
@@ -302,7 +302,7 @@ public func <<<<* <T: Deserializable>(inout array: [T], dataObject: AnyObject?) 
   return array
 }
 
-// MARK: - Overloading of own operators for deserialization of JSON strings.
+// MARK: Overloading of own operators for deserialization of JSON strings.
 
 private func dataStringToObject(dataString: String) -> AnyObject? {
   var data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
