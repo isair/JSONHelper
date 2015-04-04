@@ -76,7 +76,7 @@ internal struct Book {
 }
 ```
 
-We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer and use our deserialization operator `<--` in it. The complete model should look like this:
+We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer and use our deserialization operator (`<--`) in it. The complete model should look like this:
 
 ```swift
 internal struct Book: Deserializable {
