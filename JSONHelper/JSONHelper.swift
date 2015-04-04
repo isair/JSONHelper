@@ -34,12 +34,13 @@ import Foundation
 /// type of object as a value.
 public typealias JSONDictionary = [String: AnyObject]
 
-// MARK: Operator for quick primitive type deserialization.
+/// Operator for use in deserialization operations.
+infix operator <-- { associativity right precedence 150 }
 
-infix operator <<< { associativity right precedence 150 }
+/// MARK: Primitive Type Deserialization
 
 // For optionals.
-public func <<< <T>(inout property: T?, value: AnyObject?) -> T? {
+public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
   var newValue: T?
   if let unwrappedValue: AnyObject = value {
     // We unwrapped the given value successfully, try to convert.
@@ -75,15 +76,15 @@ public func <<< <T>(inout property: T?, value: AnyObject?) -> T? {
 }
 
 // For non-optionals.
-public func <<< <T>(inout property: T, value: AnyObject?) -> T {
+public func <-- <T>(inout property: T, value: AnyObject?) -> T {
   var newValue: T?
-  newValue <<< value
+  newValue <-- value
   if let newValue = newValue { property = newValue }
   return property
 }
 
 // Special handling for value and format pair to NSDate conversion.
-public func <<< (inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
+public func <-- (inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
   var newValue: NSDate?
   if let dateString = valueAndFormat.value as? String {
     if let formatString = valueAndFormat.format as? String {
@@ -98,18 +99,16 @@ public func <<< (inout property: NSDate?, valueAndFormat: (value: AnyObject?, fo
   return property
 }
 
-public func <<< (inout property: NSDate, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate {
+public func <-- (inout property: NSDate, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate {
   var date: NSDate?
-  date <<< valueAndFormat
+  date <-- valueAndFormat
   if let date = date { property = date }
   return property
 }
 
-// MARK: Operator for quick primitive array deserialization.
+// MARK: Primitive Array Deserialization
 
-infix operator <<<* { associativity right precedence 150 }
-
-public func <<<* (inout array: [String]?, value: AnyObject?) -> [String]? {
+public func <-- (inout array: [String]?, value: AnyObject?) -> [String]? {
   if let stringArray = value as? [String] {
     array = stringArray
   } else {
@@ -118,14 +117,14 @@ public func <<<* (inout array: [String]?, value: AnyObject?) -> [String]? {
   return array
 }
 
-public func <<<* (inout array: [String], value: AnyObject?) -> [String] {
+public func <-- (inout array: [String], value: AnyObject?) -> [String] {
   var newValue: [String]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [Int]?, value: AnyObject?) -> [Int]? {
+public func <-- (inout array: [Int]?, value: AnyObject?) -> [Int]? {
   if let intArray = value as? [Int] {
     array = intArray
   } else {
@@ -134,14 +133,14 @@ public func <<<* (inout array: [Int]?, value: AnyObject?) -> [Int]? {
   return array
 }
 
-public func <<<* (inout array: [Int], value: AnyObject?) -> [Int] {
+public func <-- (inout array: [Int], value: AnyObject?) -> [Int] {
   var newValue: [Int]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [Float]?, value: AnyObject?) -> [Float]? {
+public func <-- (inout array: [Float]?, value: AnyObject?) -> [Float]? {
 
   if let floatArray = value as? [Float] {
     array = floatArray
@@ -151,14 +150,14 @@ public func <<<* (inout array: [Float]?, value: AnyObject?) -> [Float]? {
   return array
 }
 
-public func <<<* (inout array: [Float], value: AnyObject?) -> [Float] {
+public func <-- (inout array: [Float], value: AnyObject?) -> [Float] {
   var newValue: [Float]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [Double]?, value: AnyObject?) -> [Double]? {
+public func <-- (inout array: [Double]?, value: AnyObject?) -> [Double]? {
   if let doubleArrayDoubleExcitement = value as? [Double] {
     array = doubleArrayDoubleExcitement
   } else {
@@ -167,14 +166,14 @@ public func <<<* (inout array: [Double]?, value: AnyObject?) -> [Double]? {
   return array
 }
 
-public func <<<* (inout array: [Double], value: AnyObject?) -> [Double] {
+public func <-- (inout array: [Double], value: AnyObject?) -> [Double] {
   var newValue: [Double]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
+public func <-- (inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
   if let boolArray = value as? [Bool] {
     array = boolArray
   } else {
@@ -183,14 +182,14 @@ public func <<<* (inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
   return array
 }
 
-public func <<<* (inout array: [Bool], value: AnyObject?) -> [Bool] {
+public func <-- (inout array: [Bool], value: AnyObject?) -> [Bool] {
   var newValue: [Bool]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
+public func <-- (inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
   if let stringURLArray = value as? [String] {
     array = [NSURL]()
     for stringURL in stringURLArray {
@@ -204,14 +203,14 @@ public func <<<* (inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
   return array
 }
 
-public func <<<* (inout array: [NSURL], value: AnyObject?) -> [NSURL] {
+public func <-- (inout array: [NSURL], value: AnyObject?) -> [NSURL] {
   var newValue: [NSURL]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
+public func <-- (inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
   var newValue: [NSDate]?
   if let dateStringArray = valueAndFormat.value as? [String] {
     if let formatString = valueAndFormat.format as? String {
@@ -229,21 +228,19 @@ public func <<<* (inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, fo
   return array
 }
 
-public func <<<* (inout array: [NSDate], valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate] {
+public func <-- (inout array: [NSDate], valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate] {
   var newValue: [NSDate]?
-  newValue <<<* valueAndFormat
+  newValue <-- valueAndFormat
   if let newValue = newValue { array = newValue }
   return array
 }
 
-public func <<<* (inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
-
+public func <-- (inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
   if let timestamps = value as? [AnyObject] {
     array = [NSDate]()
-
     for timestamp in timestamps {
       var date: NSDate?
-      date <<< timestamp
+      date <-- timestamp
       if date != nil { array!.append(date!) }
     }
   } else {
@@ -252,22 +249,20 @@ public func <<<* (inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
   return array
 }
 
-public func <<<* (inout array: [NSDate], value: AnyObject?) -> [NSDate] {
+public func <-- (inout array: [NSDate], value: AnyObject?) -> [NSDate] {
   var newValue: [NSDate]?
-  newValue <<<* value
+  newValue <-- value
   if let newValue = newValue { array = newValue }
   return array
 }
 
-// MARK: Operator for quick class deserialization.
-
-infix operator <<<< { associativity right precedence 150 }
+// MARK: Custom Object Deserialization
 
 public protocol Deserializable {
   init(data: JSONDictionary)
 }
 
-public func <<<< <T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
+public func <-- <T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
   if let data = dataObject as? JSONDictionary {
     instance = T(data: data)
   } else {
@@ -276,18 +271,16 @@ public func <<<< <T: Deserializable>(inout instance: T?, dataObject: AnyObject?)
   return instance
 }
 
-public func <<<< <T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
+public func <-- <T: Deserializable>(inout instance: T, dataObject: AnyObject?) -> T {
   var newInstance: T?
-  newInstance <<<< dataObject
+  newInstance <-- dataObject
   if let newInstance = newInstance { instance = newInstance }
   return instance
 }
 
-// MARK: Operator for quick deserialization into an array of instances of a deserializable class.
+// MARK: Custom Object Array Deserialization
 
-infix operator <<<<* { associativity right precedence 150 }
-
-public func <<<<* <T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
+public func <-- <T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
   if let dataArray = dataObject as? [JSONDictionary] {
     array = [T]()
     for data in dataArray {
@@ -299,14 +292,14 @@ public func <<<<* <T: Deserializable>(inout array: [T]?, dataObject: AnyObject?)
   return array
 }
 
-public func <<<<* <T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
+public func <-- <T: Deserializable>(inout array: [T], dataObject: AnyObject?) -> [T] {
   var newArray: [T]?
-  newArray <<<<* dataObject
+  newArray <-- dataObject
   if let newArray = newArray { array = newArray }
   return array
 }
 
-// MARK: Overloading of own operators for deserialization of JSON strings.
+// MARK: JSON String Deserialization
 
 private func dataStringToObject(dataString: String) -> AnyObject? {
   var data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -314,18 +307,18 @@ private func dataStringToObject(dataString: String) -> AnyObject? {
   return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
 }
 
-public func <<<< <T: Deserializable>(inout instance: T?, dataString: String) -> T? {
-  return instance <<<< dataStringToObject(dataString)
+public func <-- <T: Deserializable>(inout instance: T?, dataString: String) -> T? {
+  return instance <-- dataStringToObject(dataString)
 }
 
-public func <<<< <T: Deserializable>(inout instance: T, dataString: String) -> T {
-  return instance <<<< dataStringToObject(dataString)
+public func <-- <T: Deserializable>(inout instance: T, dataString: String) -> T {
+  return instance <-- dataStringToObject(dataString)
 }
 
-public func <<<<* <T: Deserializable>(inout array: [T]?, dataString: String) -> [T]? {
-  return array <<<<* dataStringToObject(dataString)
+public func <-- <T: Deserializable>(inout array: [T]?, dataString: String) -> [T]? {
+  return array <-- dataStringToObject(dataString)
 }
 
-public func <<<<* <T: Deserializable>(inout array: [T], dataString: String) -> [T] {
-  return array <<<<* dataStringToObject(dataString)
+public func <-- <T: Deserializable>(inout array: [T], dataString: String) -> [T] {
+  return array <-- dataStringToObject(dataString)
 }
