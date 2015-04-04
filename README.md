@@ -48,18 +48,9 @@ pod "JSONHelper"
 
 You can also add [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/JSONHelper.swift) directly into your project.
 
-##Operator List
-
-| Operator  | Functionality                                                                                              |
-| --------- | ---------------------------------------------------------------------------------------------------------- |
-| __<<<__   | For deserializing data into primitive types, NSDate or NSURL.                                              |
-| __<<<*__  | For deserializing data into an array of primitive types, NSDate or NSURL.                                  |
-| __<<<<__  | For deserializing data into an instance of a class. __Supports JSON strings__                              |
-| __<<<<*__ | For deserializing data into an array that contains instances of a certain class. __Supports JSON strings__ |
-
 ##Simple Tutorial
 
-Please take a good look at the operator list before you start reading this tutorial. Also, for simplicity, I'm going to assume you use [AFNetworking](https://github.com/AFNetworking/AFNetworking) as your networking library. Let's say we have an endpoint at __http://yoursite.com/your-endpoint/__ which gives the following response when a simple __GET__ request is sent to it.
+First of all I'm going to assume you use [AFNetworking](https://github.com/AFNetworking/AFNetworking) as your networking library; for simplicity. Let's say we have an endpoint at __http://yoursite.com/your-endpoint/__ which gives the following response when a simple __GET__ request is sent to it.
 
 ```json
 {
@@ -85,7 +76,7 @@ internal struct Book {
 }
 ```
 
-We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer. The complete model should look like this:
+We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer and use our deserialization operator `<--` in it. The complete model should look like this:
 
 ```swift
 internal struct Book: Deserializable {
@@ -93,8 +84,8 @@ internal struct Book: Deserializable {
   var name: String?
 
   init(data: [String: AnyObject]) {
-    author <<< data["author"]
-    name <<< data["name"]
+    author <-- data["author"]
+    name <-- data["name"]
   }
 }
 ```
@@ -107,7 +98,7 @@ AFHTTPRequestOperationManager().GET(
   parameters: nil,
   success: { operation, data in
     var books: [Book]?
-    books <<<<* data["books"]
+    books <-- data["books"]
     
     if let books = books {
       // Response contained a books array, and we deserialized it. Do what you want here.
@@ -130,32 +121,32 @@ internal struct User: Deserializable {
   var name = "Guest"
   
   required init(data: [String: AnyObject]) {
-    name <<< data["name"]
+    name <-- data["name"]
   }
 }
 ````
 
 ##NSDate and NSURL Deserialization
 
-The __<<<__ and __<<<*__ operators also support deserializing data into NSDate and NSURL variables.
+You can also deserialize data into NSDate and NSURL variables, or arrays of them.
 
 ````swift
 let website: NSURL?
 let imageURLs: [NSURL]?
 
-website <<< "http://mywebsite.com"
-imageURLs <<<* ["http://mywebsite.com/image.png", "http://mywebsite.com/anotherImage.png"]
+website <-- "http://mywebsite.com"
+imageURLs <-- ["http://mywebsite.com/image.png", "http://mywebsite.com/anotherImage.png"]
 ````
 
 ````swift
 let meetingDate: NSDate?
 let partyDates: [NSDate]?
 
-meetingDate <<< (value: "2014-09-18", format: "yyyy-MM-dd")
-partyDates <<<* (value: ["2014-09-19", "2014-09-20"], format: "yyyy-MM-dd")
+meetingDate <-- (value: "2014-09-18", format: "yyyy-MM-dd")
+partyDates <-- (value: ["2014-09-19", "2014-09-20"], format: "yyyy-MM-dd")
 
 let myDayOff: NSDate?
-myDayOff <<< 1414172803 // You can also use unix timestamps.
+myDayOff <-- 1414172803 // You can also use unix timestamps.
 ````
 
 ##JSON String Deserialization
@@ -167,14 +158,14 @@ internal struct Person: Deserializable {
   var name = ""
 
   init(data: [String: AnyObject]) {
-    name <<< data["name"]
+    name <-- data["name"]
   }
 }
 
 var jsonString = "[{\"name\": \"Rocket Raccoon\"}, {\"name\": \"Groot\"}]"
 var people = [Person]()
 
-people <<<<* jsonString
+people <-- jsonString
 
 for person in people {
   println("\(person.name)")
