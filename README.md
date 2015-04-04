@@ -48,20 +48,20 @@ pod "JSONHelper"
 
 You can also add [JSONHelper.swift](https://raw.githubusercontent.com/isair/JSONHelper/master/JSONHelper/JSONHelper.swift) directly into your project.
 
-##Simple Tutorial
+##Basic Tutorial
 
-First of all I'm going to assume you use [AFNetworking](https://github.com/AFNetworking/AFNetworking) as your networking library; for simplicity. Let's say we have an endpoint at __http://yoursite.com/your-endpoint/__ which gives the following response when a simple __GET__ request is sent to it.
+First of all I'm going to assume you use [AFNetworking](https://github.com/AFNetworking/AFNetworking) as your networking library; for simplicity. Let's say we have an endpoint at __http://yoursite.com/movies/__ which gives the following response when a simple __GET__ request is sent to it.
 
 ```json
 {
-  "books": [
+  "movies": [
     {
-      "author": "Irvine Welsh",
-      "name": "Filth"
+      "name": "Filth",
+      "release_date": "2014-05-30"
     },
     {
-      "author": "Bret Easton Ellis",
-      "name": "American Psycho"
+      "name": "American Psycho",
+      "release_date": "2000-04-14"
     }
   ]
 }
@@ -70,22 +70,22 @@ First of all I'm going to assume you use [AFNetworking](https://github.com/AFNet
 From this response it is clear that we have a book model similar to the implementation below.
 
 ```swift
-internal struct Book {
-  var author: String?
+internal struct Movie {
   var name: String?
+  var releaseDate: NSDate?
 }
 ```
 
 We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer and use our deserialization operator (`<--`) in it. The complete model should look like this:
 
 ```swift
-internal struct Book: Deserializable {
-  var author: String? // You can also use let instead of var if you want.
-  var name: String?
+internal struct Movie: Deserializable {
+  var name: String? // You can also use let instead of var if you want.
+  var releaseDate: NSDate?
 
   init(data: [String: AnyObject]) {
-    author <-- data["author"]
     name <-- data["name"]
+    releaseDate <-- (value: data["release_date"], format: "yyyy-MM-dd") // Refer to the next section for more info.
   }
 }
 ```
@@ -94,16 +94,16 @@ And finally, requesting and deserializing the response from our endpoint becomes
 
 ```swift
 AFHTTPRequestOperationManager().GET(
-  "http://yoursite.com/your-endpoint/"
+  "http://yoursite.com/movies/"
   parameters: nil,
   success: { operation, data in
-    var books: [Book]?
-    books <-- data["books"]
+    var movies: [Movie]?
+    movies <-- data["movies"]
     
-    if let books = books {
-      // Response contained a books array, and we deserialized it. Do what you want here.
+    if let movies = movies {
+      // Response contained a movies array, and we deserialized it. Do what you want here.
     } else {
-      // Server gave us a response but there was no books key in it, so the books variable
+      // Server gave us a response but there was no "movies" key in it, so the movies variable
       // is equal to nil. Do some error handling here.
     }
   },
@@ -128,7 +128,7 @@ internal struct User: Deserializable {
 
 ##NSDate and NSURL Deserialization
 
-You can also deserialize data into NSDate and NSURL variables, or arrays of them.
+NSURL deserialization works very much like a primitive type deserialization.
 
 ````swift
 let website: NSURL?
@@ -137,6 +137,8 @@ let imageURLs: [NSURL]?
 website <-- "http://mywebsite.com"
 imageURLs <-- ["http://mywebsite.com/image.png", "http://mywebsite.com/anotherImage.png"]
 ````
+
+NSDate deserialization however, requires a format to be provided.
 
 ````swift
 let meetingDate: NSDate?
