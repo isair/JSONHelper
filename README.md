@@ -170,6 +170,6 @@ var people = [Person]()
 people <-- jsonString
 
 for person in people {
-  println("\(person.name)")
+  println(person.name)
 }
 ````
