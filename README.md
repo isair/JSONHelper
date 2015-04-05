@@ -164,7 +164,7 @@ internal struct Person: Deserializable {
   }
 }
 
-var jsonString = "[{\"name\": \"Rocket Raccoon\"}, {\"name\": \"Groot\"}]"
+let jsonString = "[{\"name\": \"Rocket Raccoon\"}, {\"name\": \"Groot\"}]"
 var people = [Person]()
 
 people <-- jsonString
