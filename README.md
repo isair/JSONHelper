@@ -138,7 +138,7 @@ website <-- "http://mywebsite.com"
 imageURLs <-- ["http://mywebsite.com/image.png", "http://mywebsite.com/anotherImage.png"]
 ````
 
-NSDate deserialization however, requires a format to be provided.
+NSDate deserialization however, requires a format to be provided most of the time.
 
 ````swift
 let meetingDate: NSDate?
