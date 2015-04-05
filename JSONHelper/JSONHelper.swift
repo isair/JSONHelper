@@ -210,10 +210,10 @@ public func <-- (inout array: [NSURL], value: AnyObject?) -> [NSURL] {
   return array
 }
 
-public func <-- (inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate]? {
+public func <-- (inout array: [NSDate]?, valueAndFormat: (AnyObject?, AnyObject?)) -> [NSDate]? {
   var newValue: [NSDate]?
-  if let dateStringArray = valueAndFormat.value as? [String] {
-    if let formatString = valueAndFormat.format as? String {
+  if let dateStringArray = valueAndFormat.0 as? [String] {
+    if let formatString = valueAndFormat.1 as? String {
       let dateFormatter = NSDateFormatter()
       dateFormatter.dateFormat = formatString
       newValue = [NSDate]()
@@ -228,7 +228,7 @@ public func <-- (inout array: [NSDate]?, valueAndFormat: (value: AnyObject?, for
   return array
 }
 
-public func <-- (inout array: [NSDate], valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> [NSDate] {
+public func <-- (inout array: [NSDate], valueAndFormat: (AnyObject?, AnyObject?)) -> [NSDate] {
   var newValue: [NSDate]?
   newValue <-- valueAndFormat
   if let newValue = newValue { array = newValue }

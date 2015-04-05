@@ -105,7 +105,7 @@ class JSONHelperTests: XCTestCase {
 
   func testOptionalNSDate() {
     var property: NSDate?
-    property <-- (value: dummyResponse["date"], format: "yyyy-MM-dd")
+    property <-- (dummyResponse["date"], "yyyy-MM-dd")
     let dateFormatter = NSDateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
     let testDate = dateFormatter.dateFromString("2014-09-19")
@@ -119,9 +119,9 @@ class JSONHelperTests: XCTestCase {
     dateFormatter.dateFormat = "yyyy-MM-dd"
     let defaultTestDate = dateFormatter.dateFromString("2015-09-19")
     var property = defaultTestDate!
-    property <-- (value: dummyResponse["invalidKey"], format: "yyyy-MM-dd")
+    property <-- (dummyResponse["invalidKey"], "yyyy-MM-dd")
     XCTAssertEqual(property.compare(defaultTestDate!), NSComparisonResult.OrderedSame, "NSDate should have the default value 2015-09-19")
-    property <-- (value: dummyResponse["date"], format: "yyyy-MM-dd")
+    property <-- (dummyResponse["date"], "yyyy-MM-dd")
     let testDate = dateFormatter.dateFromString("2014-09-19")
     XCTAssertEqual(property.compare(testDate!), NSComparisonResult.OrderedSame, "NSDate should have the value 2015-09-19")
   }
