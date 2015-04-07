@@ -16,7 +16,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D76C52001ACD46B100B49735"
                BuildableName = "JSONHelper.framework"
-               BlueprintName = "JSONHelperMac"
+               BlueprintName = "JSONHelper-Mac"
                ReferencedContainer = "container:JSONHelper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -44,7 +44,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D76C52001ACD46B100B49735"
             BuildableName = "JSONHelper.framework"
-            BlueprintName = "JSONHelperMac"
+            BlueprintName = "JSONHelper-Mac"
             ReferencedContainer = "container:JSONHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -62,7 +62,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D76C52001ACD46B100B49735"
             BuildableName = "JSONHelper.framework"
-            BlueprintName = "JSONHelperMac"
+            BlueprintName = "JSONHelper-Mac"
             ReferencedContainer = "container:JSONHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

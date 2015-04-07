@@ -314,9 +314,9 @@
 			productReference = 5FAD07981A70F31300C4D09E /* JSONHelperExampleTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D76C52001ACD46B100B49735 /* JSONHelperMac */ = {
+		D76C52001ACD46B100B49735 /* JSONHelper-Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D76C52071ACD46B100B49735 /* Build configuration list for PBXNativeTarget "JSONHelperMac" */;
+			buildConfigurationList = D76C52071ACD46B100B49735 /* Build configuration list for PBXNativeTarget "JSONHelper-Mac" */;
 			buildPhases = (
 				D76C52011ACD46B100B49735 /* Sources */,
 				D76C52031ACD46B100B49735 /* Frameworks */,
@@ -327,7 +327,7 @@
 			);
 			dependencies = (
 			);
-			name = JSONHelperMac;
+			name = "JSONHelper-Mac";
 			productName = JSONHelper;
 			productReference = D76C520A1ACD46B100B49735 /* JSONHelper.framework */;
 			productType = "com.apple.product-type.framework";
@@ -370,7 +370,7 @@
 			projectRoot = "";
 			targets = (
 				5FAD07631A70F2FC00C4D09E /* JSONHelper */,
-				D76C52001ACD46B100B49735 /* JSONHelperMac */,
+				D76C52001ACD46B100B49735 /* JSONHelper-Mac */,
 				5FAD076E1A70F2FC00C4D09E /* JSONHelperTests */,
 				5FAD07831A70F31300C4D09E /* JSONHelperExample */,
 				5FAD07971A70F31300C4D09E /* JSONHelperExampleTests */,
@@ -792,7 +792,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D76C52071ACD46B100B49735 /* Build configuration list for PBXNativeTarget "JSONHelperMac" */ = {
+		D76C52071ACD46B100B49735 /* Build configuration list for PBXNativeTarget "JSONHelper-Mac" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D76C52081ACD46B100B49735 /* Debug */,
