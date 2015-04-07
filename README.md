@@ -85,7 +85,7 @@ internal struct Movie: Deserializable {
 
   init(data: [String: AnyObject]) {
     name <-- data["name"]
-    releaseDate <-- (value: data["release_date"], format: "yyyy-MM-dd") // Refer to the next section for more info.
+    releaseDate <-- (data["release_date"], "yyyy-MM-dd") // Refer to the next section for more info.
   }
 }
 ```
@@ -144,8 +144,8 @@ NSDate deserialization however, requires a format to be provided most of the tim
 let meetingDate: NSDate?
 let partyDates: [NSDate]?
 
-meetingDate <-- (value: "2014-09-18", format: "yyyy-MM-dd")
-partyDates <-- (value: ["2014-09-19", "2014-09-20"], format: "yyyy-MM-dd")
+meetingDate <-- ("2014-09-18", "yyyy-MM-dd")
+partyDates <-- (["2014-09-19", "2014-09-20"], "yyyy-MM-dd")
 
 let myDayOff: NSDate?
 myDayOff <-- 1414172803 // You can also use unix timestamps.
