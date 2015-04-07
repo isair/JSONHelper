@@ -1,5 +1,13 @@
 # Change Log
 
+## [1.5.1](https://github.com/isair/JSONHelper/tree/1.5.1) (2015-04-07)
+
+[Full Changelog](https://github.com/isair/JSONHelper/compare/1.5.0...1.5.1)
+
+**Merged pull requests:**
+
+- Add automatically generated change log file. [\#28](https://github.com/isair/JSONHelper/pull/28) ([skywinder](https://github.com/skywinder))
+
 ## [1.5.0](https://github.com/isair/JSONHelper/tree/1.5.0) (2015-04-04)
 
 [Full Changelog](https://github.com/isair/JSONHelper/compare/1.4.2...1.5.0)
