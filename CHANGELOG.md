@@ -1,8 +1,24 @@
 # Change Log
 
+## [1.5.3](https://github.com/isair/JSONHelper/tree/1.5.3) (2015-04-13)
+
+[Full Changelog](https://github.com/isair/JSONHelper/compare/1.5.2...1.5.3)
+
+**Merged pull requests:**
+
+- Bugfix: for Release builds [\#30](https://github.com/isair/JSONHelper/pull/30) ([thinkalike-dev](https://github.com/thinkalike-dev))
+
+## [1.5.2](https://github.com/isair/JSONHelper/tree/1.5.2) (2015-04-09)
+
+[Full Changelog](https://github.com/isair/JSONHelper/compare/1.5.1...1.5.2)
+
 ## [1.5.1](https://github.com/isair/JSONHelper/tree/1.5.1) (2015-04-07)
 
 [Full Changelog](https://github.com/isair/JSONHelper/compare/1.5.0...1.5.1)
+
+**Implemented enhancements:**
+
+- Don't require tuples passed to the deserialization operator to be named [\#29](https://github.com/isair/JSONHelper/issues/29)
 
 **Merged pull requests:**
 
