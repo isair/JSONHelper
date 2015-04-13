@@ -42,6 +42,7 @@ infix operator <-- { associativity right precedence 150 }
 // For optionals.
 public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
   var newValue: T?
+  ""
   if let unwrappedValue: AnyObject = value {
     // We unwrapped the given value successfully, try to convert.
     if let convertedValue = unwrappedValue as? T {
