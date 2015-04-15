@@ -37,13 +37,25 @@ public typealias JSONDictionary = [String: AnyObject]
 /// Operator for use in deserialization operations.
 infix operator <-- { associativity right precedence 150 }
 
+/// Returns nil if given object is of type NSNull.
+///
+/// :param: object Object to convert.
+///
+/// :returns: nil if object is of type NSNull, else returns the object itself.
+private func convertToNilIfNull(object: AnyObject?) -> AnyObject? {
+  if object is NSNull {
+    return nil
+  }
+  return object
+}
+
 /// MARK: Primitive Type Deserialization
 
 // For optionals.
 public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
   var newValue: T?
   ""
-  if let unwrappedValue: AnyObject = value {
+  if let unwrappedValue: AnyObject = convertToNilIfNull(value) {
     // We unwrapped the given value successfully, try to convert.
     if let convertedValue = unwrappedValue as? T {
       // Convert by just type-casting.
@@ -87,8 +99,8 @@ public func <-- <T>(inout property: T, value: AnyObject?) -> T {
 // Special handling for value and format pair to NSDate conversion.
 public func <-- (inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
   var newValue: NSDate?
-  if let dateString = valueAndFormat.value as? String {
-    if let formatString = valueAndFormat.format as? String {
+  if let dateString = convertToNilIfNull(valueAndFormat.value) as? String {
+    if let formatString = convertToNilIfNull(valueAndFormat.format) as? String {
       let dateFormatter = NSDateFormatter()
       dateFormatter.dateFormat = formatString
       if let newDate = dateFormatter.dateFromString(dateString) {
@@ -110,7 +122,7 @@ public func <-- (inout property: NSDate, valueAndFormat: (value: AnyObject?, for
 // MARK: Primitive Array Deserialization
 
 public func <-- (inout array: [String]?, value: AnyObject?) -> [String]? {
-  if let stringArray = value as? [String] {
+  if let stringArray = convertToNilIfNull(value) as? [String] {
     array = stringArray
   } else {
     array = nil
@@ -126,7 +138,7 @@ public func <-- (inout array: [String], value: AnyObject?) -> [String] {
 }
 
 public func <-- (inout array: [Int]?, value: AnyObject?) -> [Int]? {
-  if let intArray = value as? [Int] {
+  if let intArray = convertToNilIfNull(value) as? [Int] {
     array = intArray
   } else {
     array = nil
@@ -142,8 +154,7 @@ public func <-- (inout array: [Int], value: AnyObject?) -> [Int] {
 }
 
 public func <-- (inout array: [Float]?, value: AnyObject?) -> [Float]? {
-
-  if let floatArray = value as? [Float] {
+  if let floatArray = convertToNilIfNull(value) as? [Float] {
     array = floatArray
   } else {
     array = nil
@@ -159,7 +170,7 @@ public func <-- (inout array: [Float], value: AnyObject?) -> [Float] {
 }
 
 public func <-- (inout array: [Double]?, value: AnyObject?) -> [Double]? {
-  if let doubleArrayDoubleExcitement = value as? [Double] {
+  if let doubleArrayDoubleExcitement = convertToNilIfNull(value) as? [Double] {
     array = doubleArrayDoubleExcitement
   } else {
     array = nil
@@ -175,7 +186,7 @@ public func <-- (inout array: [Double], value: AnyObject?) -> [Double] {
 }
 
 public func <-- (inout array: [Bool]?, value: AnyObject?) -> [Bool]? {
-  if let boolArray = value as? [Bool] {
+  if let boolArray = convertToNilIfNull(value) as? [Bool] {
     array = boolArray
   } else {
     array = nil
@@ -191,7 +202,7 @@ public func <-- (inout array: [Bool], value: AnyObject?) -> [Bool] {
 }
 
 public func <-- (inout array: [NSURL]?, value: AnyObject?) -> [NSURL]? {
-  if let stringURLArray = value as? [String] {
+  if let stringURLArray = convertToNilIfNull(value) as? [String] {
     array = [NSURL]()
     for stringURL in stringURLArray {
       if let url = NSURL(string: stringURL) {
@@ -213,8 +224,8 @@ public func <-- (inout array: [NSURL], value: AnyObject?) -> [NSURL] {
 
 public func <-- (inout array: [NSDate]?, valueAndFormat: (AnyObject?, AnyObject?)) -> [NSDate]? {
   var newValue: [NSDate]?
-  if let dateStringArray = valueAndFormat.0 as? [String] {
-    if let formatString = valueAndFormat.1 as? String {
+  if let dateStringArray = convertToNilIfNull(valueAndFormat.0) as? [String] {
+    if let formatString = convertToNilIfNull(valueAndFormat.1) as? String {
       let dateFormatter = NSDateFormatter()
       dateFormatter.dateFormat = formatString
       newValue = [NSDate]()
@@ -237,7 +248,7 @@ public func <-- (inout array: [NSDate], valueAndFormat: (AnyObject?, AnyObject?)
 }
 
 public func <-- (inout array: [NSDate]?, value: AnyObject?) -> [NSDate]? {
-  if let timestamps = value as? [AnyObject] {
+  if let timestamps = convertToNilIfNull(value) as? [AnyObject] {
     array = [NSDate]()
     for timestamp in timestamps {
       var date: NSDate?
@@ -264,7 +275,7 @@ public protocol Deserializable {
 }
 
 public func <-- <T: Deserializable>(inout instance: T?, dataObject: AnyObject?) -> T? {
-  if let data = dataObject as? JSONDictionary {
+  if let data = convertToNilIfNull(dataObject) as? JSONDictionary {
     instance = T(data: data)
   } else {
     instance = nil
@@ -282,7 +293,7 @@ public func <-- <T: Deserializable>(inout instance: T, dataObject: AnyObject?) -
 // MARK: Custom Object Array Deserialization
 
 public func <-- <T: Deserializable>(inout array: [T]?, dataObject: AnyObject?) -> [T]? {
-  if let dataArray = dataObject as? [JSONDictionary] {
+  if let dataArray = convertToNilIfNull(dataObject) as? [JSONDictionary] {
     array = [T]()
     for data in dataArray {
       array!.append(T(data: data))
