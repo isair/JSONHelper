@@ -97,10 +97,10 @@ public func <-- <T>(inout property: T, value: AnyObject?) -> T {
 }
 
 // Special handling for value and format pair to NSDate conversion.
-public func <-- (inout property: NSDate?, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate? {
+public func <-- (inout property: NSDate?, valueAndFormat: (AnyObject?, AnyObject?)) -> NSDate? {
   var newValue: NSDate?
-  if let dateString = convertToNilIfNull(valueAndFormat.value) as? String {
-    if let formatString = convertToNilIfNull(valueAndFormat.format) as? String {
+  if let dateString = convertToNilIfNull(valueAndFormat.0) as? String {
+    if let formatString = convertToNilIfNull(valueAndFormat.1) as? String {
       let dateFormatter = NSDateFormatter()
       dateFormatter.dateFormat = formatString
       if let newDate = dateFormatter.dateFromString(dateString) {
