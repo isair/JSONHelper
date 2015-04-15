@@ -112,7 +112,7 @@ public func <-- (inout property: NSDate?, valueAndFormat: (AnyObject?, AnyObject
   return property
 }
 
-public func <-- (inout property: NSDate, valueAndFormat: (value: AnyObject?, format: AnyObject?)) -> NSDate {
+public func <-- (inout property: NSDate, valueAndFormat: (AnyObject?, AnyObject?)) -> NSDate {
   var date: NSDate?
   date <-- valueAndFormat
   if let date = date { property = date }
