@@ -49,7 +49,7 @@ private func convertToNilIfNull(object: AnyObject?) -> AnyObject? {
   return object
 }
 
-/// MARK: Primitive Type Deserialization
+// MARK: Primitive Type Deserialization
 
 // For optionals.
 public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
