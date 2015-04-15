@@ -72,11 +72,11 @@ public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
       case is NSURL?:
         newValue = NSURL(string: "\(unwrappedValue)") as? T
       case is NSDate?:
-        if let timestamp = value as? Int {
+        if let timestamp = unwrappedValue as? Int {
           newValue = NSDate(timeIntervalSince1970: Double(timestamp)) as? T
-        } else if let timestamp = value as? Double {
+        } else if let timestamp = unwrappedValue as? Double {
           newValue = NSDate(timeIntervalSince1970: timestamp) as? T
-        } else if let timestamp = value as? NSNumber {
+        } else if let timestamp = unwrappedValue as? NSNumber {
           newValue = NSDate(timeIntervalSince1970: timestamp.doubleValue) as? T
         }
       default:
