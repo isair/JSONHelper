@@ -42,6 +42,11 @@ class JSONHelperTests: XCTestCase {
 
     init() {}
   }
+    
+  enum EnumTest: Int {
+    case Zero = 0
+    case One = 1
+  }
 
   func testOptionalString() {
     var property: String?
@@ -170,6 +175,12 @@ class JSONHelperTests: XCTestCase {
     var property = [Person]()
     property <-- dummyResponse["instanceArray"]
     XCTAssertEqual(property.count, 2, "[Person] property should have 2 members")
+  }
+    
+  func testRawValueEnum() {
+    var property = EnumTest.Zero
+    property <-- dummyResponse["int"]
+    XCTAssertEqual(property, .One, "EnumTest should be equal to .One")
   }
 
   func testJSONStringParsing() {
