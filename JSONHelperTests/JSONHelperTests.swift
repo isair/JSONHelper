@@ -180,7 +180,7 @@ class JSONHelperTests: XCTestCase {
   func testRawValueEnum() {
     var property = EnumTest.Zero
     property <-- dummyResponse["int"]
-    XCTAssertEqual(property, .One, "EnumTest should be equal to .One")
+    XCTAssertEqual(property, EnumTest.One, "EnumTest should be equal to .One")
   }
 
   func testJSONStringParsing() {
