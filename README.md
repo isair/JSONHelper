@@ -1,7 +1,6 @@
 
 #JSONHelper [![CocoaPods](https://img.shields.io/cocoapods/l/JSONHelper.svg)](https://github.com/isair/JSONHelper/blob/master/LICENSE) ![CocoaPods](https://img.shields.io/cocoapods/p/JSONHelper.svg)
 
-[![Build Status](https://travis-ci.org/isair/JSONHelper.svg?branch=master)](https://travis-ci.org/isair/JSONHelper)
 [![CocoaPods](https://img.shields.io/cocoapods/v/JSONHelper.svg)](https://cocoapods.org/pods/JSONHelper)
 [![Stories in Ready](https://badge.waffle.io/isair/JSONHelper.png?label=ready&title=Ready)](https://waffle.io/isair/JSONHelper)
 [![Gratipay](https://img.shields.io/gratipay/bsencan91.svg)](https://gratipay.com/bsencan91/)
