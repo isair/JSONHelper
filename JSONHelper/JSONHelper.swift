@@ -311,6 +311,33 @@ public func <-- <T: Deserializable>(inout array: [T], dataObject: AnyObject?) ->
   return array
 }
 
+// MARK: Raw Value Representable (Enum) Deserialization
+
+public func <-- <T: RawRepresentable>(inout property: T?, value: AnyObject?) -> T? {
+    var newValue: T?
+    
+    var unwrappedValue : T.RawValue?
+    unwrappedValue <-- value
+    
+    if let unwrappedValue = unwrappedValue {
+        // We unwrapped the given value successfully, try to convert.
+        if let convertedValue = T(rawValue:unwrappedValue) {
+            // Convert by just type-casting.
+            newValue = convertedValue
+        }
+    }
+    property = newValue
+    return property
+}
+
+// For non-optionals.
+public func <-- <T: RawRepresentable>(inout property: T, value: AnyObject?) -> T {
+    var newValue: T?
+    newValue <-- value
+    if let newValue = newValue { property = newValue }
+    return property
+}
+
 // MARK: JSON String Deserialization
 
 private func dataStringToObject(dataString: String) -> AnyObject? {
@@ -334,3 +361,5 @@ public func <-- <T: Deserializable>(inout array: [T]?, dataString: String) -> [T
 public func <-- <T: Deserializable>(inout array: [T], dataString: String) -> [T] {
   return array <-- dataStringToObject(dataString)
 }
+
+
