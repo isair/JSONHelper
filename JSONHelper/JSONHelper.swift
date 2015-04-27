@@ -489,8 +489,10 @@ public func <-- <T: RawRepresentable>(inout property: T?, value: AnyObject?) -> 
   var newEnumValue: T?
   var newRawEnumValue : T.RawValue?
   newRawEnumValue <-- value
-  if let unwrappedNewRawEnumValue = newRawEnumValue, enumValue = T(rawValue: unwrappedNewRawEnumValue) {
-    newEnumValue = enumValue
+  if let unwrappedNewRawEnumValue = newRawEnumValue {
+    if let enumValue = T(rawValue: unwrappedNewRawEnumValue) {
+      newEnumValue = enumValue
+    }
   }
   property = newEnumValue
   return property
