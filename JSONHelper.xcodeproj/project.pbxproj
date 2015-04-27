@@ -63,7 +63,7 @@
 		5FAD07981A70F31300C4D09E /* JSONHelperExampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONHelperExampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FAD079D1A70F31300C4D09E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5FAD079E1A70F31300C4D09E /* JSONHelperExampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONHelperExampleTests.swift; sourceTree = "<group>"; };
-		5FC4468E1A70F3750038EE4E /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; };
+		5FC4468E1A70F3750038EE4E /* JSONHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = JSONHelper.swift; sourceTree = "<group>"; tabWidth = 2; };
 		D76C520A1ACD46B100B49735 /* JSONHelper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSONHelper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
