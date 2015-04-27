@@ -65,7 +65,7 @@ First of all I'm going to assume you use [AFNetworking](https://github.com/AFNet
     },
     {
       "name": "American Psycho",
-      "release_date": "2000-04-14"
+      "release_date": "2000-04-14",
       "cast": {
         "Patrick Bateman": "Christian Bale",
         "Timothy Bryce": "Justin Theroux"
