@@ -268,6 +268,157 @@ public func <-- (inout array: [NSDate], value: AnyObject?) -> [NSDate] {
   return array
 }
 
+
+// MARK: Primitive Map Deserialization
+
+public func <-- (inout map: [String:String]?, value: AnyObject?) -> [String:String]? {
+  if let stringMap = convertToNilIfNull(value) as? [String:String] {
+    map = stringMap
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:String], value: AnyObject?) -> [String:String] {
+  var newValue: [String:String]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:Int]?, value: AnyObject?) -> [String:Int]? {
+  if let intMap = convertToNilIfNull(value) as? [String:Int] {
+    map = intMap
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:Int], value: AnyObject?) -> [String:Int] {
+  var newValue: [String:Int]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:Float]?, value: AnyObject?) -> [String:Float]? {
+  if let floatMap = convertToNilIfNull(value) as? [String:Float] {
+    map = floatMap
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:Float], value: AnyObject?) -> [String:Float] {
+  var newValue: [String:Float]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:Double]?, value: AnyObject?) -> [String:Double]? {
+  if let doubleMapDoubleExcitement = convertToNilIfNull(value) as? [String:Double] {
+    map = doubleMapDoubleExcitement
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:Double], value: AnyObject?) -> [String:Double] {
+  var newValue: [String:Double]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:Bool]?, value: AnyObject?) -> [String:Bool]? {
+  if let boolMap = convertToNilIfNull(value) as? [String:Bool] {
+    map = boolMap
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:Bool], value: AnyObject?) -> [String:Bool] {
+  var newValue: [String:Bool]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:NSURL]?, value: AnyObject?) -> [String:NSURL]? {
+  if let stringURLMap = convertToNilIfNull(value) as? [String:String] {
+    map = [String:NSURL]()
+    for (key, stringURL) in stringURLMap {
+      if let url = NSURL(string: stringURL) {
+        map![key] = url
+      }
+    }
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:NSURL], value: AnyObject?) -> [String:NSURL] {
+  var newValue: [String:NSURL]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:NSDate]?, valueAndFormat: (AnyObject?, AnyObject?)) -> [String:NSDate]? {
+  var newValue: [String:NSDate]?
+  if let dateStringMap = convertToNilIfNull(valueAndFormat.0) as? [String:String] {
+    if let formatString = convertToNilIfNull(valueAndFormat.1) as? String {
+      let dateFormatter = NSDateFormatter()
+      dateFormatter.dateFormat = formatString
+      newValue = [String:NSDate]()
+      for (key, dateString) in dateStringMap {
+        if let date = dateFormatter.dateFromString(dateString) {
+          newValue![key] = date
+        }
+      }
+    }
+  }
+  map = newValue
+  return map
+}
+
+public func <-- (inout map: [String:NSDate], valueAndFormat: (AnyObject?, AnyObject?)) -> [String:NSDate] {
+  var newValue: [String:NSDate]?
+  newValue <-- valueAndFormat
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+public func <-- (inout map: [String:NSDate]?, value: AnyObject?) -> [String:NSDate]? {
+  if let timestamps = convertToNilIfNull(value) as? [String:AnyObject] {
+    map = [String:NSDate]()
+    for (key, timestamp) in timestamps {
+      var date: NSDate?
+      date <-- timestamp
+      if date != nil { map![key] = date! }
+    }
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- (inout map: [String:NSDate], value: AnyObject?) -> [String:NSDate] {
+  var newValue: [String:NSDate]?
+  newValue <-- value
+  if let newValue = newValue { map = newValue }
+  return map
+}
+
+
 // MARK: Custom Object Deserialization
 
 public protocol Deserializable {
@@ -311,14 +462,37 @@ public func <-- <T: Deserializable>(inout array: [T], dataObject: AnyObject?) ->
   return array
 }
 
+// MARK: Custom Object Map Deserialization
+
+public func <-- <T: Deserializable>(inout map: [String:T]?, dataObject: AnyObject?) -> [String:T]? {
+  if let dataMap = convertToNilIfNull(dataObject) as? [String:JSONDictionary] {
+    map = [String:T]()
+    for (key, data) in dataMap {
+      map![key] = T(data: data)
+    }
+  } else {
+    map = nil
+  }
+  return map
+}
+
+public func <-- <T: Deserializable>(inout map: [String:T], dataObject: AnyObject?) -> [String:T] {
+  var newMap: [String:T]?
+  newMap <-- dataObject
+  if let newMap = newMap { map = newMap }
+  return map
+}
+
 // MARK: Raw Value Representable (Enum) Deserialization
 
 public func <-- <T: RawRepresentable>(inout property: T?, value: AnyObject?) -> T? {
   var newEnumValue: T?
   var newRawEnumValue : T.RawValue?
   newRawEnumValue <-- value
-  if let unwrappedNewRawEnumValue = newRawEnumValue, enumValue = T(rawValue: unwrappedNewRawEnumValue) {
-    newEnumValue = enumValue
+  if let unwrappedNewRawEnumValue = newRawEnumValue {
+    if let enumValue = T(rawValue: unwrappedNewRawEnumValue) {
+      newEnumValue = enumValue
+    }
   }
   property = newEnumValue
   return property
@@ -354,6 +528,14 @@ public func <-- <T: Deserializable>(inout array: [T]?, dataString: String) -> [T
 
 public func <-- <T: Deserializable>(inout array: [T], dataString: String) -> [T] {
   return array <-- dataStringToObject(dataString)
+}
+
+public func <-- <T: Deserializable>(inout map: [String:T]?, dataString: String) -> [String:T]? {
+    return map <-- dataStringToObject(dataString)
+}
+
+public func <-- <T: Deserializable>(inout map: [String:T], dataString: String) -> [String:T] {
+    return map <-- dataStringToObject(dataString)
 }
 
 

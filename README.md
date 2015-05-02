@@ -57,11 +57,19 @@ First of all I'm going to assume you use [AFNetworking](https://github.com/AFNet
   "movies": [
     {
       "name": "Filth",
-      "release_date": "2014-05-30"
+      "release_date": "2014-05-30",
+      "cast": {
+        "Bruce": "James McAvoy",
+        "Lennox": "Jamie Bell"
+      }
     },
     {
       "name": "American Psycho",
-      "release_date": "2000-04-14"
+      "release_date": "2000-04-14",
+      "cast": {
+        "Patrick Bateman": "Christian Bale",
+        "Timothy Bryce": "Justin Theroux"
+      }
     }
   ]
 }
@@ -73,6 +81,7 @@ From this response it is clear that we have a book model similar to the implemen
 internal struct Movie {
   var name: String?
   var releaseDate: NSDate?
+  var cast:[String:String]?
 }
 ```
 
@@ -82,10 +91,12 @@ We now have to make it extend the protocol __Deserializable__ and implement the 
 internal struct Movie: Deserializable {
   var name: String? // You can also use let instead of var if you want.
   var releaseDate: NSDate?
+  var cast:[String:String]?
 
   init(data: [String: AnyObject]) {
     name <-- data["name"]
     releaseDate <-- (data["release_date"], "yyyy-MM-dd") // Refer to the next section for more info.
+    cast <-- data["cast"]
   }
 }
 ```

@@ -30,6 +30,14 @@ class JSONHelperTests: XCTestCase {
       ], [
         "name": "d"
       ]
+    ],
+    "instanceMap": [
+        "ePerson": [
+            "name": "e"
+        ],
+        "fPerson": [
+            "name": "f"
+        ]
     ]
   ]
 
@@ -176,24 +184,47 @@ class JSONHelperTests: XCTestCase {
     property <-- dummyResponse["instanceArray"]
     XCTAssertEqual(property.count, 2, "[Person] property should have 2 members")
   }
-    
+  
+  func testInstanceMap() {
+    var property = [String:Person]()
+    property <-- dummyResponse["instanceMap"]
+    XCTAssertEqual(property["ePerson"]!.name, "e", "member \"ePerson\" of [String:Person] property should have \"e\" for name")
+  }
+  
   func testRawValueEnum() {
     var property = EnumTest.Zero
     property <-- dummyResponse["int"]
     XCTAssertEqual(property, EnumTest.One, "EnumTest should be equal to .One")
   }
-
-  func testJSONStringParsing() {
+  
+  func testJSONStringArrayParsing() {
     var jsonString = "[{\"name\": \"I am \"},{\"name\": \"Groot!\"}]"
     var people = [Person]()
     var areYouGroot = ""
-
+    
     people <-- jsonString
-
+    
     for person in people {
       areYouGroot += person.name
     }
-
+    
+    XCTAssertEqual(areYouGroot, "I am Groot!", "Groot should be Groot")
+  }
+  
+  func testJSONStringMapParsing() {
+    var jsonString = "{\"person one\": {\"name\": \"I am \"}, \"person two\": {\"name\": \"Groot!\"}}"
+    var people = [String:Person]()
+    var areYouGroot = ""
+    var keys = ""
+    
+    people <-- jsonString
+    
+    for (personKey, person) in people {
+      areYouGroot += person.name
+      keys += personKey
+    }
+    
+    XCTAssertEqual(keys, "person oneperson two", "keys should be correctly picked up")
     XCTAssertEqual(areYouGroot, "I am Groot!", "Groot should be Groot")
   }
 }
