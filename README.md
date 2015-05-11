@@ -79,7 +79,7 @@ First of all I'm going to assume you use [AFNetworking](https://github.com/AFNet
 From this response it is clear that we have a book model similar to the implementation below.
 
 ```swift
-internal struct Movie {
+struct Movie {
   var name: String?
   var releaseDate: NSDate?
   var cast: [String: String]?
@@ -89,7 +89,7 @@ internal struct Movie {
 We now have to make it extend the protocol __Deserializable__ and implement the __required init(data: [String: AnyObject])__ initializer and use our deserialization operator (`<--`) in it. The complete model should look like this:
 
 ```swift
-internal struct Movie: Deserializable {
+struct Movie: Deserializable {
   var name: String? // You can also use let instead of var if you want.
   var releaseDate: NSDate?
   var cast: [String: String]?
@@ -129,10 +129,10 @@ AFHTTPRequestOperationManager().GET(
 You can easily assign default values to variables in cases where you want them to have a certain value when deserialization fails.
 
 ````swift
-internal struct User: Deserializable {
+struct User: Deserializable {
   var name = "Guest"
   
-  required init(data: [String: AnyObject]) {
+  init(data: [String: AnyObject]) {
     name <-- data["name"]
   }
 }
@@ -168,7 +168,7 @@ myDayOff <-- 1414172803 // You can also use unix timestamps.
 You can deserialize instances and arrays of instances directly from a JSON string as well. Here is a quick example.
 
 ````swift
-internal struct Person: Deserializable {
+struct Person: Deserializable {
   var name = ""
 
   init(data: [String: AnyObject]) {
