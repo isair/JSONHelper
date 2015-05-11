@@ -23,7 +23,7 @@ Lightning fast JSON deserialization for iOS &amp; OS X written in Swift.
 
 JSONHelper is a library written to make sure that deserializing data obtained from an API is as easy as possible. It doesn't depend on any networking libraries, and works equally well with any of them.
 
-__Requires iOS 7 or later and Xcode 6.1.x__
+__Requires iOS 7 or later and Xcode 6.1+__
 
 ##Installation
 
