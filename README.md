@@ -92,7 +92,7 @@ We now have to make it extend the protocol __Deserializable__ and implement the 
 internal struct Movie: Deserializable {
   var name: String? // You can also use let instead of var if you want.
   var releaseDate: NSDate?
-  var cast:[String:String]?
+  var cast: [String: String]?
 
   init(data: [String: AnyObject]) {
     name <-- data["name"]
