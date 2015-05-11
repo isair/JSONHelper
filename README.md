@@ -82,7 +82,7 @@ From this response it is clear that we have a book model similar to the implemen
 internal struct Movie {
   var name: String?
   var releaseDate: NSDate?
-  var cast:[String:String]?
+  var cast: [String: String]?
 }
 ```
 
