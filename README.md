@@ -90,7 +90,7 @@ We now have to make it extend the protocol __Deserializable__ and implement the 
 
 ```swift
 struct Movie: Deserializable {
-  var name: String? // You can also use let instead of var if you want.
+  var name: String?
   var releaseDate: NSDate?
   var cast: [String: String]?
 
