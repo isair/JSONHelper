@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
 
   s.homepage = 'https://github.com/isair/JSONHelper'
   s.author = { 'Baris Sencan' => 'barissncn@gmail.com' }
-  s.social_media_url = 'https://twitter.com/BarisAndMorty'
+  s.social_media_url = 'https://twitter.com/IsairAndMorty'
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
