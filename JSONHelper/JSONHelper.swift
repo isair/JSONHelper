@@ -65,7 +65,7 @@ public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
       switch property {
       case is Int?:
         if unwrappedValue is String {
-          if let intValue = "\(unwrappedValue)".toInt() {
+          if let intValue = Int("\(unwrappedValue)") {
             newValue = intValue as? T
           }
         }
@@ -509,9 +509,13 @@ public func <-- <T: RawRepresentable>(inout property: T, value: AnyObject?) -> T
 // MARK: JSON String Deserialization
 
 private func dataStringToObject(dataString: String) -> AnyObject? {
-  var data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
-  var error: NSError?
-  return NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+  let data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding)!
+    do {
+        let jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
+        return jsonObject
+    } catch {
+        return nil
+    }
 }
 
 public func <-- <T: Deserializable>(inout instance: T?, dataString: String) -> T? {
