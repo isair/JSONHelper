@@ -7,7 +7,7 @@
 [![Gratipay](https://img.shields.io/gratipay/bsencan91.svg)](https://gratipay.com/bsencan91/)
 [![Gitter](https://badges.gitter.im/JOIN CHAT.svg)](https://gitter.im/isair/JSONHelper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Lightning fast JSON deserialization for iOS &amp; OS X written in Swift. A much improved version, and a rewrite, is under development in branch [dev-2.0.0](https://github.com/isair/JSONHelper/tree/dev-2.0.0) and any contributions to it are welcome as my personal time is currently very limited.
+Lightning fast JSON deserialization for iOS, OS X, and tvOS written in Swift. A much improved version, and a rewrite, is under development in branch [dev-2.0.0](https://github.com/isair/JSONHelper/tree/dev-2.0.0) and any contributions to it are welcome as my personal time is currently very limited.
 
 ##Table of Contents
 
