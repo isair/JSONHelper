@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0620"
+   LastUpgradeVersion = "0710"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D76C52001ACD46B100B49735"
-               BuildableName = "JSONHelper.framework"
-               BlueprintName = "JSONHelper_Mac"
+               BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
+               BuildableName = "JSONHelper_tvOS.framework"
+               BlueprintName = "JSONHelper_tvOS"
                ReferencedContainer = "container:JSONHelper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,9 +45,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D76C52001ACD46B100B49735"
-            BuildableName = "JSONHelper.framework"
-            BlueprintName = "JSONHelper_Mac"
+            BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
+            BuildableName = "JSONHelper_tvOS.framework"
+            BlueprintName = "JSONHelper_tvOS"
             ReferencedContainer = "container:JSONHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -63,9 +63,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D76C52001ACD46B100B49735"
-            BuildableName = "JSONHelper.framework"
-            BlueprintName = "JSONHelper_Mac"
+            BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
+            BuildableName = "JSONHelper_tvOS.framework"
+            BlueprintName = "JSONHelper_tvOS"
             ReferencedContainer = "container:JSONHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
