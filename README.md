@@ -76,7 +76,7 @@ First of all I'm going to assume you use [AFNetworking](https://github.com/AFNet
 }
 ```
 
-From this response it is clear that we have a book model similar to the implementation below.
+From this response it is clear that we have a movie model similar to the implementation below.
 
 ```swift
 struct Movie {
