@@ -63,12 +63,6 @@ public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
     } else {
       // Convert by processing the value first.
       switch property {
-      case is Int?:
-        if unwrappedValue is String {
-          if let intValue = Int("\(unwrappedValue)") {
-            newValue = intValue as? T
-          }
-        }
       case is NSURL?:
         newValue = NSURL(string: "\(unwrappedValue)") as? T
       case is NSDate?:
@@ -78,6 +72,12 @@ public func <-- <T>(inout property: T?, value: AnyObject?) -> T? {
           newValue = NSDate(timeIntervalSince1970: timestamp) as? T
         } else if let timestamp = unwrappedValue as? NSNumber {
           newValue = NSDate(timeIntervalSince1970: timestamp.doubleValue) as? T
+        }
+      case is Int?:
+        if unwrappedValue is String {
+          if let intValue = Int("\(unwrappedValue)") {
+            newValue = intValue as? T
+          }
         }
       default:
         break
