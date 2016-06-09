@@ -102,10 +102,10 @@ While you can basically adopt the `Convertible` protocol for any type, if your t
 Example:
 ```swift
 class User: Deserializable {
-  let idKey = "id"
-  let emailKey = "email"
-  let nameKey = "name"
-  let avatarURLKey = "avatar_url"
+  static let idKey = "id"
+  static let emailKey = "email"
+  static let nameKey = "name"
+  static let avatarURLKey = "avatar_url"
 
   var id: String?
   var email: String?
@@ -113,10 +113,10 @@ class User: Deserializable {
   var avatarURL = NSURL(string: "https://mysite.com/assets/default-avatar.png")
 
   required init(dictionary: [String : AnyObject]) throws {
-    id <-- dictionary[idKey]
-    email <-- dictionary[emailKey]
-    name <-- dictionary[nameKey]
-    avatarURL <-- dictionary[avatarURLKey]
+    id <-- dictionary[User.idKey]
+    email <-- dictionary[User.emailKey]
+    name <-- dictionary[User.nameKey]
+    avatarURL <-- dictionary[User.avatarURLKey]
   }
 }
 ```
