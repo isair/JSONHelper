@@ -15,8 +15,22 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
-               BuildableName = "JSONHelper_tvOS.framework"
-               BlueprintName = "JSONHelper_tvOS"
+               BuildableName = "JSONHelper.framework"
+               BlueprintName = "JSONHelper-tvOS"
+               ReferencedContainer = "container:JSONHelper.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5FAD076E1A70F2FC00C4D09E"
+               BuildableName = "JSONHelperTests.xctest"
+               BlueprintName = "JSONHelperTests"
                ReferencedContainer = "container:JSONHelper.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,9 +40,29 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5FAD076E1A70F2FC00C4D09E"
+               BuildableName = "JSONHelperTests.xctest"
+               BlueprintName = "JSONHelperTests"
+               ReferencedContainer = "container:JSONHelper.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
+            BuildableName = "JSONHelper.framework"
+            BlueprintName = "JSONHelper-tvOS"
+            ReferencedContainer = "container:JSONHelper.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -46,8 +80,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
-            BuildableName = "JSONHelper_tvOS.framework"
-            BlueprintName = "JSONHelper_tvOS"
+            BuildableName = "JSONHelper.framework"
+            BlueprintName = "JSONHelper-tvOS"
             ReferencedContainer = "container:JSONHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -64,8 +98,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5F928D951C0D469F00EF50C4"
-            BuildableName = "JSONHelper_tvOS.framework"
-            BlueprintName = "JSONHelper_tvOS"
+            BuildableName = "JSONHelper.framework"
+            BlueprintName = "JSONHelper-tvOS"
             ReferencedContainer = "container:JSONHelper.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'JSONHelper'
-  s.version = '1.7.0'
+  s.version = '2.0.0'
   s.license = { :type => 'zlib', :file => 'LICENSE' }
   s.summary = 'Lightning fast JSON deserialization and value conversion library for iOS & OS X written in Swift.'
 
@@ -12,7 +12,7 @@ Pod::Spec.new do |s|
   s.osx.deployment_target = '10.9'
   s.tvos.deployment_target = '9.0'
   s.source       = { :git => 'https://github.com/isair/JSONHelper.git', :tag => s.version }
-  s.source_files = 'JSONHelper'
+  s.source_files = 'JSONHelper/**/*.swift'
   s.frameworks   = 'Foundation'
   s.requires_arc = true
 end
