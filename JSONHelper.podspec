@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
   s.name = 'JSONHelper'
   s.version = '2.0.0'
   s.license = { :type => 'zlib', :file => 'LICENSE' }
-  s.summary = 'Lightning fast JSON deserialization and value conversion library for iOS & OS X written in Swift.'
+  s.summary = 'Lightning fast JSON deserialization and value conversion library for iOS, tvOS, and OS X written in Swift.'
 
   s.homepage = 'https://github.com/isair/JSONHelper'
   s.author = { 'Baris Sencan' => 'baris.sncn@gmail.com' }
