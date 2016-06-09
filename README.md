@@ -107,16 +107,16 @@ class User: Deserializable {
   static let nameKey = "name"
   static let avatarURLKey = "avatar_url"
 
-  var id: String?
-  var email: String?
-  var name = "Guest"
-  var avatarURL = NSURL(string: "https://mysite.com/assets/default-avatar.png")
+  private(set) var id: String?
+  private(set) var email: String?
+  private(set) var name = "Guest"
+  private(set) var avatarURL = NSURL(string: "https://mysite.com/assets/default-avatar.png")
 
-  required init(dictionary: [String : AnyObject]) throws {
-    id <-- dictionary[User.idKey]
-    email <-- dictionary[User.emailKey]
-    name <-- dictionary[User.nameKey]
-    avatarURL <-- dictionary[User.avatarURLKey]
+  required init(dictionary: [String : AnyObject]) {
+    _ = try? id <-- dictionary[User.idKey]
+    _ = try? email <-- dictionary[User.emailKey]
+    _ = try? name <-- dictionary[User.nameKey]
+    _ = try? avatarURL <-- dictionary[User.avatarURLKey]
   }
 }
 ```
