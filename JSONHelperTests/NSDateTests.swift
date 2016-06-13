@@ -18,13 +18,13 @@ class NSDateTests: XCTestCase {
 
   func testEpochTimestampConversion() {
     var date = NSDate()
-    try! date <-- (epochTimestamp as Any)
+    date <-- (epochTimestamp as Any)
     XCTAssertEqual(JSONHelper.dateFormatter.stringFromDate(date), dateString)
   }
 
   func testStringConversion() {
     var date = NSDate()
-    try! date <-- (dateString as Any)
+    date <-- (dateString as Any)
     XCTAssertEqual(JSONHelper.dateFormatter.stringFromDate(date), dateString)
   }
 }

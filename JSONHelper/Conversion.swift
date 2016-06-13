@@ -26,7 +26,7 @@ public protocol Convertible {
 
 // MARK: - Basic Conversion
 
-public func <-- <T, U>(inout lhs: T?, rhs: U?) throws -> T? {
+public func <-- <T, U>(inout lhs: T?, rhs: U?) -> T? {
   if !(lhs is NSNull) {
     lhs = JSONHelper.convertToNilIfNull(rhs) as? T
   } else {
@@ -35,28 +35,41 @@ public func <-- <T, U>(inout lhs: T?, rhs: U?) throws -> T? {
   return lhs
 }
 
-public func <-- <T, U>(inout lhs: T, rhs: U?) throws -> T {
+public func <-- <T, U>(inout lhs: T, rhs: U?) -> T {
   var newValue: T?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: C?, rhs: T?) throws -> C? {
-  lhs = try C.convertFromValue(JSONHelper.convertToNilIfNull(rhs))
+public func <-- <C: Convertible, T>(inout lhs: C?, rhs: T?) -> C? {
+  lhs = nil
+
+  do {
+    lhs = try C.convertFromValue(JSONHelper.convertToNilIfNull(rhs))
+  } catch ConversionError.InvalidValue {
+#if DEBUG
+    print("Invalid value \(rhs.debugDescription) for supported type.")
+#endif
+  } catch ConversionError.UnsupportedType {
+#if DEBUG
+    print("Unsupported type.")
+#endif
+  } catch {}
+
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: C, rhs: T?) throws -> C {
+public func <-- <C: Convertible, T>(inout lhs: C, rhs: T?) -> C {
   var newValue: C?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
 // MARK: - Array Conversion
 
-public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: [T]?) throws -> [C]? {
+public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: [T]?) -> [C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -65,7 +78,8 @@ public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: [T]?) throws -> [C]? {
   lhs = [C]()
   for element in rhs {
     var convertedElement: C?
-    try convertedElement <-- element
+    convertedElement <-- element
+
     if let convertedElement = convertedElement {
       lhs?.append(convertedElement)
     }
@@ -74,36 +88,36 @@ public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: [T]?) throws -> [C]? {
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: [C], rhs: [T]?) throws -> [C] {
+public func <-- <C: Convertible, T>(inout lhs: [C], rhs: [T]?) -> [C] {
   var newValue: [C]?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: T?) throws -> [C]? {
+public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: T?) -> [C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
   }
 
   if let elements = rhs as? NSArray as? [AnyObject] {
-    return try lhs <-- elements
+    return lhs <-- elements
   }
 
-  throw ConversionError.UnsupportedType
+  return nil
 }
 
-public func <-- <C: Convertible, T>(inout lhs: [C], rhs: T?) throws -> [C] {
+public func <-- <C: Convertible, T>(inout lhs: [C], rhs: T?) -> [C] {
   var newValue: [C]?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
 // MARK: - Dictionary Conversion
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: [T : U]?) throws -> [T : C]? {
+public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: [T : U]?) -> [T : C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -112,7 +126,7 @@ public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: [T : U]?) throw
   lhs = [T : C]()
   for (key, value) in rhs {
     var convertedValue: C?
-    try convertedValue <-- value
+    convertedValue <-- value
     if let convertedValue = convertedValue {
       lhs?[key] = convertedValue
     }
@@ -121,36 +135,36 @@ public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: [T : U]?) throw
   return lhs
 }
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: [T : U]?) throws -> [T : C] {
+public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: [T : U]?) -> [T : C] {
   var newValue: [T : C]?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: U?) throws -> [T : C]? {
+public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: U?) -> [T : C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
   }
 
   if let elements = rhs as? NSDictionary as? [T : AnyObject] {
-    return try lhs <-- elements
+    return lhs <-- elements
   }
 
-  throw ConversionError.UnsupportedType
+  return nil
 }
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: U?) throws -> [T : C] {
+public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: U?) -> [T : C] {
   var newValue: [T : C]?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
 // MARK: - Enum Conversion
 
-public func <-- <T: RawRepresentable, U>(inout lhs: T?, rhs: U?) throws -> T? {
+public func <-- <T: RawRepresentable, U>(inout lhs: T?, rhs: U?) -> T? {
   var newValue: T?
 
   if let
@@ -163,9 +177,9 @@ public func <-- <T: RawRepresentable, U>(inout lhs: T?, rhs: U?) throws -> T? {
   return lhs
 }
 
-public func <-- <T: RawRepresentable, U>(inout lhs: T, rhs: U?) throws -> T {
+public func <-- <T: RawRepresentable, U>(inout lhs: T, rhs: U?) -> T {
   var newValue: T?
-  try newValue <-- rhs
+  newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }

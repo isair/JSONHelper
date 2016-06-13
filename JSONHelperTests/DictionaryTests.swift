@@ -18,13 +18,13 @@ class DictionaryTests: XCTestCase {
 
   func testDictionaryToConvertibleDictionary() {
     var value = [String : NSDate]()
-    try! value <-- dateStringDictionary
+    value <-- dateStringDictionary
     XCTAssertEqual(JSONHelper.dateFormatter.stringFromDate(value["one"]!), dateStringDictionary["one"])
   }
 
   func testDictionaryAsAnyToConvertibleDictionary() {
     var value = [String : NSDate]()
-    try! value <-- (dateStringDictionary as Any)
+    value <-- (dateStringDictionary as Any)
     XCTAssertEqual(JSONHelper.dateFormatter.stringFromDate(value["one"]!), dateStringDictionary["one"])
   }
 
@@ -40,21 +40,21 @@ class DictionaryTests: XCTestCase {
 
     var name = ""
 
-    init(dictionary: [String : AnyObject]) throws {
-      try name <-- dictionary["name"]
+    init(dictionary: [String : AnyObject]) {
+      name <-- dictionary["name"]
     }
   }
 
   func testDictionaryToMappableDictionary() {
     var value = [String : Item]()
-    try! value <-- dictionary
+    value <-- dictionary
     XCTAssertEqual(value["one"]?.name, dictionary["one"]?["name"])
     XCTAssertEqual(value["two"]?.name, dictionary["two"]?["name"])
   }
 
   func testDictionaryAsAnyToMappableDictionary() {
     var value = [String : Item]()
-    try! value <-- (dictionary as Any)
+    value <-- (dictionary as Any)
     XCTAssertEqual(value["one"]?.name, dictionary["one"]?["name"])
     XCTAssertEqual(value["two"]?.name, dictionary["two"]?["name"])
   }

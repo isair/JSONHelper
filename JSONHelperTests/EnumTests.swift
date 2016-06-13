@@ -19,7 +19,7 @@ class EnumTests: XCTestCase {
   }
 
   func testStringConversion() {
-    try! value <-- (TestEnum.Friend.rawValue as Any)
+    value <-- (TestEnum.Friend.rawValue as Any)
     XCTAssertEqual(value, TestEnum.Friend)
   }
 }

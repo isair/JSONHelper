@@ -23,12 +23,12 @@ class StringTests: XCTestCase {
   }
 
   func testStringConversion() {
-    try! value <-- (testString as Any)
+    value <-- (testString as Any)
     XCTAssertEqual(value, testString)
   }
 
   func testIntConversion() {
-    try! value <-- (testIntAndResult.0 as Any)
+    value <-- (testIntAndResult.0 as Any)
     XCTAssertEqual(value, testIntAndResult.1)
   }
 
@@ -36,7 +36,7 @@ class StringTests: XCTestCase {
     JSONHelper.dateFormatter.dateFormat = testDateFormat
     JSONHelper.dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
 
-    try! value <-- (testDateAndResult.0 as Any)
+    value <-- (testDateAndResult.0 as Any)
     XCTAssertEqual(value, testDateAndResult.1)
   }
 }

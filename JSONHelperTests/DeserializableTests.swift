@@ -13,8 +13,8 @@ class DeserializableTests: XCTestCase {
 
     var name = ""
 
-    init(dictionary: [String : AnyObject]) throws {
-      try name <-- dictionary[Item.nameKey]
+    init(dictionary: [String : AnyObject]) {
+      name <-- dictionary[Item.nameKey]
     }
 
     init() {}
@@ -30,12 +30,12 @@ class DeserializableTests: XCTestCase {
   }
 
   func testDictionaryDeserialization() {
-    try! item <-- itemDictionary
+    item <-- itemDictionary
     XCTAssertEqual(item.name, itemDictionary[Item.nameKey])
   }
 
   func testStringDeserialization() {
-    try! item <-- itemString
+    item <-- itemString
     XCTAssertEqual(item.name, itemDictionary[Item.nameKey])
   }
 }

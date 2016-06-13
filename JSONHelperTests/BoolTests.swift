@@ -18,20 +18,20 @@ class BoolTests: XCTestCase {
   }
 
   func testBoolConversion() {
-    try! value <-- (testBool as Any)
+    value <-- (testBool as Any)
     XCTAssertEqual(value, testBool)
   }
 
   func testIntConversion() {
     for intAndResult in testIntsAndResults {
-      try! value <-- (intAndResult.0 as Any)
+      value <-- (intAndResult.0 as Any)
       XCTAssertEqual(value, intAndResult.1)
     }
   }
 
   func testStringConversion() {
     for stringAndResult in testStringsAndResults {
-      try! value <-- (stringAndResult.0 as Any)
+      value <-- (stringAndResult.0 as Any)
       XCTAssertEqual(value, stringAndResult.1)
     }
   }

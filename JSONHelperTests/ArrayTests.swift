@@ -15,7 +15,7 @@ class ArrayTests: XCTestCase {
 
   func testArrayToConvertibleArray() {
     var urls = [NSURL]()
-    try! urls <-- urlStrings
+    urls <-- urlStrings
 
     XCTAssertEqual(urls[0].host, urlHosts[0])
     XCTAssertEqual(urls[1].host, urlHosts[1])
@@ -24,7 +24,7 @@ class ArrayTests: XCTestCase {
 
   func testArrayAsAnyToConvertibleArray() {
     var urls = [NSURL]()
-    try! urls <-- (urlStrings as Any)
+    urls <-- (urlStrings as Any)
 
     XCTAssertEqual(urls[0].host, urlHosts[0])
     XCTAssertEqual(urls[1].host, urlHosts[1])
@@ -38,8 +38,8 @@ class ArrayTests: XCTestCase {
 
     var name: String?
 
-    init(dictionary: [String: AnyObject]) throws {
-      try name <-- dictionary[Item.nameKey]
+    init(dictionary: [String: AnyObject]) {
+      name <-- dictionary[Item.nameKey]
     }
   }
 
@@ -50,14 +50,14 @@ class ArrayTests: XCTestCase {
 
   func testArrayToDeserializableArray() {
     var items = [Item]()
-    try! items <-- dictionaries
+    items <-- dictionaries
     XCTAssertEqual(items[0].name, "a")
     XCTAssertEqual(items[1].name, "b")
   }
 
   func testArrayAsAnyToDeserializableArray() {
     var items = [Item]()
-    try! items <-- (dictionaries as Any)
+    items <-- (dictionaries as Any)
     XCTAssertEqual(items[0].name, "a")
     XCTAssertEqual(items[1].name, "b")
   }

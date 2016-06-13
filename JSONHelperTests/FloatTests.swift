@@ -21,32 +21,32 @@ class FloatTests: XCTestCase {
   }
 
   func testIntConversion() {
-    try! value <-- (testInt as Any)
+    value <-- (testInt as Any)
     XCTAssert(Int(value) == testInt)
   }
 
   func testFloatConversion() {
-    try! value <-- (testFloat as Any)
+    value <-- (testFloat as Any)
     XCTAssertEqual(value, testFloat)
   }
 
   func testDoubleConversion() {
-    try! value <-- (testDouble as Any)
+    value <-- (testDouble as Any)
     XCTAssertEqual(value, testFloat)
   }
 
   func testNSNumberConversion() {
-    try! value <-- (testNSNumber as Any)
+    value <-- (testNSNumber as Any)
     XCTAssertEqual(value, testFloat)
   }
 
   func testNSDecimalNumberConversion() {
-    try! value <-- (testNSDecimalNumber as Any)
+    value <-- (testNSDecimalNumber as Any)
     XCTAssertEqual(value, testFloat)
   }
 
   func testStringConversion() {
-    try! value <-- (testString as Any)
+    value <-- (testString as Any)
     XCTAssertEqual(value, testFloat)
   }
 }

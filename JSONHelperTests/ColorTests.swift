@@ -25,7 +25,7 @@ class ColorTests: XCTestCase {
   }
 
   func testStringConversion() {
-    try! value <-- (testStringAndResult.0 as Any)
+    value <-- (testStringAndResult.0 as Any)
 
     var r: CGFloat = 0
     var g: CGFloat = 0

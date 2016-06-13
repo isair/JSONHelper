@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
   s.name = 'JSONHelper'
-  s.version = '2.0.0'
+  s.version = '2.1.0'
   s.license = { :type => 'zlib', :file => 'LICENSE' }
-  s.summary = 'Lightning fast JSON deserialization and value conversion library for iOS, tvOS, and OS X written in Swift.'
+  s.summary = 'Convert anything into anything in one operation; hex strings into UIColor/NSColor, JSON strings into class instances, y/n strings to booleans, arrays and dictionaries of these; anything you can make sense of!'
 
   s.homepage = 'https://github.com/isair/JSONHelper'
   s.author = { 'Baris Sencan' => 'baris.sncn@gmail.com' }

@@ -7,7 +7,7 @@
 [![Gratipay](https://img.shields.io/gratipay/bsencan91.svg)](https://gratipay.com/bsencan91/)
 [![Gitter](https://badges.gitter.im/JOIN CHAT.svg)](https://gitter.im/isair/JSONHelper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-Convert anything into anything in one line; hex strings into UIColor/NSColor, JSON strings into class instances, numbers to strings, etc, anything you can make sense of!
+Convert anything into anything in one operation; hex strings into UIColor/NSColor, JSON strings into class instances, y/n strings to booleans, arrays and dictionaries of these; anything you can make sense of!
 
 __Latest version requires iOS 8+ and Xcode 7.3+__
 
@@ -15,11 +15,9 @@ __Latest version requires iOS 8+ and Xcode 7.3+__
 
 1. [Installation](#installation)
 2. [The <-- Operator](#the----operator)
-  - [Overview](#overview)
-  - [Convertible Protocol](#convertible-protocol)
-  - [Deserializable Protocol](#deserializable-protocol)
-  - [Serializable Protocol](#serializable-protocol)
-3. [JSON Deserialization Example](#simple-tutorial)
+3. [Convertible Protocol](#convertible-protocol)
+4. [Deserializable Protocol](#deserializable-protocol) (with JSON deserialization example)
+5. [Serializable Protocol](#serializable-protocol)
 
 ## Installation
 
@@ -43,24 +41,16 @@ Then do `carthage update`. After that, add the framework to your project.
 
 ## The <-- Operator
 
-### Overview
+The `<--` operator takes the value on its right hand side and tries to convert it into the type of the value on its left hand side. If the conversion fails, an error is logged on debug builds. If it's successful, the value of the left hand side variable is overwritten. It's chainable as well.
 
-The `<--` operator takes the value on its right hand side and tries to convert it into the type of the value on its left hand side. If the conversion fails, an error is thrown. If it's successful, the value of the left hand side variable is overwritten. It's chainable as well.
-
-If the right hand side value is nil, and the left hand side variable is an optional, then nil is assigned to it. When the left hand side is non-optional, in the case where the right hand side value is nil, the current value of the left hand side variable is left untouched.
+If the right hand side value is nil or the conversion fails, and the left hand side variable is an optional, then nil is assigned to it. When the left hand side is non-optional, the current value of the left hand side variable is left untouched.
 
 Using this specification let's assume you have a dictionary response that you retrieved from some API with hex color strings in it, under the key `colors`, that you want to convert into an array of UIColor instances. Also, to fully use everything we know, let's also assume that we want to have a default value for our color array in case the value for the key we're looking for does not exist (is nil).
 
 ```swift
-var colors = [UIColor.blackColor()]
-// Assume we have response { "colors": ["#fff"] }
-try colors <-- response[colorsKey]
-```
-
-It's really that simple. If you want to ignore any conversion errors instead of having to catch them, you can replace the last line with the following.
-
-```swift
-_ = try? colors <-- response[colorsKey]
+var colors = [UIColor.blackColor(), UIColor.whiteColor()]
+// Assume we have response { "colors": ["#aaa", "#b06200aa"] }
+colors <-- response[colorsKey]
 ```
 
 ### Convertible Protocol
@@ -92,12 +82,12 @@ struct Vector2D: Convertible {
 
 ```swift
 var myVector: Vector2D?
-try myVector <-- (1.0, 2.7)
+myVector <-- (1.0, 2.7)
 ```
 
 ### Deserializable Protocol
 
-While you can basically adopt the `Convertible` protocol for any type, if your type is always converted from a dictionary things can get a lot easier with the `Deserializable` protocol.
+While you can basically adopt the `Convertible` protocol for any type, if your type is always converted from a dictionary or a JSON string then things can get a lot easier with the `Deserializable` protocol.
 
 Example:
 ```swift
@@ -113,19 +103,19 @@ class User: Deserializable {
   private(set) var avatarURL = NSURL(string: "https://mysite.com/assets/default-avatar.png")
 
   required init(dictionary: [String : AnyObject]) {
-    _ = try? id <-- dictionary[User.idKey]
-    _ = try? email <-- dictionary[User.emailKey]
-    _ = try? name <-- dictionary[User.nameKey]
-    _ = try? avatarURL <-- dictionary[User.avatarURLKey]
+    id <-- dictionary[User.idKey]
+    email <-- dictionary[User.emailKey]
+    name <-- dictionary[User.nameKey]
+    avatarURL <-- dictionary[User.avatarURLKey]
   }
 }
 ```
 
 ```swift
 var myUser: User?
-try user <-- apiResponse["user"]
+user <-- apiResponse["user"]
 ```
 
 ### Serializable Protocol
 
-// Serialization is coming soon. I'll probably not add a new protocol and just rename and update the Deserializable protocol.
+// Serialization is coming soon. I'll probably not add a new protocol and just rename and update the Deserializable protocol and turn it into a mixin.
