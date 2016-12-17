@@ -6,17 +6,17 @@ import Foundation
 
 extension String: Convertible {
 
-  public static func convertFromValue<T>(value: T?) throws -> String? {
+  public static func convert<T>(fromValue value: T?) throws -> String? {
     guard let value = value else { return nil }
 
     if let stringValue = value as? String {
       return stringValue
     } else if let intValue = value as? Int {
       return "\(intValue)"
-    } else if let dateValue = value as? NSDate {
-      return JSONHelper.dateFormatter.stringFromDate(dateValue)
+    } else if let dateValue = value as? Date {
+      return JSONHelper.dateFormatter.string(from: dateValue)
     }
 
-    throw ConversionError.UnsupportedType
+    throw ConversionError.unsupportedType
   }
 }

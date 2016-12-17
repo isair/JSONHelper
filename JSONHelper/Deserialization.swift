@@ -13,18 +13,18 @@ public protocol Deserializable {
 
 // MARK: - Helper Methods
 
-private func dataStringToObject(dataString: String) -> AnyObject? {
-  guard let data: NSData = dataString.dataUsingEncoding(NSUTF8StringEncoding) else { return nil }
-  var jsonObject: AnyObject?
+private func dataStringToObject(_ dataString: String) -> AnyObject? {
+  guard let data: Data = dataString.data(using: String.Encoding.utf8) else { return nil }
+  var jsonObject: Any?
   do {
-    jsonObject = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0))
+    jsonObject = try JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions(rawValue: 0))
   } catch {}
-  return jsonObject
+  return jsonObject as AnyObject?
 }
 
 // MARK: - Basic Deserialization
 
-public func <-- <D: Deserializable, T>(inout lhs: D?, rhs: T?) -> D? {
+@discardableResult public func <-- <D: Deserializable, T>(lhs: inout D?, rhs: T?) -> D? {
   let cleanedValue = JSONHelper.convertToNilIfNull(rhs)
 
   if let jsonObject = cleanedValue as? NSDictionary as? [String : AnyObject] {
@@ -38,7 +38,7 @@ public func <-- <D: Deserializable, T>(inout lhs: D?, rhs: T?) -> D? {
   return lhs
 }
 
-public func <-- <D: Deserializable, T>(inout lhs: D, rhs: T?) -> D {
+@discardableResult public func <-- <D: Deserializable, T>(lhs: inout D, rhs: T?) -> D {
   var newValue: D?
   newValue <-- rhs
   lhs = newValue ?? lhs
@@ -47,7 +47,7 @@ public func <-- <D: Deserializable, T>(inout lhs: D, rhs: T?) -> D {
 
 // MARK: - Array Deserialization
 
-public func <-- <D: Deserializable, T>(inout lhs: [D]?, rhs: [T]?) -> [D]? {
+@discardableResult public func <-- <D: Deserializable, T>(lhs: inout [D]?, rhs: [T]?) -> [D]? {
   guard let rhs = rhs else { return nil }
 
   lhs = [D]()
@@ -63,14 +63,14 @@ public func <-- <D: Deserializable, T>(inout lhs: [D]?, rhs: [T]?) -> [D]? {
   return lhs
 }
 
-public func <-- <D: Deserializable, T>(inout lhs: [D], rhs: [T]?) -> [D] {
+@discardableResult public func <-- <D: Deserializable, T>(lhs: inout [D], rhs: [T]?) -> [D] {
   var newValue: [D]?
   newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <D: Deserializable, T>(inout lhs: [D]?, rhs: T?) -> [D]? {
+@discardableResult public func <-- <D: Deserializable, T>(lhs: inout [D]?, rhs: T?) -> [D]? {
   guard let rhs = rhs else { return nil }
 
   if let elements = rhs as? NSArray as? [AnyObject] {
@@ -80,7 +80,7 @@ public func <-- <D: Deserializable, T>(inout lhs: [D]?, rhs: T?) -> [D]? {
   return nil
 }
 
-public func <-- <D: Deserializable, T>(inout lhs: [D], rhs: T?) -> [D] {
+@discardableResult public func <-- <D: Deserializable, T>(lhs: inout [D], rhs: T?) -> [D] {
   var newValue: [D]?
   newValue <-- rhs
   lhs = newValue ?? lhs
@@ -89,7 +89,7 @@ public func <-- <D: Deserializable, T>(inout lhs: [D], rhs: T?) -> [D] {
 
 // MARK: - Dictionary Deserialization
 
-public func <-- <T, D: Deserializable, U>(inout lhs: [T : D]?, rhs: [T : U]?) -> [T : D]? {
+@discardableResult public func <-- <T, D: Deserializable, U>(lhs: inout [T : D]?, rhs: [T : U]?) -> [T : D]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -108,14 +108,14 @@ public func <-- <T, D: Deserializable, U>(inout lhs: [T : D]?, rhs: [T : U]?) ->
   return lhs
 }
 
-public func <-- <T, D: Deserializable, U>(inout lhs: [T : D], rhs: [T : U]?) -> [T : D] {
+@discardableResult public func <-- <T, D: Deserializable, U>(lhs: inout [T : D], rhs: [T : U]?) -> [T : D] {
   var newValue: [T : D]?
   newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <T, D: Deserializable, U>(inout lhs: [T : D]?, rhs: U?) -> [T : D]? {
+@discardableResult public func <-- <T, D: Deserializable, U>(lhs: inout [T : D]?, rhs: U?) -> [T : D]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -128,7 +128,7 @@ public func <-- <T, D: Deserializable, U>(inout lhs: [T : D]?, rhs: U?) -> [T : 
   return nil
 }
 
-public func <-- <T, D: Deserializable, U>(inout lhs: [T : D], rhs: U?) -> [T : D] {
+@discardableResult public func <-- <T, D: Deserializable, U>(lhs: inout [T : D], rhs: U?) -> [T : D] {
   var newValue: [T : D]?
   newValue <-- rhs
   lhs = newValue ?? lhs

@@ -6,7 +6,7 @@ import Foundation
 
 extension Float: Convertible {
 
-  public static func convertFromValue<T>(value: T?) throws -> Float? {
+  public static func convert<T>(fromValue value: T?) throws -> Float? {
     guard let value = value else { return nil }
 
     if let floatValue = value as? Float {
@@ -19,6 +19,6 @@ extension Float: Convertible {
       return Float(intValue)
     }
 
-    throw ConversionError.UnsupportedType
+    throw ConversionError.unsupportedType
   }
 }

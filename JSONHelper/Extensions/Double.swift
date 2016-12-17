@@ -6,7 +6,7 @@ import Foundation
 
 extension Double: Convertible {
 
-  public static func convertFromValue<T>(value: T?) throws -> Double? {
+  public static func convert<T>(fromValue value: T?) throws -> Double? {
     guard let value = value else { return nil }
 
     if let doubleValue = value as? Double {
@@ -19,6 +19,6 @@ extension Double: Convertible {
       return Double(intValue)
     }
 
-    throw ConversionError.UnsupportedType
+    throw ConversionError.unsupportedType
   }
 }

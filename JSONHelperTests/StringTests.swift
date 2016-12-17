@@ -13,7 +13,7 @@ import JSONHelper
 class StringTests: XCTestCase {
   let testString = "test"
   let testIntAndResult = (1, "1")
-  let testDateAndResult = (NSDate(timeIntervalSince1970: 0), "1970-01-01")
+  let testDateAndResult = (Date(timeIntervalSince1970: 0), "1970-01-01")
   let testDateFormat = "yyyy-MM-dd"
 
   var value = ""
@@ -34,7 +34,7 @@ class StringTests: XCTestCase {
 
   func testDateConversion() {
     JSONHelper.dateFormatter.dateFormat = testDateFormat
-    JSONHelper.dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: 0)
+    JSONHelper.dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
     value <-- (testDateAndResult.0 as Any)
     XCTAssertEqual(value, testDateAndResult.1)

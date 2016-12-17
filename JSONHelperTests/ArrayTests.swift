@@ -14,7 +14,7 @@ class ArrayTests: XCTestCase {
   let urlHosts = ["apple.com", "google.com", "facebook.com"]
 
   func testArrayToConvertibleArray() {
-    var urls = [NSURL]()
+    var urls = [URL]()
     urls <-- urlStrings
 
     XCTAssertEqual(urls[0].host, urlHosts[0])
@@ -23,7 +23,7 @@ class ArrayTests: XCTestCase {
   }
 
   func testArrayAsAnyToConvertibleArray() {
-    var urls = [NSURL]()
+    var urls = [URL]()
     urls <-- (urlStrings as Any)
 
     XCTAssertEqual(urls[0].host, urlHosts[0])
