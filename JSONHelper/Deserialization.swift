@@ -8,7 +8,7 @@ import Foundation
 public protocol Deserializable {
 
   /// TODOC
-  init(dictionary: [String : AnyObject])
+  init(dictionary: [String : Any])
 }
 
 // MARK: - Helper Methods

@@ -8,7 +8,7 @@ import Foundation
 public protocol Serializable {
 
   /// TODOC
-  func toDictionary() throws -> [String : AnyObject]
+  func toDictionary() throws -> [String : Any]
 }
 
 // TODO
