@@ -10,8 +10,8 @@ class DoubleTests: XCTestCase {
   let testInt = 1
   let testFloat = Float(1.2)
   let testDouble = Double(1.2)
-  let testNSNumber = NSNumber(double: 1.2)
-  let testNSDecimalNumber = NSDecimalNumber(double: 1.2)
+  let testNSNumber = NSNumber(value: 1.2 as Double)
+  let testNSDecimalNumber = NSDecimalNumber(value: 1.2 as Double)
   let testString = "1.2"
 
   var value = 0.0
@@ -27,7 +27,7 @@ class DoubleTests: XCTestCase {
 
   func testFloatConversion() {
     value <-- (testFloat as Any)
-    XCTAssertEqual(value, testDouble)
+    XCTAssertEqualWithAccuracy(value, testDouble, accuracy: Double(FLT_EPSILON))
   }
 
   func testDoubleConversion() {

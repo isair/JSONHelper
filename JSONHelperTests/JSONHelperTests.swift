@@ -10,7 +10,7 @@ class JSONHelperTests: XCTestCase {
 
   func testConvertToNilIfNull() {
     let nilValues: [AnyObject?] = [NSNull(), nil]
-    let nonNilValues = [0, "", false, [], [:]]
+    let nonNilValues = [0, "", false, [], [:]] as [Any]
 
     for nilValue in nilValues {
       XCTAssert(JSONHelper.convertToNilIfNull(nilValue) == nil)

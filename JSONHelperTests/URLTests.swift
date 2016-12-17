@@ -10,13 +10,13 @@ import Foundation
 import XCTest
 import JSONHelper
 
-class NSURLTests: XCTestCase {
+class URLTests: XCTestCase {
   let urlString = "https://facebook.com"
   let urlHost = "facebook.com"
 
   func testStringConversion() {
-    var url = NSURL()
+    var url: URL?
     url <-- (urlString as Any)
-    XCTAssertEqual(url.host, urlHost)
+    XCTAssertEqual(url?.host, urlHost)
   }
 }

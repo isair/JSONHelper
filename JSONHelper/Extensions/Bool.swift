@@ -6,7 +6,7 @@ import Foundation
 
 extension Bool: Convertible {
 
-  public static func convertFromValue<T>(value: T?) throws -> Bool? {
+  public static func convert<T>(fromValue value: T?) throws -> Bool? {
     guard let value = value else { return nil }
 
     if let boolValue = value as? Bool {
@@ -14,16 +14,16 @@ extension Bool: Convertible {
     } else if let intValue = value as? Int {
       return intValue > 0
     } else if let stringValue = value as? String {
-      switch stringValue.lowercaseString {
+      switch stringValue.lowercased() {
       case "true", "t", "yes", "y":
         return true
       case "false", "f", "no", "n":
         return false
       default:
-        throw ConversionError.InvalidValue
+        throw ConversionError.invalidValue
       }
     }
 
-    throw ConversionError.UnsupportedType
+    throw ConversionError.unsupportedType
   }
 }

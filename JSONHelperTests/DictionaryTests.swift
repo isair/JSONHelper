@@ -17,15 +17,15 @@ class DictionaryTests: XCTestCase {
   }
 
   func testDictionaryToConvertibleDictionary() {
-    var value = [String : NSDate]()
+    var value = [String : Date]()
     value <-- dateStringDictionary
-    XCTAssertEqual(JSONHelper.dateFormatter.stringFromDate(value["one"]!), dateStringDictionary["one"])
+    XCTAssertEqual(JSONHelper.dateFormatter.string(from: value["one"]!), dateStringDictionary["one"])
   }
 
   func testDictionaryAsAnyToConvertibleDictionary() {
-    var value = [String : NSDate]()
+    var value = [String : Date]()
     value <-- (dateStringDictionary as Any)
-    XCTAssertEqual(JSONHelper.dateFormatter.stringFromDate(value["one"]!), dateStringDictionary["one"])
+    XCTAssertEqual(JSONHelper.dateFormatter.string(from: value["one"]!), dateStringDictionary["one"])
   }
 
   // MARK: - Deserializable Tests

@@ -4,21 +4,21 @@
 
 import Foundation
 
-extension NSDecimalNumber: Convertible {
+extension Decimal: Convertible {
 
-  public static func convertFromValue<T>(value: T?) throws -> Self? {
+  public static func convert<T>(fromValue value: T?) throws -> Decimal? {
     guard let value = value else { return nil }
 
     if let doubleValue = value as? Double {
-      return self.init(double: doubleValue)
+      return self.init(doubleValue)
     } else if let stringValue = value as? String {
       return self.init(string: stringValue)
     } else if let floatValue = value as? Float {
-      return self.init(float: floatValue)
+      return self.init(Double(floatValue))
     } else if let intValue = value as? Int {
-      return self.init(integer: intValue)
+      return self.init(intValue)
     }
 
-    throw ConversionError.UnsupportedType
+    throw ConversionError.unsupportedType
   }
 }

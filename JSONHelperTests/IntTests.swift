@@ -14,8 +14,8 @@ class IntTests: XCTestCase {
   let testInt = 1
   let testFloat = Float(1)
   let testDouble = Double(1)
-  let testNSNumber = NSNumber(integer: 1)
-  let testNSDecimalNumber = NSDecimalNumber(integer: 1)
+  let testNSNumber = NSNumber(value: 1 as Int)
+  let testNSDecimalNumber = NSDecimalNumber(value: 1 as Int)
   let testString = "1"
 
   var value = 0

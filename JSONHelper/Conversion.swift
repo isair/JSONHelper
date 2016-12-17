@@ -5,28 +5,32 @@
 import Foundation
 
 /// Operator for use in right hand side to left hand side conversion.
-infix operator <-- { associativity right precedence 150 }
+infix operator <-- : convert
+precedencegroup convert
+{
+    associativity: right
+}
 
 /// Thrown when a conversion operation fails.
-public enum ConversionError: ErrorType {
+public enum ConversionError: Error {
 
   /// TODOC
-  case UnsupportedType
+  case unsupportedType
 
   /// TODOC
-  case InvalidValue
+  case invalidValue
 }
 
 /// An object that can attempt to convert values of unknown types to its own type.
 public protocol Convertible {
 
   /// TODOC
-  static func convertFromValue<T>(value: T?) throws -> Self?
+  static func convert<T>(fromValue value: T?) throws -> Self?
 }
 
 // MARK: - Basic Conversion
 
-public func <-- <T, U>(inout lhs: T?, rhs: U?) -> T? {
+@discardableResult public func <-- <T, U>(lhs: inout T?, rhs: U?) -> T? {
   if !(lhs is NSNull) {
     lhs = JSONHelper.convertToNilIfNull(rhs) as? T
   } else {
@@ -35,23 +39,23 @@ public func <-- <T, U>(inout lhs: T?, rhs: U?) -> T? {
   return lhs
 }
 
-public func <-- <T, U>(inout lhs: T, rhs: U?) -> T {
+@discardableResult public func <-- <T, U>(lhs: inout T, rhs: U?) -> T {
   var newValue: T?
   newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: C?, rhs: T?) -> C? {
+@discardableResult public func <-- <C: Convertible, T>(lhs: inout C?, rhs: T?) -> C? {
   lhs = nil
 
   do {
-    lhs = try C.convertFromValue(JSONHelper.convertToNilIfNull(rhs))
-  } catch ConversionError.InvalidValue {
+    lhs = try C.convert(fromValue: JSONHelper.convertToNilIfNull(rhs))
+  } catch ConversionError.invalidValue {
 #if DEBUG
     print("Invalid value \(rhs.debugDescription) for supported type.")
 #endif
-  } catch ConversionError.UnsupportedType {
+  } catch ConversionError.unsupportedType {
 #if DEBUG
     print("Unsupported type.")
 #endif
@@ -60,7 +64,7 @@ public func <-- <C: Convertible, T>(inout lhs: C?, rhs: T?) -> C? {
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: C, rhs: T?) -> C {
+@discardableResult public func <-- <C: Convertible, T>(lhs: inout C, rhs: T?) -> C {
   var newValue: C?
   newValue <-- rhs
   lhs = newValue ?? lhs
@@ -69,7 +73,7 @@ public func <-- <C: Convertible, T>(inout lhs: C, rhs: T?) -> C {
 
 // MARK: - Array Conversion
 
-public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: [T]?) -> [C]? {
+@discardableResult public func <-- <C: Convertible, T>(lhs: inout [C]?, rhs: [T]?) -> [C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -88,14 +92,14 @@ public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: [T]?) -> [C]? {
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: [C], rhs: [T]?) -> [C] {
+@discardableResult public func <-- <C: Convertible, T>(lhs: inout [C], rhs: [T]?) -> [C] {
   var newValue: [C]?
   newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: T?) -> [C]? {
+@discardableResult public func <-- <C: Convertible, T>(lhs: inout [C]?, rhs: T?) -> [C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -108,7 +112,7 @@ public func <-- <C: Convertible, T>(inout lhs: [C]?, rhs: T?) -> [C]? {
   return nil
 }
 
-public func <-- <C: Convertible, T>(inout lhs: [C], rhs: T?) -> [C] {
+@discardableResult public func <-- <C: Convertible, T>(lhs: inout [C], rhs: T?) -> [C] {
   var newValue: [C]?
   newValue <-- rhs
   lhs = newValue ?? lhs
@@ -117,7 +121,7 @@ public func <-- <C: Convertible, T>(inout lhs: [C], rhs: T?) -> [C] {
 
 // MARK: - Dictionary Conversion
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: [T : U]?) -> [T : C]? {
+@discardableResult public func <-- <T, C: Convertible, U>(lhs: inout [T : C]?, rhs: [T : U]?) -> [T : C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -135,14 +139,14 @@ public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: [T : U]?) -> [T
   return lhs
 }
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: [T : U]?) -> [T : C] {
+@discardableResult public func <-- <T, C: Convertible, U>(lhs: inout [T : C], rhs: [T : U]?) -> [T : C] {
   var newValue: [T : C]?
   newValue <-- rhs
   lhs = newValue ?? lhs
   return lhs
 }
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: U?) -> [T : C]? {
+@discardableResult public func <-- <T, C: Convertible, U>(lhs: inout [T : C]?, rhs: U?) -> [T : C]? {
   guard let rhs = rhs else {
     lhs = nil
     return lhs
@@ -155,7 +159,7 @@ public func <-- <T, C: Convertible, U>(inout lhs: [T : C]?, rhs: U?) -> [T : C]?
   return nil
 }
 
-public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: U?) -> [T : C] {
+@discardableResult public func <-- <T, C: Convertible, U>(lhs: inout [T : C], rhs: U?) -> [T : C] {
   var newValue: [T : C]?
   newValue <-- rhs
   lhs = newValue ?? lhs
@@ -164,12 +168,12 @@ public func <-- <T, C: Convertible, U>(inout lhs: [T : C], rhs: U?) -> [T : C] {
 
 // MARK: - Enum Conversion
 
-public func <-- <T: RawRepresentable, U>(inout lhs: T?, rhs: U?) -> T? {
+@discardableResult public func <-- <T: RawRepresentable, U>(lhs: inout T?, rhs: U?) -> T? {
   var newValue: T?
 
   if let
     rawValue = rhs as? T.RawValue,
-    enumValue = T(rawValue: rawValue) {
+    let enumValue = T(rawValue: rawValue) {
     newValue = enumValue
   }
   lhs = newValue
@@ -177,7 +181,7 @@ public func <-- <T: RawRepresentable, U>(inout lhs: T?, rhs: U?) -> T? {
   return lhs
 }
 
-public func <-- <T: RawRepresentable, U>(inout lhs: T, rhs: U?) -> T {
+@discardableResult public func <-- <T: RawRepresentable, U>(lhs: inout T, rhs: U?) -> T {
   var newValue: T?
   newValue <-- rhs
   lhs = newValue ?? lhs

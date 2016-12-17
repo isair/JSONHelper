@@ -4,17 +4,17 @@
 
 import Foundation
 
-extension NSURL: Convertible {
+extension URL: Convertible {
 
-  public static func convertFromValue<T>(value: T?) throws -> Self? {
+  public static func convert<T>(fromValue value: T?) throws -> URL? {
     guard let value = value else { return nil }
 
-    if let urlValue = value as? NSURL {
+    if let urlValue = value as? URL {
       return self.init(string: urlValue.absoluteString)
     } else if let stringValue = value as? String {
       return self.init(string: stringValue)
     }
 
-    throw ConversionError.UnsupportedType
+    throw ConversionError.unsupportedType
   }
 }
