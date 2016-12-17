@@ -40,7 +40,7 @@ class DictionaryTests: XCTestCase {
 
     var name = ""
 
-    init(dictionary: [String : AnyObject]) {
+    init(dictionary: [String : Any]) {
       name <-- dictionary["name"]
     }
   }
