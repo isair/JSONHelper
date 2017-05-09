@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'JSONHelper'
-  s.version = '2.1.0'
+  s.version = '2.2.0'
   s.license = { :type => 'zlib', :file => 'LICENSE' }
 
   s.summary = 'Convert values of any type into any other type in just one operation!'
