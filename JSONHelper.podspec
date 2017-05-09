@@ -2,7 +2,9 @@ Pod::Spec.new do |s|
   s.name = 'JSONHelper'
   s.version = '2.1.0'
   s.license = { :type => 'zlib', :file => 'LICENSE' }
-  s.summary = 'Convert anything into anything in one operation; hex strings into UIColor/NSColor, JSON strings into class instances, y/n strings to booleans, arrays and dictionaries of these; anything you can make sense of!'
+
+  s.summary = 'Convert values of any type into any other type in just one operation!'
+  s.description = 'Convert anything into anything in one operation; hex strings into UIColor/NSColor, JSON strings into class instances, y/n strings to booleans, arrays and dictionaries of these; anything you can make sense of!'
 
   s.homepage = 'https://github.com/isair/JSONHelper'
   s.author = { 'Baris Sencan' => 'baris.sncn@gmail.com' }
