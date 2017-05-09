@@ -8,12 +8,12 @@ import JSONHelper
 
 class DecimalTests: XCTestCase {
   let testInt = 1
-  let testFloat = Float(1.2)
-  let testDouble = Double(1.2)
-  let testDecimal = Decimal(1.2)
-  let testNSNumber = NSNumber(value: 1.2 as Double)
-  let testNSDecimalNumber = NSDecimalNumber(value: 1.2 as Double)
-  let testString = "1.2"
+  let testFloat = Float(1.5)
+  let testDouble = Double(1.5)
+  let testDecimal = Decimal(1.5)
+  let testNSNumber = NSNumber(value: 1.5 as Double)
+  let testNSDecimalNumber = NSDecimalNumber(value: 1.5 as Double)
+  let testString = "1.5"
 
   var value = Decimal(0)
 
@@ -23,12 +23,12 @@ class DecimalTests: XCTestCase {
 
   func testIntConversion() {
     value <-- (testInt as Any)
-    XCTAssert(Int(NSDecimalNumber(decimal: value)) == testInt)
+    XCTAssertEqual(Int(NSDecimalNumber(decimal: value)), testInt)
   }
 
   func testFloatConversion() {
     value <-- (testFloat as Any)
-    XCTAssert(abs(value - testDecimal) < Decimal(Double(FLT_EPSILON)))
+    XCTAssertEqual(value, testDecimal)
   }
 
   func testDoubleConversion() {
