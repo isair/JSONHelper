@@ -105,7 +105,7 @@ public protocol Convertible {
     return lhs
   }
 
-  if let elements = rhs as? NSArray as? [AnyObject] {
+  if let elements = rhs as? NSArray as [AnyObject]? {
     return lhs <-- elements
   }
 
