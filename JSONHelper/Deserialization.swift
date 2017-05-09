@@ -73,7 +73,7 @@ private func dataStringToObject(_ dataString: String) -> AnyObject? {
 @discardableResult public func <-- <D: Deserializable, T>(lhs: inout [D]?, rhs: T?) -> [D]? {
   guard let rhs = rhs else { return nil }
 
-  if let elements = rhs as? NSArray as? [AnyObject] {
+  if let elements = rhs as? NSArray as [AnyObject]? {
     return lhs <-- elements
   }
 

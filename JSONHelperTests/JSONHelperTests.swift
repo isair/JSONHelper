@@ -2,7 +2,7 @@
 //  Copyright © 2016 Baris Sencan. All rights reserved.
 //
 
-import UIKit
+import Foundation
 import XCTest
 import JSONHelper
 
