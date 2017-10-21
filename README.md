@@ -1,4 +1,4 @@
-# JSONHelper [![CocoaPods](https://img.shields.io/cocoapods/l/JSONHelper.svg)](https://github.com/isair/JSONHelper/blob/master/LICENSE) ![CocoaPods](https://img.shields.io/cocoapods/p/JSONHelper.svg)
+JSONHelper [![CocoaPods](https://img.shields.io/cocoapods/l/JSONHelper.svg)](https://github.com/isair/JSONHelper/blob/master/LICENSE) ![CocoaPods](https://img.shields.io/cocoapods/p/JSONHelper.svg)
 -----
 
 [![Build Status](https://travis-ci.org/isair/JSONHelper.svg?branch=master)](https://travis-ci.org/isair/JSONHelper)
@@ -8,6 +8,10 @@
 Convert anything into anything in one operation; hex strings into UIColor/NSColor, JSON strings into class instances, y/n strings to booleans, arrays and dictionaries of these; anything you can make sense of!
 
 __Latest version requires iOS 8+ and Xcode 7.3+__
+
+<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/aHZuH6shEL9HHDhoj4sgJJga/isair/JSONHelper'>
+  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/aHZuH6shEL9HHDhoj4sgJJga/isair/JSONHelper.svg' />
+</a>
 
 ## Table of Contents
 
