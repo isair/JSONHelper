@@ -1,11 +1,9 @@
-# JSONHelper
-[![CocoaPods](https://img.shields.io/cocoapods/l/JSONHelper.svg)](https://github.com/isair/JSONHelper/blob/master/LICENSE)
-![CocoaPods](https://img.shields.io/cocoapods/p/JSONHelper.svg)
-[![Build Status](https://travis-ci.org/isair/JSONHelper.svg?branch=master)](https://travis-ci.org/isair/JSONHelper)
-[![CocoaPods](https://img.shields.io/cocoapods/v/JSONHelper.svg)](https://cocoapods.org/pods/JSONHelper)
+# JSONHelper [![CocoaPods](https://img.shields.io/cocoapods/l/JSONHelper.svg)](https://github.com/isair/JSONHelper/blob/master/LICENSE) ![CocoaPods](https://img.shields.io/cocoapods/p/JSONHelper.svg)
+-----
 
-[![Gratipay](https://img.shields.io/gratipay/bsencan91.svg)](https://gratipay.com/bsencan91/)
-[![Gitter](https://badges.gitter.im/JOIN CHAT.svg)](https://gitter.im/isair/JSONHelper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Build Status](https://travis-ci.org/isair/JSONHelper.svg?branch=master)](https://travis-ci.org/isair/JSONHelper
+[![CocoaPods](https://img.shields.io/cocoapods/v/JSONHelper.svg)](https://cocoapods.org/pods/JSONHelper)
+[![Gitter](https://badges.gitter.im/JOINCHAT.svg)](https://gitter.im/isair/JSONHelper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Convert anything into anything in one operation; hex strings into UIColor/NSColor, JSON strings into class instances, y/n strings to booleans, arrays and dictionaries of these; anything you can make sense of!
 
