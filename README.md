@@ -9,9 +9,7 @@ Convert anything into anything in one operation; hex strings into UIColor/NSColo
 
 __Latest version requires iOS 8+ and Xcode 7.3+__
 
-<a target='_blank' rel='nofollow' href='https://app.codesponsor.io/link/aHZuH6shEL9HHDhoj4sgJJga/isair/JSONHelper'>
-  <img alt='Sponsor' width='888' height='68' src='https://app.codesponsor.io/embed/aHZuH6shEL9HHDhoj4sgJJga/isair/JSONHelper.svg' />
-</a>
+<a href="https://tracking.gitads.io/?repo=JSONHelper"><img src="https://images.gitads.io/JSONHelper" alt="GitAds"/></a>
 
 ## Table of Contents
 
